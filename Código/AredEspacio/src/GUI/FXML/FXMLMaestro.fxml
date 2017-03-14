@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLMaestroController">
+   <children>
+      <Pane layoutX="77.0" layoutY="41.0" prefHeight="500.0" prefWidth="780.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label layoutX="274.0" layoutY="134.0" text="Nombre:" />
+            <Label layoutX="274.0" layoutY="176.0" text="Apellidos:" />
+            <Label layoutX="274.0" layoutY="215.0" text="Fehca de Nacimiento:" />
+            <Label layoutX="531.0" layoutY="135.0" text="Genero:" />
+            <Label layoutX="274.0" layoutY="254.0" text="Correo Eletrónico" />
+            <Label layoutX="104.0" layoutY="297.0" text="Teléfono:" />
+            <Label layoutX="380.0" layoutY="296.0" text="Teléfono móvil:" />
+            <Label fx:id="labelDomicilio" layoutX="104.0" layoutY="342.0" text="Domicilio:" />
+            <Label fx:id="labelCiudad" layoutX="104.0" layoutY="382.0" text="Ciudad:" />
+            <Label layoutX="398.0" layoutY="383.0" text="Estado:" />
+            <Label layoutX="472.0" layoutY="344.0" text="Código Postal:" />
+            <TextField fx:id="campoNombre" layoutX="342.0" layoutY="131.0" prefHeight="25.0" prefWidth="167.0" />
+            <TextField fx:id="campoApellido" layoutX="343.0" layoutY="169.0" prefHeight="25.0" prefWidth="166.0" />
+            <TextField fx:id="campoCorreo" layoutX="371.0" layoutY="248.0" prefHeight="25.0" prefWidth="304.0" />
+            <DatePicker fx:id="fechaNacimiento" editable="false" layoutX="392.0" layoutY="212.0" prefHeight="25.0" prefWidth="114.0" />
+            <RadioButton fx:id="generoMasculino" layoutX="589.0" layoutY="136.0" mnemonicParsing="false" text="Masculino">
+               <toggleGroup>
+                  <ToggleGroup fx:id="genero" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="generoFemenino" layoutX="589.0" layoutY="168.0" mnemonicParsing="false" text="Femenino" toggleGroup="$genero" />
+            <ImageView fx:id="foto" fitHeight="126.0" fitWidth="122.0" layoutX="84.0" layoutY="97.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../../Desktop/blank.png" />
+               </image></ImageView>
+            <Button fx:id="agregarFoto" layoutX="103.0" layoutY="236.0" mnemonicParsing="false" onAction="#buscarFoto" text="Agregar Foto" />
+            <TextField fx:id="campoTelefono" layoutX="168.0" layoutY="293.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField fx:id="campoMovil" layoutX="471.0" layoutY="292.0" prefHeight="25.0" prefWidth="203.0" />
+            <TextField fx:id="campoDomicilio" layoutX="168.0" layoutY="341.0" prefHeight="25.0" prefWidth="294.0" />
+            <TextField fx:id="campoCodigoPostal" layoutX="556.0" layoutY="338.0" prefHeight="25.0" prefWidth="118.0" />
+            <TextField fx:id="campoCiudad" layoutX="168.0" layoutY="378.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField fx:id="campoEstado" layoutX="441.0" layoutY="378.0" prefHeight="25.0" prefWidth="235.0" />
+            <Label fx:id="titulo" layoutX="315.0" layoutY="51.0" text="Deshabilitar Maestro">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="botonOpcion" layoutX="605.0" layoutY="426.0" mnemonicParsing="false" onAction="#realizarFuncion" text="Modificar" />
+            <TextArea fx:id="motivo" layoutX="168.0" layoutY="335.0" prefHeight="72.0" prefWidth="509.0" />
+         </children></Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.FXMLMarcoController">
+   <children>
+      <MenuBar fx:id="menu" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu fx:id="alumno" mnemonicParsing="false" text="Alumno">
+            <items>
+              <MenuItem fx:id="itemRegistrarAlumno" mnemonicParsing="false" onAction="#registrarAlumno" text="Registrar" />
+            </items>
+          </Menu>
+          <Menu fx:id="maestro" mnemonicParsing="false" text="Maestro">
+            <items>
+              <MenuItem fx:id="itemRegistrarMaestro" mnemonicParsing="false" onAction="#registrarMaestro" text="Registrar" />
+                  <MenuItem fx:id="itemVerMaestro" mnemonicParsing="false" onAction="#consultarMaestro" text="Consultar" />
+                  <MenuItem fx:id="itemModificarMaestro" mnemonicParsing="false" onAction="#modificarMaestro" text="Modificar" />
+                  <MenuItem fx:id="itemDeshabilitarMaestro" mnemonicParsing="false" onAction="#deshabilitarMaestro" text="Deshabilitar" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
