@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package JPA.JPAControllers;
+package JPA.JPAController;
 
-import JPA.ClasesEntidad.Maestro;
-import JPA.JPAControllers.exceptions.NonexistentEntityException;
+import JPA.ClasesEntidad.Contador;
+import JPA.JPAController.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,9 +20,9 @@ import javax.persistence.criteria.Root;
  *
  * @author Mauricio Juárez
  */
-public class MaestroJpaController implements Serializable {
+public class ContadorJpaController implements Serializable {
 
-    public MaestroJpaController(EntityManagerFactory emf) {
+    public ContadorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -31,12 +31,12 @@ public class MaestroJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Maestro maestro) {
+    public void create(Contador contador) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(maestro);
+            em.persist(contador);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,19 +45,19 @@ public class MaestroJpaController implements Serializable {
         }
     }
 
-    public void edit(Maestro maestro) throws NonexistentEntityException, Exception {
+    public void edit(Contador contador) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            maestro = em.merge(maestro);
+            contador = em.merge(contador);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = maestro.getId();
-                if (findMaestro(id) == null) {
-                    throw new NonexistentEntityException("The maestro with id " + id + " no longer exists.");
+                Integer id = contador.getIdContador();
+                if (findContador(id) == null) {
+                    throw new NonexistentEntityException("The contador with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -73,14 +73,14 @@ public class MaestroJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Maestro maestro;
+            Contador contador;
             try {
-                maestro = em.getReference(Maestro.class, id);
-                maestro.getId();
+                contador = em.getReference(Contador.class, id);
+                contador.getIdContador();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The maestro with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The contador with id " + id + " no longer exists.", enfe);
             }
-            em.remove(maestro);
+            em.remove(contador);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -89,19 +89,19 @@ public class MaestroJpaController implements Serializable {
         }
     }
 
-    public List<Maestro> findMaestroEntities() {
-        return findMaestroEntities(true, -1, -1);
+    public List<Contador> findContadorEntities() {
+        return findContadorEntities(true, -1, -1);
     }
 
-    public List<Maestro> findMaestroEntities(int maxResults, int firstResult) {
-        return findMaestroEntities(false, maxResults, firstResult);
+    public List<Contador> findContadorEntities(int maxResults, int firstResult) {
+        return findContadorEntities(false, maxResults, firstResult);
     }
 
-    private List<Maestro> findMaestroEntities(boolean all, int maxResults, int firstResult) {
+    private List<Contador> findContadorEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Maestro.class));
+            cq.select(cq.from(Contador.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -113,20 +113,20 @@ public class MaestroJpaController implements Serializable {
         }
     }
 
-    public Maestro findMaestro(Integer id) {
+    public Contador findContador(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Maestro.class, id);
+            return em.find(Contador.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getMaestroCount() {
+    public int getContadorCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Maestro> rt = cq.from(Maestro.class);
+            Root<Contador> rt = cq.from(Contador.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

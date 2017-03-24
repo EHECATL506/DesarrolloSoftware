@@ -17,6 +17,7 @@ public class EscenaPrincipal extends Application {
     public static String Marco = "FXML/FXMLMarco.fxml";
     public static String EscenaBusquedaMaestro = "FXML/FXMLMaestroBusqueda.fxml";
     public static String EscenaMaestro = "FXML/FXMLMaestro.fxml";
+    public static String EscenaGrupo = "FXML/FXMLGrupo.fxml";
 
     @Override
     public void start(Stage stage) throws Exception {

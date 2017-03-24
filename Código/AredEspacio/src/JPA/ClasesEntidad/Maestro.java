@@ -1,9 +1,12 @@
 package JPA.ClasesEntidad;
 
+import JPA.JPAController.ContadorJpaController;
+import JPA.JPAController.MaestroJpaController;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -13,11 +16,13 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,15 +35,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Maestro.findAll", query = "SELECT m FROM Maestro m")
     , @NamedQuery(name = "Maestro.findById", query = "SELECT m FROM Maestro m WHERE m.id = :id")
     , @NamedQuery(name = "Maestro.findByNoDeColaborador", query = "SELECT m FROM Maestro m WHERE m.noDeColaborador LIKE :noDeColaborador")
-    , @NamedQuery(name = "Maestro.findByNombre", query = "SELECT m FROM Maestro m WHERE m.nombre LIKE :nombre")    
-    , @NamedQuery(name = "Maestro.findByApellidos", query = "SELECT m FROM Maestro m WHERE m.apellidos = :apellidos")
+    , @NamedQuery(name = "Maestro.findByNombre", query = "SELECT m FROM Maestro m WHERE m.nombre LIKE :nombre")
+    , @NamedQuery(name = "Maestro.findByApellidos", query = "SELECT m FROM Maestro m WHERE m.apellidos LIKE :apellidos")
     , @NamedQuery(name = "Maestro.findByFechaDeNacimiento", query = "SELECT m FROM Maestro m WHERE m.fechaDeNacimiento = :fechaDeNacimiento")
     , @NamedQuery(name = "Maestro.findByGenero", query = "SELECT m FROM Maestro m WHERE m.genero = :genero")
     , @NamedQuery(name = "Maestro.findByCorreoElectronico", query = "SELECT m FROM Maestro m WHERE m.correoElectronico = :correoElectronico")
     , @NamedQuery(name = "Maestro.findByTelefono", query = "SELECT m FROM Maestro m WHERE m.telefono = :telefono")
     , @NamedQuery(name = "Maestro.findByTelefonoMovil", query = "SELECT m FROM Maestro m WHERE m.telefonoMovil = :telefonoMovil")
     , @NamedQuery(name = "Maestro.findByDomicilio", query = "SELECT m FROM Maestro m WHERE m.domicilio = :domicilio")
-    , @NamedQuery(name = "Maestro.findByCuidad", query = "SELECT m FROM Maestro m WHERE m.cuidad = :cuidad")
+    , @NamedQuery(name = "Maestro.findByCiudad", query = "SELECT m FROM Maestro m WHERE m.ciudad = :ciudad")
     , @NamedQuery(name = "Maestro.findByCodigoPostal", query = "SELECT m FROM Maestro m WHERE m.codigoPostal = :codigoPostal")
     , @NamedQuery(name = "Maestro.findByEstado", query = "SELECT m FROM Maestro m WHERE m.estado = :estado")
     , @NamedQuery(name = "Maestro.findByFechaDeRegistro", query = "SELECT m FROM Maestro m WHERE m.fechaDeRegistro = :fechaDeRegistro")
@@ -71,7 +76,7 @@ public class Maestro implements Serializable {
     private Date fechaDeNacimiento;
     @Basic(optional = false)
     @Column(name = "genero")
-    private String genero;
+    private boolean genero;
     @Basic(optional = false)
     @Column(name = "correoElectronico")
     private String correoElectronico;
@@ -85,8 +90,8 @@ public class Maestro implements Serializable {
     @Column(name = "domicilio")
     private String domicilio;
     @Basic(optional = false)
-    @Column(name = "cuidad")
-    private String cuidad;
+    @Column(name = "ciudad")
+    private String ciudad;
     @Basic(optional = false)
     @Column(name = "codigoPostal")
     private String codigoPostal;
@@ -106,6 +111,8 @@ public class Maestro implements Serializable {
     @Lob
     @Column(name = "motivoDeDeshabilitacion")
     private String motivoDeDeshabilitacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMaestro")
+    private List<Grupo> grupoList;
 
     public Maestro() {
     }
@@ -114,7 +121,7 @@ public class Maestro implements Serializable {
         this.id = id;
     }
 
-    public Maestro(Integer id, String noDeColaborador, String nombre, String apellidos, byte[] foto, Date fechaDeNacimiento, String genero, String correoElectronico, String telefono, String telefonoMovil, String domicilio, String cuidad, String codigoPostal, String estado, Date fechaDeRegistro, boolean deshabilitado) {
+    public Maestro(Integer id, String noDeColaborador, String nombre, String apellidos, byte[] foto, Date fechaDeNacimiento, boolean genero, String correoElectronico, String telefono, String telefonoMovil, String domicilio, String ciudad, String codigoPostal, String estado, Date fechaDeRegistro, boolean deshabilitado) {
         this.id = id;
         this.noDeColaborador = noDeColaborador;
         this.nombre = nombre;
@@ -126,13 +133,21 @@ public class Maestro implements Serializable {
         this.telefono = telefono;
         this.telefonoMovil = telefonoMovil;
         this.domicilio = domicilio;
-        this.cuidad = cuidad;
+        this.ciudad = ciudad;
         this.codigoPostal = codigoPostal;
         this.estado = estado;
         this.fechaDeRegistro = fechaDeRegistro;
         this.deshabilitado = deshabilitado;
     }
 
+    public String getEstadoDeMaestro(){
+        if(this.deshabilitado){
+            return "Deshabilitado";
+        }else{
+            return "Habilitado";
+        }
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -181,11 +196,11 @@ public class Maestro implements Serializable {
         this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
-    public String getGenero() {
+    public boolean getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(boolean genero) {
         this.genero = genero;
     }
 
@@ -221,12 +236,12 @@ public class Maestro implements Serializable {
         this.domicilio = domicilio;
     }
 
-    public String getCuidad() {
-        return cuidad;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCuidad(String cuidad) {
-        this.cuidad = cuidad;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
     public String getCodigoPostal() {
@@ -276,23 +291,14 @@ public class Maestro implements Serializable {
     public void setMotivoDeDeshabilitacion(String motivoDeDeshabilitacion) {
         this.motivoDeDeshabilitacion = motivoDeDeshabilitacion;
     }
-    
-    public static EntityManager obtenerController(){
-        return Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
+
+    @XmlTransient
+    public List<Grupo> getGrupoList() {
+        return grupoList;
     }
-    
-    public static List<Maestro> obtenerCoincidenciasPorNombre(String nombre){
-        return obtenerController().createNamedQuery("Maestro.findByNombre")
-                        .setParameter("nombre","%"+ nombre +"%").getResultList();
-    }
-    
-    public static List<Maestro> obtenerCoincidenciasPorNoDeColaborador(String noDeColaborador){
-        return obtenerController().createNamedQuery("Maestro.findByNoDeColaborador")
-                        .setParameter("noDeColaborador","%"+ noDeColaborador +"%").getResultList();
-    }
-    
-    public void guardarCambios(){
-        obtenerController().persist(this);
+
+    public void setGrupoList(List<Grupo> grupoList) {
+        this.grupoList = grupoList;
     }
 
     @Override
@@ -309,10 +315,7 @@ public class Maestro implements Serializable {
             return false;
         }
         Maestro other = (Maestro) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
@@ -320,4 +323,47 @@ public class Maestro implements Serializable {
         return "JPA.ClasesEntidad.Maestro[ id=" + id + " ]";
     }
     
+    private void crearNoDeColaborador() throws Exception{
+        ContadorJpaController controller = new ContadorJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        EntityManager entityManager = controller.getEntityManager();
+        Contador contadorMaestro = (Contador) entityManager
+                .createNamedQuery("Contador.findByNombre").setParameter("nombre", "Maestros").getSingleResult();
+        int numeroDeMaestros = contadorMaestro.getContador();
+        numeroDeMaestros++;
+        int año = new Date().getYear()-100;
+        String numeroDeColaborador = String.format("M%1$02d%2$06d",año,numeroDeMaestros);
+        contadorMaestro.setContador(numeroDeMaestros);
+        controller.edit(contadorMaestro);
+        this.noDeColaborador=numeroDeColaborador;
+    }
+    
+    public void crear() throws Exception{
+        MaestroJpaController controller =  new MaestroJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        this.crearNoDeColaborador();
+        controller.create(this);
+    }
+    
+    public void actualizar() throws Exception{
+        MaestroJpaController controller =  new MaestroJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        controller.edit(this);
+    }
+    
+    public static List<Maestro> obtenerMaestroPorNoDeColaborador(String noDeColaborador){
+        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
+        return em.createNamedQuery("Maestro.findByNoDeColaborador").setParameter("noDeColaborador", "%"+noDeColaborador+"%").getResultList();
+    }
+    public static List<Maestro> obtenerMaestroPorNombre(String nombre){
+        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
+        return em.createNamedQuery("Maestro.findByNombre").setParameter("nombre", "%"+nombre+"%").getResultList();
+    }
+    public static List<Maestro> obtenerMaestroPorApellido(String apellidos){
+        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
+        return em.createNamedQuery("Maestro.findByApellidos").setParameter("apellidos", "%"+apellidos+"%").getResultList();
+    }
 }

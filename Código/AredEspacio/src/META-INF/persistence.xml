@@ -2,7 +2,12 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="AredEspacioPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>JPA.ClasesEntidad.Grupo</class>
+    <class>JPA.ClasesEntidad.Horario</class>
     <class>JPA.ClasesEntidad.Maestro</class>
+    <class>JPA.ClasesEntidad.Clase</class>
+    <class>JPA.ClasesEntidad.Alumno</class>
+    <class>JPA.ClasesEntidad.Contador</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/aredespacio?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="AredEspacioUser"/>

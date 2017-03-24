@@ -17,7 +17,7 @@ public class ControlDeImagenes {
         FileChooser explorador = new FileChooser();
         explorador.setTitle("Buscar Foto");
         explorador.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("PNG", "*.png")
+                new FileChooser.ExtensionFilter("Fotos", "*.png", "*.jpg")
         );
         try {
             String ruta = explorador.showOpenDialog(new Stage()).getPath();
