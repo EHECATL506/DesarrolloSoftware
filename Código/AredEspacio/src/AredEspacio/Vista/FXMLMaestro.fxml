@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMaestroController">
+   <children>
+      <Pane layoutX="77.0" layoutY="41.0" prefHeight="500.0" prefWidth="780.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label layoutX="200.0" layoutY="135.0" text="Nombre:" />
+            <Label layoutX="442.0" layoutY="135.0" text="Apellido(s):" />
+            <Label layoutX="200.0" layoutY="187.0" text="Fehca de Nacimiento:" />
+            <Label layoutX="451.0" layoutY="187.0" text="Genero:" />
+            <Label layoutX="200.0" layoutY="230.0" text="Correo Eletrónico:" />
+            <Label layoutX="200.0" layoutY="263.0" text="Teléfono:" />
+            <Label layoutX="442.0" layoutY="263.0" text="Teléfono móvil:" />
+            <Label fx:id="labelDomicilio" layoutX="200.0" layoutY="296.0" text="Domicilio:" />
+            <Label fx:id="labelCiudad" layoutX="200.0" layoutY="330.0" text="Ciudad:" />
+            <Label layoutX="473.0" layoutY="330.0" text="Estado:" />
+            <Label layoutX="538.0" layoutY="296.0" text="Código Postal:" />
+            <TextField fx:id="campoNombre" layoutX="260.0" layoutY="132.0" prefHeight="25.0" prefWidth="177.0" />
+            <TextField fx:id="campoApellido" layoutX="507.0" layoutY="132.0" prefHeight="25.0" prefWidth="215.0" />
+            <TextField fx:id="campoCorreo" layoutX="320.0" layoutY="226.0" prefHeight="25.0" prefWidth="403.0" />
+            <DatePicker fx:id="fechaNacimiento" editable="false" layoutX="323.0" layoutY="183.0" prefHeight="25.0" prefWidth="114.0" />
+            <Button fx:id="agregarFoto" layoutX="60.0" layoutY="238.0" mnemonicParsing="false" onAction="#buscarFoto" text="Agregar Foto" />
+            <TextField fx:id="campoTelefono" layoutX="260.0" layoutY="259.0" prefHeight="25.0" prefWidth="177.0" />
+            <TextField fx:id="campoMovil" layoutX="530.0" layoutY="259.0" prefHeight="25.0" prefWidth="194.0" />
+            <TextField fx:id="campoDomicilio" layoutX="260.0" layoutY="292.0" prefHeight="25.0" prefWidth="272.0" />
+            <TextField fx:id="campoCodigoPostal" layoutX="619.0" layoutY="293.0" prefHeight="25.0" prefWidth="104.0" />
+            <TextField fx:id="campoCiudad" layoutX="260.0" layoutY="326.0" prefHeight="25.0" prefWidth="200.0" />
+            <Label fx:id="titulo" layoutX="345.0" layoutY="50.0" text="Registrar Maestro">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="botonOpcion" layoutX="660.0" layoutY="426.0" mnemonicParsing="false" onAction="#realizarFuncion" text="Registrar" />
+            <TextArea fx:id="motivo" layoutX="316.0" layoutY="360.0" prefHeight="58.0" prefWidth="403.0" />
+            <TitledPane animated="false" collapsible="false" layoutX="32.0" layoutY="60.0" prefHeight="170.0" prefWidth="145.0" text="Foto del Maestro">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="122.0">
+                     <children>
+                        <ImageView fx:id="foto" fitHeight="126.0" fitWidth="122.0" layoutX="47.0" layoutY="48.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../../../../../../Desktop/blank.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
+            <ComboBox fx:id="campoGenero" layoutX="507.0" layoutY="183.0" prefHeight="25.0" prefWidth="215.0" promptText="Seleccione el Genero" />
+            <ComboBox fx:id="campoEstado" layoutX="522.0" layoutY="326.0" prefHeight="25.0" prefWidth="200.0" promptText="Seleccione el Estado" />
+            <Label fx:id="labelDeshabilitado" layoutX="200.0" layoutY="360.0" text="Deshabilitado:" />
+            <Label fx:id="labelFechaDeRegistro" layoutX="200.0" layoutY="430.0" text="Fecha de Registro:" />
+            <Label fx:id="labelFechaDeDeshabilitacion" layoutX="385.0" layoutY="430.0" text="Fecha de deshabilitación:" />
+         </children></Pane>
+   </children>
+</AnchorPane>

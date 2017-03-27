@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLEliminarAlumnoController">
+   <children>
+      <StackPane prefHeight="150.0" prefWidth="200.0" />
+      <HBox layoutX="10.0" layoutY="118.0" prefHeight="333.0" prefWidth="775.0">
+         <children>
+            <TitledPane collapsible="false" prefHeight="215.0" prefWidth="213.0">
+               <content>
+                  <ImageView fx:id="iVFoto" fitHeight="179.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </content>
+            </TitledPane>
+            <Pane prefHeight="281.0" prefWidth="575.0">
+               <children>
+                  <TextField fx:id="tFNombre" editable="false" layoutX="70.0" layoutY="1.0" minHeight="30.0" prefHeight="25.0" prefWidth="128.0" />
+                  <TextField fx:id="tFApellidos" editable="false" layoutX="263.0" layoutY="1.0" minHeight="30.0" prefHeight="30.0" prefWidth="290.0" />
+                  <Label layoutX="14.0" layoutY="5.0" prefHeight="17.0" prefWidth="56.0" text="Nombre:" />
+                  <Label layoutX="205.0" layoutY="5.0" prefHeight="17.0" prefWidth="58.0" text="Apellidos:" />
+                  <Label layoutX="15.0" layoutY="43.0" text="Fecha de registro:" />
+                  <DatePicker fx:id="dPRegistro" editable="false" layoutX="120.0" layoutY="39.0" minHeight="30.0" prefHeight="30.0" prefWidth="188.0" />
+                  <Label layoutX="317.0" layoutY="43.0" text="Matricula:" />
+                  <Label layoutX="15.0" layoutY="80.0" text="Coreo Electrónico:" />
+                  <TextField fx:id="tFCorreo" editable="false" layoutX="120.0" layoutY="76.0" minHeight="30.0" prefHeight="30.0" prefWidth="433.0" />
+                  <Label layoutX="15.0" layoutY="118.0" text="Teléfono:" />
+                  <TextField fx:id="tFTelefono" editable="false" layoutX="75.0" layoutY="114.0" minHeight="30.0" prefHeight="25.0" prefWidth="155.0" />
+                  <Label layoutX="239.0" layoutY="118.0" text="Telefono Móvil:" />
+                  <TextField fx:id="tFMovil" editable="false" layoutX="330.0" layoutY="114.0" minHeight="30.0" prefHeight="30.0" prefWidth="223.0" />
+                  <Label layoutX="16.0" layoutY="153.0" text="Motivo:" />
+                  <TextField fx:id="tFMatricula" editable="false" layoutX="374.0" layoutY="39.0" minHeight="30.0" prefHeight="30.0" prefWidth="180.0" />
+                  <TextArea fx:id="tAMotivo" layoutX="75.0" layoutY="153.0" prefHeight="150.0" prefWidth="479.0" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+      <Label fx:id="lTitulo" layoutX="284.0" layoutY="27.0">
+         <font>
+            <Font name="Bodoni MT Black Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lMensaje" layoutX="275.0" layoutY="55.0" />
+      <Button fx:id="bCancelar" layoutX="628.0" layoutY="504.0" minHeight="30.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Button fx:id="bEliminar" layoutX="698.0" layoutY="504.0" minHeight="30.0" mnemonicParsing="false" onAction="#darBaja" />
+   </children>
+</AnchorPane>

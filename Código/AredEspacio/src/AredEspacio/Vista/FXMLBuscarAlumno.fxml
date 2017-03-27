@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLBuscarAlumnoController">
+   <children>
+      <StackPane layoutX="14.0" layoutY="89.0" prefHeight="307.0" prefWidth="773.0">
+         <children>
+            <HBox prefHeight="73.0" prefWidth="780.0">
+               <children>
+                  <Pane prefHeight="307.0" prefWidth="780.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="26.0" text="Buscar por:" />
+                        <ComboBox fx:id="cBCriterio" layoutX="86.0" layoutY="21.0" minHeight="30.0" prefHeight="30.0" prefWidth="161.0" promptText="Selecciona el criterio" />
+                        <TextField fx:id="tFBusqueda" layoutX="256.0" layoutY="21.0" minHeight="30.0" prefHeight="30.0" prefWidth="359.0" />
+                        <Button layoutX="624.0" layoutY="19.0" minHeight="30.0" mnemonicParsing="false" onAction="#buscar" prefHeight="30.0" prefWidth="59.0" text="Buscar" />
+                        <TableView fx:id="tVResultados" layoutX="14.0" layoutY="67.0" prefHeight="224.0" prefWidth="667.0">
+                          <columns>
+                            <TableColumn fx:id="tCMatricula" prefWidth="120.0" text="Matricula" />
+                            <TableColumn fx:id="tCNombre" prefWidth="149.0" text="Nombre" />
+                              <TableColumn fx:id="tCApellidos" prefWidth="272.0" text="Apellidos" />
+                              <TableColumn fx:id="tCStatus" prefWidth="125.0" text="Status" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="692.0" layoutY="261.0" minHeight="30.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="30.0" prefWidth="73.0" text="Baja/Alta" />
+                        <Button layoutX="692.0" layoutY="224.0" minHeight="30.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="73.0" text="Modificar" />
+                        <Button layoutX="692.0" layoutY="188.0" minHeight="30.0" mnemonicParsing="false" onAction="#consultar" prefHeight="25.0" prefWidth="73.0" text="Consultar" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+      <Label layoutX="300.0" layoutY="27.0" text="Buscar Alumno">
+         <font>
+            <Font name="Bodoni MT Black Italic" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="283.0" layoutY="55.0" text="Ingrese la matricula o el nombre del alumno" />
+   </children>
+</AnchorPane>

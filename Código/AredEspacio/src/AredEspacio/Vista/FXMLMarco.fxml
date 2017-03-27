@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMarcoController">
+   <children>
+      <MenuBar fx:id="menu" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu fx:id="alumno" mnemonicParsing="false" text="Alumno">
+            <items>
+              <MenuItem fx:id="itemRegistrarAlumno" mnemonicParsing="false" onAction="#registrarAlumno" text="Registrar" />
+                  <MenuItem fx:id="itemBuscarAlumno" mnemonicParsing="false" onAction="#buscarAlumno" text="Buscar" />
+            </items>
+          </Menu>
+          <Menu fx:id="maestro" mnemonicParsing="false" text="Maestro">
+            <items>
+              <MenuItem fx:id="itemRegistrarMaestro" mnemonicParsing="false" onAction="#registrarMaestro" text="Registrar" />
+                  <MenuItem fx:id="itemBuscarMaestro" mnemonicParsing="false" onAction="#buscarMaestro" text="Buscar" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>

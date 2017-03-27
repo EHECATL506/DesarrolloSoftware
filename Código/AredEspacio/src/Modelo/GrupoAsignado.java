@@ -1,8 +1,5 @@
 package Modelo;
 
-import JPA.ClasesEntidad.Grupo;
-import JPA.ClasesEntidad.Horario;
-import JPA.ClasesEntidad.Maestro;
 import java.util.ArrayList;
 import java.util.List;
 
