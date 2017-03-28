@@ -6,25 +6,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 
 public class FXMLMarcoController extends MainController implements Initializable {
+
     @FXML
-    MenuBar menu;
+    public void modificarGrupo() {
+        this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarGrupo);
+    }
+
     @FXML
-    Menu alumno;
-    @FXML
-    Menu maestro;
-    @FXML
-    MenuItem itemRegistrarMaestro;
-    @FXML
-    MenuItem itemBuscarMaestro;
-    @FXML
-    MenuItem itemRegistrarAlumno;
-    @FXML
-    MenuItem itemBuscarAlumno;
+    public void registrarGrupo() {
+        this.escena.cargarEscena(EscenaPrincipal.EscenaGrupo);
+    }
 
     @FXML
     public void registrarMaestro() {

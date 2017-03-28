@@ -5,7 +5,10 @@
  */
 package Modelo;
 
+import ControladorBD.HorarioJpaController;
+import Exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Horario.findByDia", query = "SELECT h FROM Horario h WHERE h.dia = :dia")
     , @NamedQuery(name = "Horario.findByHora", query = "SELECT h FROM Horario h WHERE h.hora = :hora")})
 public class Horario implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,75 +52,122 @@ public class Horario implements Serializable {
     @JoinColumn(name = "idGrupo", referencedColumnName = "idGrupo")
     @ManyToOne(optional = false)
     private Grupo idGrupo;
-
+    
     public Horario() {
     }
-
+    
+    public String getInicio() {
+        String[] split = this.hora.split("-");
+        return split[0];
+    }
+    
+    public String getFin() {
+        String[] split = this.hora.split("-");
+        return split[1];
+    }
+    
     public Horario(Integer idHorario) {
         this.idHorario = idHorario;
     }
-
+    
     public Horario(Integer idHorario, String dia, String hora) {
         this.idHorario = idHorario;
         this.dia = dia;
         this.hora = hora;
     }
-
+    
     public Integer getIdHorario() {
         return idHorario;
     }
-
+    
     public void setIdHorario(Integer idHorario) {
         this.idHorario = idHorario;
     }
-
+    
     public String getDia() {
         return dia;
     }
-
+    
     public void setDia(String dia) {
         this.dia = dia;
     }
-
+    
     public String getHora() {
         return hora;
     }
-
+    
     public void setHora(String hora) {
         this.hora = hora;
     }
-
+    
     public Grupo getIdGrupo() {
         return idGrupo;
     }
-
+    
     public void setIdGrupo(Grupo idGrupo) {
         this.idGrupo = idGrupo;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (idHorario != null ? idHorario.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object object) {
+        if (this == null && object != null) {
+            return false;
+        }
+        if (this != null && object == null) {
+            return false;
+        }
+        
+        Horario other = (Horario) object;
+        return this.dia.equals(other.getDia())
+                && this.hora.equals(other.getHora());
+        /*
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Horario)) {
-            return false;
+        return false;
         }
-        Horario other = (Horario) object;
         if ((this.idHorario == null && other.idHorario != null) || (this.idHorario != null && !this.idHorario.equals(other.idHorario))) {
-            return false;
+        return false;
         }
-        return true;
+        return true;*/
     }
-
+    
     @Override
     public String toString() {
         return "Modelo.Horario[ idHorario=" + idHorario + " ]";
     }
     
+    public void crear() {
+        HorarioJpaController controller = new HorarioJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        controller.create(this);
+    }
+    
+    public void actualizar() throws Exception {
+        HorarioJpaController controller = new HorarioJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        controller.edit(this);
+    }
+    
+    public void eliminar() throws NonexistentEntityException {
+        HorarioJpaController controller = new HorarioJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        controller.destroy(this.idHorario);
+    }
+    
+    public static void crearHorarios(ArrayList<Horario> horarios, Grupo grupo) {
+        for (Horario horario : horarios) {
+            horario.setIdGrupo(grupo);
+            horario.crear();
+        }
+    }
 }

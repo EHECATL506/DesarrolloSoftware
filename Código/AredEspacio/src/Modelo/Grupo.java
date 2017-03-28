@@ -5,7 +5,10 @@
  */
 package Modelo;
 
+import ControladorBD.GrupoJpaController;
+import Exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -21,6 +24,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -137,6 +141,10 @@ public class Grupo implements Serializable {
         return idMaestro;
     }
 
+    public String getMaestro() {
+        return this.idMaestro.getNombre() + " " + this.idMaestro.getApellidos();
+    }
+
     public void setIdMaestro(Maestro idMaestro) {
         this.idMaestro = idMaestro;
     }
@@ -173,5 +181,38 @@ public class Grupo implements Serializable {
     public String toString() {
         return "Modelo.Grupo[ idGrupo=" + idGrupo + " ]";
     }
-    
+
+    public void crear(ArrayList<Horario> horarios) {
+        GrupoJpaController controller = new GrupoJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        controller.create(this);
+        Horario.crearHorarios(horarios, this);
+    }
+
+    public static List<Grupo> listarGrupos() {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null)
+                .createEntityManager()
+                .createNamedQuery("Grupo.findAll").getResultList();
+    }
+
+    public void actualizar(ArrayList<Horario> horarios, ArrayList<Horario> horariosEliminados) throws NonexistentEntityException, Exception {
+        GrupoJpaController controller = new GrupoJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        controller.edit(this);
+
+        for (Horario horario : horarios) {
+            try {
+                horario.actualizar();
+            } catch (Exception e) {
+                horario.setIdGrupo(this);
+                horario.crear();
+            }
+        }
+
+        for (Horario horario : horariosEliminados) {
+            horario.eliminar();
+        }
+    }
 }

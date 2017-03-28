@@ -265,14 +265,14 @@ public class Maestro implements Serializable {
         this.fechaDeRegistro = fechaDeRegistro;
     }
 
-    public String getEstadoDeMaestro(){
-        if(this.deshabilitado){
+    public String getEstadoDeMaestro() {
+        if (this.deshabilitado) {
             return "Deshabilitado";
-        }else{
+        } else {
             return "Habilitado";
         }
     }
-    
+
     public boolean getDeshabilitado() {
         return deshabilitado;
     }
@@ -330,8 +330,8 @@ public class Maestro implements Serializable {
     public String toString() {
         return "Modelo.Maestro[ id=" + id + " ]";
     }
-    
-        private void crearNoDeColaborador() throws Exception{
+
+    private void crearNoDeColaborador() throws Exception {
         ContadorJpaController controller = new ContadorJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
@@ -340,38 +340,40 @@ public class Maestro implements Serializable {
                 .createNamedQuery("Contador.findByNombre").setParameter("nombre", "Maestros").getSingleResult();
         int numeroDeMaestros = contadorMaestro.getContador();
         numeroDeMaestros++;
-        int año = new Date().getYear()-100;
-        String numeroDeColaborador = String.format("M%1$02d%2$06d",año,numeroDeMaestros);
+        int año = new Date().getYear() - 100;
+        String numeroDeColaborador = String.format("M%1$02d%2$06d", año, numeroDeMaestros);
         contadorMaestro.setContador(numeroDeMaestros);
         controller.edit(contadorMaestro);
-        this.noDeColaborador=numeroDeColaborador;
+        this.noDeColaborador = numeroDeColaborador;
     }
-    
-    public void crear() throws Exception{
-        MaestroJpaController controller =  new MaestroJpaController(
+
+    public void crear() throws Exception {
+        MaestroJpaController controller = new MaestroJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         this.crearNoDeColaborador();
         controller.create(this);
     }
-    
-    public void actualizar() throws Exception{
-        MaestroJpaController controller =  new MaestroJpaController(
+
+    public void actualizar() throws Exception {
+        MaestroJpaController controller = new MaestroJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         controller.edit(this);
     }
-    
-    public static List<Maestro> obtenerMaestroPorNoDeColaborador(String noDeColaborador){
+
+    public static List<Maestro> obtenerMaestroPorNoDeColaborador(String noDeColaborador) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-        return em.createNamedQuery("Maestro.findByNoDeColaborador").setParameter("noDeColaborador", "%"+noDeColaborador+"%").getResultList();
+        return em.createNamedQuery("Maestro.findByNoDeColaborador").setParameter("noDeColaborador", "%" + noDeColaborador + "%").getResultList();
     }
-    public static List<Maestro> obtenerMaestroPorNombre(String nombre){
+
+    public static List<Maestro> obtenerMaestroPorNombre(String nombre) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-        return em.createNamedQuery("Maestro.findByNombre").setParameter("nombre", "%"+nombre+"%").getResultList();
+        return em.createNamedQuery("Maestro.findByNombre").setParameter("nombre", "%" + nombre + "%").getResultList();
     }
-    public static List<Maestro> obtenerMaestroPorApellido(String apellidos){
+
+    public static List<Maestro> obtenerMaestroPorApellido(String apellidos) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-        return em.createNamedQuery("Maestro.findByApellidos").setParameter("apellidos", "%"+apellidos+"%").getResultList();
+        return em.createNamedQuery("Maestro.findByApellidos").setParameter("apellidos", "%" + apellidos + "%").getResultList();
     }
 }

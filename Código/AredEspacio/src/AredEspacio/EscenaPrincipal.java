@@ -22,7 +22,9 @@ public class EscenaPrincipal extends Application {
     public static String EscenaBuscarAlumno = "Vista/FXMLBuscarAlumno.fxml";
     public static String EscenaEliminarAlumno = "Vista/FXMLEliminarAlumno.fxml";
     public static String EscenaInicio = "Vista/FXMLInicio.fxml";
-
+    public static String EscenaModificarGrupo = "Vista/FXMLModificarGrupo.fxml";
+    public static String EscenaBuscarGrupo = "Vista/FXMLBuscarGrupo.fxml";
+    
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();
