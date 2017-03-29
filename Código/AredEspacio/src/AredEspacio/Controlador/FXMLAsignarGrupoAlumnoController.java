@@ -101,16 +101,20 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
         Clase clase = new Clase();
         clase.setIdGrupo(temp.get(0));
         clase.setIdAlumno(alumno);
-        
-        System.out.println();
-        try {
-            jpa.create(clase);
-            Mensaje.informacion("El alumno ha sido asiganda al grupo de " + sClase );
-            desplegarGrupos();
-            //lista.add(new FilaHorario());
-        } catch (IllegalOrphanException ex) {
-            Mensaje.advertencia("El alumno ya ha sido registrado en esta clase");
+        for (Clase g : alumno.getClaseList() ) {
+            if (g.getIdGrupo().getIdGrupo() != temp.get(0).getIdGrupo()) {
+                continue;
+            } else {
+                jpa.create(clase);
+                Mensaje.informacion("El alumno ha sido asiganda al grupo de " + sClase );
+                desplegarGrupos();
+            }
+             System.out.println("no");
         }
+     
+       
+        
+        //lista.add(new FilaHorario());
     }
 
     @FXML

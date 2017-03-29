@@ -7,14 +7,13 @@ package ControladorBD;
 
 import Exceptions.IllegalOrphanException;
 import Exceptions.NonexistentEntityException;
+import Modelo.Grupo;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Modelo.Maestro;
-import Modelo.Clase;
-import Modelo.Grupo;
 import Modelo.Horario;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +48,6 @@ public class GrupoJpaController implements Serializable {
                 idMaestro = em.getReference(idMaestro.getClass(), idMaestro.getId());
                 grupo.setIdMaestro(idMaestro);
             }
-            Clase clase = grupo.getClase();
-            if (clase != null) {
-                clase = em.getReference(clase.getClass(), clase.getIdClase());
-                grupo.setClase(clase);
-            }
             List<Horario> attachedHorarioList = new ArrayList<Horario>();
             for (Horario horarioListHorarioToAttach : grupo.getHorarioList()) {
                 horarioListHorarioToAttach = em.getReference(horarioListHorarioToAttach.getClass(), horarioListHorarioToAttach.getIdHorario());
@@ -64,15 +58,6 @@ public class GrupoJpaController implements Serializable {
             if (idMaestro != null) {
                 idMaestro.getGrupoList().add(grupo);
                 idMaestro = em.merge(idMaestro);
-            }
-            if (clase != null) {
-                Grupo oldIdGrupoOfClase = clase.getIdGrupo();
-                if (oldIdGrupoOfClase != null) {
-                    oldIdGrupoOfClase.setClase(null);
-                    oldIdGrupoOfClase = em.merge(oldIdGrupoOfClase);
-                }
-                clase.setIdGrupo(grupo);
-                clase = em.merge(clase);
             }
             for (Horario horarioListHorario : grupo.getHorarioList()) {
                 Grupo oldIdGrupoOfHorarioListHorario = horarioListHorario.getIdGrupo();
@@ -99,17 +84,9 @@ public class GrupoJpaController implements Serializable {
             Grupo persistentGrupo = em.find(Grupo.class, grupo.getIdGrupo());
             Maestro idMaestroOld = persistentGrupo.getIdMaestro();
             Maestro idMaestroNew = grupo.getIdMaestro();
-            Clase claseOld = persistentGrupo.getClase();
-            Clase claseNew = grupo.getClase();
             List<Horario> horarioListOld = persistentGrupo.getHorarioList();
             List<Horario> horarioListNew = grupo.getHorarioList();
             List<String> illegalOrphanMessages = null;
-            if (claseOld != null && !claseOld.equals(claseNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("You must retain Clase " + claseOld + " since its idGrupo field is not nullable.");
-            }
             for (Horario horarioListOldHorario : horarioListOld) {
                 if (!horarioListNew.contains(horarioListOldHorario)) {
                     if (illegalOrphanMessages == null) {
@@ -124,10 +101,6 @@ public class GrupoJpaController implements Serializable {
             if (idMaestroNew != null) {
                 idMaestroNew = em.getReference(idMaestroNew.getClass(), idMaestroNew.getId());
                 grupo.setIdMaestro(idMaestroNew);
-            }
-            if (claseNew != null) {
-                claseNew = em.getReference(claseNew.getClass(), claseNew.getIdClase());
-                grupo.setClase(claseNew);
             }
             List<Horario> attachedHorarioListNew = new ArrayList<Horario>();
             for (Horario horarioListNewHorarioToAttach : horarioListNew) {
@@ -144,15 +117,6 @@ public class GrupoJpaController implements Serializable {
             if (idMaestroNew != null && !idMaestroNew.equals(idMaestroOld)) {
                 idMaestroNew.getGrupoList().add(grupo);
                 idMaestroNew = em.merge(idMaestroNew);
-            }
-            if (claseNew != null && !claseNew.equals(claseOld)) {
-                Grupo oldIdGrupoOfClase = claseNew.getIdGrupo();
-                if (oldIdGrupoOfClase != null) {
-                    oldIdGrupoOfClase.setClase(null);
-                    oldIdGrupoOfClase = em.merge(oldIdGrupoOfClase);
-                }
-                claseNew.setIdGrupo(grupo);
-                claseNew = em.merge(claseNew);
             }
             for (Horario horarioListNewHorario : horarioListNew) {
                 if (!horarioListOld.contains(horarioListNewHorario)) {
@@ -195,13 +159,6 @@ public class GrupoJpaController implements Serializable {
                 throw new NonexistentEntityException("The grupo with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Clase claseOrphanCheck = grupo.getClase();
-            if (claseOrphanCheck != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Grupo (" + grupo + ") cannot be destroyed since the Clase " + claseOrphanCheck + " in its clase field has a non-nullable idGrupo field.");
-            }
             List<Horario> horarioListOrphanCheck = grupo.getHorarioList();
             for (Horario horarioListOrphanCheckHorario : horarioListOrphanCheck) {
                 if (illegalOrphanMessages == null) {

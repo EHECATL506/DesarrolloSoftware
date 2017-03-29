@@ -52,23 +52,22 @@ public class Grupo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+
     @Basic(optional = false)
     @Column(name = "idGrupo")
     private Integer idGrupo;
-    
+
     @Basic(optional = false)
     @Column(name = "salon")
     private String salon;
     @Basic(optional = false)
     @Column(name = "tipoDeDanza")
     private String tipoDeDanza;
-    
+
     @Basic(optional = false)
     @Column(name = "nivel")
     private String nivel;
-    
-    
+
     @Basic(optional = false)
     @Column(name = "inicioDeGrupo")
     @Temporal(TemporalType.DATE)
@@ -78,11 +77,21 @@ public class Grupo implements Serializable {
     private Date finDeGrupo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupo")
     private List<Horario> horarioList;
+
     @JoinColumn(name = "idMaestro", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Maestro idMaestro;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "idGrupo")
+
+    /*@OneToOne(cascade = CascadeType.ALL, mappedBy = "idGrupo")
     private Clase clase;
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupo")
+    private List<Clase> claseList;
+
+    @XmlTransient
+    public List<Horario> getHorarioList() {
+        return horarioList;
+    }
 
     public Grupo() {
     }
@@ -90,13 +99,13 @@ public class Grupo implements Serializable {
     public Grupo(Integer idGrupo) {
         this.idGrupo = idGrupo;
     }
-    
-    public String getNivel(){
+
+    public String getNivel() {
         return this.nivel;
     }
-    
-    public void setNivel(String nivel){
-        this.nivel=nivel;
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
     }
 
     public Grupo(Integer idGrupo, String salon, String tipoDeDanza, Date inicioDeGrupo) {
@@ -146,11 +155,6 @@ public class Grupo implements Serializable {
         this.finDeGrupo = finDeGrupo;
     }
 
-    @XmlTransient
-    public List<Horario> getHorarioList() {
-        return horarioList;
-    }
-
     public void setHorarioList(List<Horario> horarioList) {
         this.horarioList = horarioList;
     }
@@ -165,14 +169,6 @@ public class Grupo implements Serializable {
 
     public void setIdMaestro(Maestro idMaestro) {
         this.idMaestro = idMaestro;
-    }
-
-    public Clase getClase() {
-        return clase;
-    }
-
-    public void setClase(Clase clase) {
-        this.clase = clase;
     }
 
     @Override
