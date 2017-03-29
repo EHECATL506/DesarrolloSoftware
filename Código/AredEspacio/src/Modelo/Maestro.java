@@ -56,6 +56,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Maestro.findByFechaDeDeshabilitacion", query = "SELECT m FROM Maestro m WHERE m.fechaDeDeshabilitacion = :fechaDeDeshabilitacion")})
 public class Maestro implements Serializable {
 
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "foto")
+    private byte[] foto;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,10 +76,6 @@ public class Maestro implements Serializable {
     @Basic(optional = false)
     @Column(name = "apellidos")
     private String apellidos;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "foto")
-    private byte[] foto;
     @Basic(optional = false)
     @Column(name = "fechaDeNacimiento")
     @Temporal(TemporalType.DATE)
@@ -177,13 +178,6 @@ public class Maestro implements Serializable {
         this.apellidos = apellidos;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     public Date getFechaDeNacimiento() {
         return fechaDeNacimiento;
@@ -375,5 +369,13 @@ public class Maestro implements Serializable {
     public static List<Maestro> obtenerMaestroPorApellido(String apellidos) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
         return em.createNamedQuery("Maestro.findByApellidos").setParameter("apellidos", "%" + apellidos + "%").getResultList();
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

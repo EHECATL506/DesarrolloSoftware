@@ -77,5 +77,7 @@
          </children>
       </Pane>
       <Button fx:id="bRegistrarGrupo" layoutX="662.0" layoutY="498.0" mnemonicParsing="false" onAction="#registrarGrupo" text="Registrar Grupo" />
+      <Label layoutX="42.0" layoutY="198.0" text="Nivel:" />
+      <TextField fx:id="txNivel" layoutX="86.0" layoutY="194.0" prefHeight="25.0" prefWidth="189.0" />
    </children>
 </AnchorPane>

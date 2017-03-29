@@ -31,6 +31,8 @@ public class FXMLGrupoController extends MainController implements Initializable
     private TextField tfSalon;
 
     @FXML
+    private TextField txNivel;
+    @FXML
     private TextField tfTipoDeDanza;
 
     @FXML
@@ -117,7 +119,8 @@ public class FXMLGrupoController extends MainController implements Initializable
         } else {
             boolean salon = Validar.texto(this.tfSalon);
             boolean danza = Validar.texto(this.tfTipoDeDanza);
-            if (salon && danza) {
+            boolean nivel = Validar.texto(this.txNivel);
+            if (salon && danza && nivel) {
                 try {
                     Maestro maestro = (Maestro) this.tMaestro.getSelectionModel().getSelectedItem();
                     if (maestro == null) {
@@ -126,6 +129,7 @@ public class FXMLGrupoController extends MainController implements Initializable
                         Grupo grupo = new Grupo();
                         grupo.setSalon(this.tfSalon.getText());
                         grupo.setTipoDeDanza(this.tfTipoDeDanza.getText());
+                        grupo.setNivel(this.txNivel.getText());
                         grupo.setIdMaestro(maestro);
                         GregorianCalendar gc = new GregorianCalendar();
                         grupo.setInicioDeGrupo(new Date(gc.getTimeInMillis()));
