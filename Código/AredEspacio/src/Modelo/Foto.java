@@ -52,9 +52,13 @@ public class Foto {
     
     public byte[] agregarImagen(String rutaFoto) {
         try {
-            fileFoto = new FileInputStream(new File(rutaFoto));
+            File ruta = new File(rutaFoto);
+            fileFoto = new FileInputStream(ruta);
+            System.out.print("ALGO ACTUALIZADO");
             BufferedImage bufferedImage = ImageIO.read(fileFoto);
+            if (bufferedImage == null) return  null;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
+            
             ImageIO.write(bufferedImage, "png", out);
             out.flush();
             return out.toByteArray();
