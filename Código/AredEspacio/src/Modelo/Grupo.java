@@ -90,7 +90,6 @@ public class Grupo implements Serializable {
     }
     
     public String getNivel(){
-        System.out.println("Nivel");
         return this.nivel;
     }
     

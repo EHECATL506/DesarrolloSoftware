@@ -80,6 +80,6 @@
       <Button fx:id="bActualizarGrupo" layoutX="657.0" layoutY="494.0" mnemonicParsing="false" onAction="#actualizarGrupo" text="Actualizar Grupo" />
       <Button fx:id="bActualizarMaestro" layoutX="340.0" layoutY="164.0" mnemonicParsing="false" onAction="#actualizarMaestro" text="Actualizar Maestro" />
       <Label layoutX="43.0" layoutY="203.0" text="Nivel:" />
-      <TextField layoutX="87.0" layoutY="199.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField fx:id="txNivel" layoutX="87.0" layoutY="199.0" prefHeight="25.0" prefWidth="189.0" />
    </children>
 </AnchorPane>

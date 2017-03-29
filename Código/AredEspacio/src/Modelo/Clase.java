@@ -100,5 +100,4 @@ public class Clase implements Serializable {
     public String toString() {
         return "Modelo.Clase[ idClase=" + idClase + " ]";
     }
-    
 }

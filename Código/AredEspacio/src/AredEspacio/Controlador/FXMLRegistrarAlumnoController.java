@@ -70,7 +70,6 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
         public String getHora () {
             return hora.get();
         }
-        
     }
     @FXML
     private DatePicker dPNacimiento;
@@ -183,6 +182,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
         //System.out.println("CONSULTAR");
         ObservableList<FilaHorario> lista = FXCollections.observableArrayList();
         for (Clase grupo : alumno.getClaseList()) {
+            
             String clase = grupo.getIdGrupo().getTipoDeDanza();
             String maestro =  (grupo.getIdGrupo().getIdMaestro().getNombre() + " ") +
                     grupo.getIdGrupo().getIdMaestro().getApellidos();
