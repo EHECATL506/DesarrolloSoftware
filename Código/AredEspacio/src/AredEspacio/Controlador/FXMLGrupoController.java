@@ -135,7 +135,7 @@ public class FXMLGrupoController extends MainController implements Initializable
                         grupo.setInicioDeGrupo(new Date(gc.getTimeInMillis()));
                         grupo.crear(this.horarios);
                         Mensaje.informacion("Exito! al actualizar el grupo");
-                        this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarGrupo);
+                        this.escena.cargarEscena(EscenaPrincipal.EscenaGrupo);
                     }
                 } catch (Exception e) {
                     Mensaje.advertencia("No hay conexión con la base de Datos");
