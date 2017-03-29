@@ -24,7 +24,7 @@ public class EscenaPrincipal extends Application {
     public static String EscenaInicio = "Vista/FXMLInicio.fxml";
     public static String EscenaModificarGrupo = "Vista/FXMLModificarGrupo.fxml";
     public static String EscenaBuscarGrupo = "Vista/FXMLBuscarGrupo.fxml";
-    
+    public static String EscenaAgregarGrupo = "Vista/FXMLAsignarGrupoAlumno.fxml";
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();

@@ -19,9 +19,9 @@ public class Validar {
      //validarTexto
     public static boolean texto(TextField texto) {
         texto.setStyle(null);
-        Pattern auto = Pattern.compile("^([0-9A-Za-z]+\\s?[0-9A-Za-z,&.-:+%=/?@#]*\\s?)+$");
+        Pattern auto = Pattern.compile("^([0-9A-Za-zñÑáéíóúÁÉÍÓÚ]+\\s?[0-9A-Za-zñÑáéíóúÁÉÍÓÚ,&.-:+%=/?@#]*\\s?)+$");
         boolean valido = auto.matcher(texto.getText()).find();
-        if (valido) return true;
+        if (valido && (texto.getText().length() < 45) ) return true;
         else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
     }
     //validarCorreo
@@ -37,7 +37,7 @@ public class Validar {
         texto.setStyle(null);
         Pattern postal = Pattern.compile("^\\d{5}$");
         boolean valido = postal.matcher(texto.getText()).find();
-        if (valido) return true;
+        if (valido) return true;    
         else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
     } 
     //validarCelular
@@ -73,9 +73,9 @@ public class Validar {
     
     public static boolean area(TextArea texto) {
         texto.setStyle(null);
-        Pattern auto = Pattern.compile("^([0-9A-Za-z]+\\s?[0-9A-Za-z,&.-:+%=/?@#]*\\s?)+$");
+        Pattern auto = Pattern.compile("^([0-9A-Za-zñÑáéíóúÁÉÍÓÚ]+\\s?[0-9A-Za-zñÑáéíóúÁÉÍÓÚ,&.-:+%=/?@#]*\\s?)+$");
         boolean valido = auto.matcher(texto.getText()).find();
-        if (valido) return true;
+        if (valido && (texto.getText().length() < 64)) return true;
         else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
     }
 }

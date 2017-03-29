@@ -94,7 +94,10 @@ public class FXMLEliminarAlumnoController extends MainController implements Init
             alumno.setMotivo(tAMotivo.getText());
             alumno.setFechaBaja(new Date());
             if (alumno.getStatus().equals("Alta")) alumno.setStatus("Baja");
-            else if (alumno.getStatus().equals("Baja")) alumno.setStatus("Alta");
+            else if (alumno.getStatus().equals("Baja")) {
+                alumno.setFechaRegistro(new Date());
+                alumno.setStatus("Alta");
+            }
             jpa.edit(alumno);
             Mensaje.informacion("El alumno ha sido dado de " + alumno.getStatus()); 
             escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);

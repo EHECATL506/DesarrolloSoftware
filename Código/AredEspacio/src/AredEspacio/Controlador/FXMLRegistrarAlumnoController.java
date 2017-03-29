@@ -8,6 +8,7 @@ import AredEspacio.EscenaPrincipal;
 import ControladorBD.AlumnoJpaController;
 import Modelo.Alumno;
 import Modelo.Clase;
+import Modelo.FilaHorario;
 import Modelo.Foto;
 import Modelo.Horario;
 import Modelo.Mensaje;
@@ -46,31 +47,6 @@ import javax.persistence.Persistence;
 
 
 public class FXMLRegistrarAlumnoController extends MainController implements  Initializable {
-    public class FilaHorario {
-        private final SimpleStringProperty clase;
-        private final SimpleStringProperty maestro;
-        private final SimpleStringProperty dia;
-        private final SimpleStringProperty hora;
-
-        public FilaHorario(String clase, String maestro, String dia, String hora) {
-            this.clase = new SimpleStringProperty(clase);
-            this.maestro = new SimpleStringProperty(maestro);
-            this.dia = new SimpleStringProperty(dia);
-            this.hora = new SimpleStringProperty(hora);
-        }
-        public String getClase () {
-            return clase.get();
-        }
-        public String getMaestro () {
-            return maestro.get();
-        }
-        public String getDia () {
-            return dia.get();
-        }
-        public String getHora () {
-            return hora.get();
-        }
-    }
     @FXML
     private DatePicker dPNacimiento;
     @FXML
@@ -119,6 +95,8 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     private TableColumn<FilaHorario, String> tCClase;    
     @FXML
     private TableColumn<FilaHorario, String> tCMaestro;
+    @FXML
+    private TableColumn<FilaHorario, String> tCNivel;
     
     private Alumno alumno;
     private String rutaFoto;
@@ -132,7 +110,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
             tFNombre.setEditable(false);
             tFApellidos.setEditable(false);
             
-            dPNacimiento.setEditable(false);
+            dPNacimiento.setDisable(true);
             cBGenero.setDisable(true);
             tFCorreo.setEditable(false);
             tFTelefono.setEditable(false);
@@ -186,11 +164,11 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
             String clase = grupo.getIdGrupo().getTipoDeDanza();
             String maestro =  (grupo.getIdGrupo().getIdMaestro().getNombre() + " ") +
                     grupo.getIdGrupo().getIdMaestro().getApellidos();
-            
+            String nivel = grupo.getIdGrupo().getNivel();
             for (Horario horario : grupo.getIdGrupo().getHorarioList()) {
                 String dia = horario.getDia();
                 String hora = horario.getHora();
-                lista.add(new FilaHorario(clase, maestro, dia, hora));
+                lista.add(new FilaHorario(clase, maestro, dia, hora, nivel));
             }
             
             tVHorario.setItems(lista);
@@ -215,7 +193,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
             Foto foto = new Foto();
             alumno.setFoto(foto.agregarImagen(rutaFoto));
         }
-        //alumno.setIdAlumno(2);
+        //alumno.setIdAlumno(1);
         //generarMatricula
         alumno.setFechaRegistro(new Date());
         alumno.setMatricula(String.format("MA-%1$05d", jpa.getAlumnoCount()));
@@ -290,6 +268,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
                 tCMaestro.setCellValueFactory(new PropertyValueFactory<>("Maestro"));        
                 tCDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));        
                 tCHora.setCellValueFactory(new PropertyValueFactory<>("Hora"));
+                tCNivel.setCellValueFactory(new PropertyValueFactory<>("Nivel"));
                 alumno = (Alumno)this.parametros;
                 desplegarAlumno();
                 consultarAlumno();

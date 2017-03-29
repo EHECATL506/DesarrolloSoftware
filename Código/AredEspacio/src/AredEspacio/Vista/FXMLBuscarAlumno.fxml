@@ -27,9 +27,10 @@
                               <TableColumn fx:id="tCStatus" prefWidth="125.0" text="Status" />
                           </columns>
                         </TableView>
-                        <Button layoutX="692.0" layoutY="261.0" minHeight="30.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="30.0" prefWidth="73.0" text="Baja/Alta" />
-                        <Button layoutX="692.0" layoutY="224.0" minHeight="30.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="73.0" text="Modificar" />
-                        <Button layoutX="692.0" layoutY="188.0" minHeight="30.0" mnemonicParsing="false" onAction="#consultar" prefHeight="25.0" prefWidth="73.0" text="Consultar" />
+                        <Button fx:id="bEliminar" disable="true" layoutX="692.0" layoutY="261.0" minHeight="30.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="30.0" prefWidth="73.0" text="Baja/Alta" />
+                        <Button fx:id="bModificar" disable="true" layoutX="692.0" layoutY="224.0" minHeight="30.0" mnemonicParsing="false" onAction="#modificar" prefHeight="30.0" prefWidth="73.0" text="Modificar" />
+                        <Button fx:id="bConsultar" disable="true" layoutX="692.0" layoutY="188.0" minHeight="30.0" mnemonicParsing="false" onAction="#consultar" prefHeight="25.0" prefWidth="73.0" text="Consultar" />
+                        <Button fx:id="bInscribir" disable="true" layoutX="692.0" layoutY="153.0" minHeight="30.0" mnemonicParsing="false" onAction="#inscribir" prefHeight="25.0" prefWidth="73.0" text="Inscribir" />
                      </children>
                   </Pane>
                </children>

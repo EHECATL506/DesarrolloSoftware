@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,6 +46,14 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     private TableColumn<?, ?> tCMatricula;
     @FXML
     private TableColumn<?, ?> tCStatus;
+    @FXML
+    private Button bEliminar;
+    @FXML
+    private Button bConsultar;
+    @FXML
+    private Button bModificar;
+    @FXML
+    private Button bInscribir;
     private List<Alumno> alumnos;
     
     //clicBuscar
@@ -56,13 +65,34 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
             alumnos = Alumno.obtenerCoincidenciasPorApellidos(busqueda);
             ObservableList lista = FXCollections.observableArrayList(alumnos);
             tVResultados.setItems(lista);
+            if (alumnos.size() > 0) {
+                bConsultar.setDisable(false);
+                bModificar.setDisable(false);
+                bEliminar.setDisable(false);
+                bInscribir.setDisable(false);
+            }
         }
         else if (cBCriterio.getValue() == "Matricula") {
             alumnos = Alumno.obtenerCoincidenciasPorMatricula(busqueda);
             ObservableList lista = FXCollections.observableArrayList(alumnos);
             tVResultados.setItems(lista);
+            if (alumnos.size() > 0) {
+                bConsultar.setDisable(false);
+                bModificar.setDisable(false);
+                bEliminar.setDisable(false);
+                bInscribir.setDisable(false);
+            }
         } else if (cBCriterio.getValue() == null) 
             Mensaje.advertencia("No se ha seleccionado el criterio");
+    }
+    
+    @FXML
+    void inscribir(ActionEvent event) {
+        Alumno row = tVResultados.getSelectionModel().getSelectedItem();
+        if (row != null )
+            escena.cargarEscenaConParametros(EscenaPrincipal.EscenaAgregarGrupo, row, TipoDeMenu.AGREGAR);
+        else
+            Mensaje.advertencia("No se ha seleccionado el alumno");
     }
     
     //clicConsultar
@@ -89,6 +119,7 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
         if (row != null )
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaRegistrarAlumno, row, TipoDeMenu.MODIFICAR);
+            
         else
             Mensaje.advertencia("No se ha seleccionado el alumno");
     }
