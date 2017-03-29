@@ -5,7 +5,10 @@
  */
 package Modelo;
 
+import ControladorBD.ClaseJpaController;
+import Exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c")
+    , @NamedQuery(name = "Clase.findByIdGrupo", query = "SELECT c FROM Clase c WHERE c.idGrupo.idGrupo = :idGrupo")
     , @NamedQuery(name = "Clase.findByIdClase", query = "SELECT c FROM Clase c WHERE c.idClase = :idClase")})
 public class Clase implements Serializable {
 
@@ -99,5 +104,28 @@ public class Clase implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Clase[ idClase=" + idClase + " ]";
+    }
+
+    public String getMatricula(){
+        return this.idAlumno.getMatricula();
+    }
+    
+    public String getNombre(){
+        return this.idAlumno.getNombre();
+    }
+    
+    public String getApellidos(){
+        return this.idAlumno.getApellidos();
+    }
+    
+    public static List<Clase> obtenerClasesDelGrupo(int idGrupo) {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager()
+                .createNamedQuery("Clase.findByIdGrupo").setParameter("idGrupo", idGrupo).getResultList();
+    }
+    
+    public void cambiarDeGrupo(Grupo grupo) throws NonexistentEntityException, Exception{
+        ClaseJpaController controller = new ClaseJpaController(Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        this.idGrupo=grupo;
+        controller.edit(this);
     }
 }

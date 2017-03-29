@@ -27,6 +27,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#registrarGrupo" text="Registrar" />
                   <MenuItem mnemonicParsing="false" onAction="#modificarGrupo" text="Buscar" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#cambiarAlumnoDeGrupo" text="Cambiar Alumno" />
               </items>
             </Menu>
         </menus>

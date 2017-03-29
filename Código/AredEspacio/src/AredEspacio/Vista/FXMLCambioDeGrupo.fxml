@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLCambioDeGrupoController">
+   <children>
+      <Pane layoutX="60.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E6E6E6;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="410.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <TableView fx:id="tGruposOrigen" layoutX="4.0" layoutY="45.0" prefHeight="140.0" prefWidth="368.0">
+              <columns>
+                <TableColumn fx:id="cIdOrigen" prefWidth="50.0" text="ID" />
+                <TableColumn fx:id="cSalonOrigen" prefWidth="50.0" text="Salon" />
+                  <TableColumn fx:id="cDanzaOrigen" prefWidth="100.0" text="Tipo de Danza" />
+                  <TableColumn fx:id="cMaestroOrigen" prefWidth="165.0" text="Maestro" />
+              </columns>
+            </TableView>
+            <Label layoutX="20.0" layoutY="18.0" text="Seleccione el grupo origen:" />
+            <Label layoutX="20.0" layoutY="215.0" text="Seleccione alumno para agregarlo a la lista:" />
+            <TableView fx:id="tAlumnosOrigen" layoutX="4.0" layoutY="240.0" prefHeight="200.0" prefWidth="368.0">
+              <columns>
+                <TableColumn fx:id="cMatriculaOrigen" text="Matricula" />
+                <TableColumn fx:id="cNombreOrigen" prefWidth="120.0" text="Nombre" />
+                  <TableColumn fx:id="cApellidoOrigen" prefWidth="165.0" text="Apellido(s)" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane layoutX="420.0" layoutY="160.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E6E6E6;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="410.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="80.0">
+         <children>
+            <TableView fx:id="tGruposDestino" layoutX="4.0" layoutY="45.0" prefHeight="140.0" prefWidth="368.0">
+               <columns>
+                  <TableColumn fx:id="cIdDestino" minWidth="50.0" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="cSalonDestino" prefWidth="50.0" text="Salon" />
+                  <TableColumn fx:id="cDanzaDestino" prefWidth="100.0" text="Tipo de Danza" />
+                  <TableColumn fx:id="cMaestroDestino" prefWidth="165.0" text="Maestro" />
+               </columns>
+            </TableView>
+            <Label layoutX="20.0" layoutY="18.0" text="Seleccione el grupo destino:" />
+            <Button layoutX="246.0" layoutY="409.0" mnemonicParsing="false" onAction="#cambiarAlumnos" text="Cambiar Alumno(s)" />
+            <Label layoutX="20.0" layoutY="215.0" text="Seleccione alumno para quitarlo de la lista:" />
+            <TableView fx:id="tAlumnosDestino" layoutX="4.0" layoutY="240.0" prefHeight="156.0" prefWidth="368.0">
+               <columns>
+                  <TableColumn fx:id="cMatriculaDestino" text="Matricula" />
+                  <TableColumn fx:id="cNombreDestino" prefWidth="120.0" text="Nombre" />
+                  <TableColumn fx:id="cApellidoDestino" prefWidth="165.0" text="Apellido(s)" />
+               </columns>
+            </TableView>
+            <Button layoutX="14.0" layoutY="409.0" mnemonicParsing="false" onAction="#removerlumno" text="Remover Alumno" />
+         </children>
+      </Pane>
+      <Label layoutX="241.0" layoutY="27.0" text="Cambiar Alumno(s) de Grupo">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
