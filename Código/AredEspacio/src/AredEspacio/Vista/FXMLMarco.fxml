@@ -8,9 +8,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMarcoController">
    <children>
-      <MenuBar fx:id="menu" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar fx:id="menu" layoutY="2.0" style="-fx-font-size: 14;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Alumno">
+          <Menu mnemonicParsing="false" style="-fx-font-size: 14;" text="Alumno">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#registrarAlumno" text="Registrar" />
                   <MenuItem mnemonicParsing="false" onAction="#buscarAlumno" text="Buscar" />

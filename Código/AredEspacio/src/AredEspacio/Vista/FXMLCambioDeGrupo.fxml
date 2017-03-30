@@ -54,7 +54,7 @@
             <Button layoutX="14.0" layoutY="409.0" mnemonicParsing="false" onAction="#removerlumno" text="Remover Alumno" />
          </children>
       </Pane>
-      <Label layoutX="241.0" layoutY="27.0" text="Cambiar Alumno(s) de Grupo">
+      <Label layoutX="241.0" layoutY="38.0" text="Cambiar Alumno(s) de Grupo">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>

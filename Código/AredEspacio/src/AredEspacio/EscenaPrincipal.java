@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -26,11 +27,17 @@ public class EscenaPrincipal extends Application {
     public static String EscenaBuscarGrupo = "Vista/FXMLBuscarGrupo.fxml";
     public static String EscenaAgregarGrupo = "Vista/FXMLAsignarGrupoAlumno.fxml";
     public static String EscenaCambiarDeGrupo = "Vista/FXMLCambioDeGrupo.fxml";
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();
         this.mainStage = stage;
+
+        this.mainStage.setResizable(false);
+        this.mainStage.setTitle("Ared Espacio");
+        this.mainStage.getIcons().add(new Image("Recursos/Imagenes/Icono.png"));
+        this.mainStage.setHeight(580);
+        this.mainStage.setWidth(807);
         this.mainScene = root;
         this.cargarEscena(EscenaPrincipal.EscenaInicio);
         this.cargarEscena(EscenaPrincipal.Marco);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import ControladorBD.GrupoJpaController;
@@ -24,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -196,12 +190,13 @@ public class Grupo implements Serializable {
         return "Modelo.Grupo[ idGrupo=" + idGrupo + " ]";
     }
 
-    public void crear(ArrayList<Horario> horarios) {
+    public boolean crear(ArrayList<Horario> horarios) {
         GrupoJpaController controller = new GrupoJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         controller.create(this);
         Horario.crearHorarios(horarios, this);
+        return true;
     }
 
     public static List<Grupo> listarGrupos() {
@@ -210,7 +205,7 @@ public class Grupo implements Serializable {
                 .createNamedQuery("Grupo.findAll").getResultList();
     }
 
-    public void actualizar(ArrayList<Horario> horarios, ArrayList<Horario> horariosEliminados) throws NonexistentEntityException, Exception {
+    public boolean actualizar(ArrayList<Horario> horarios, ArrayList<Horario> horariosEliminados) throws NonexistentEntityException, Exception {
         GrupoJpaController controller = new GrupoJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
@@ -228,6 +223,7 @@ public class Grupo implements Serializable {
         for (Horario horario : horariosEliminados) {
             horario.eliminar();
         }
+        return true;
     }
     
     public List<Grupo> obtenerDanzas() {

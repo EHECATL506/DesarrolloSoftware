@@ -143,25 +143,28 @@ public class Horario implements Serializable {
         return "Modelo.Horario[ idHorario=" + idHorario + " ]";
     }
     
-    public void crear() {
+    public boolean crear() {
         HorarioJpaController controller = new HorarioJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         controller.create(this);
+        return true;
     }
     
-    public void actualizar() throws Exception {
+    public boolean actualizar() throws Exception {
         HorarioJpaController controller = new HorarioJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         controller.edit(this);
+        return true;
     }
     
-    public void eliminar() throws NonexistentEntityException {
+    public boolean eliminar() throws NonexistentEntityException {
         HorarioJpaController controller = new HorarioJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         controller.destroy(this.idHorario);
+        return true;
     }
     
     public static void crearHorarios(ArrayList<Horario> horarios, Grupo grupo) {

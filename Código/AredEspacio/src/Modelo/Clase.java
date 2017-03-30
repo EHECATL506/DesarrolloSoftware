@@ -123,9 +123,10 @@ public class Clase implements Serializable {
                 .createNamedQuery("Clase.findByIdGrupo").setParameter("idGrupo", idGrupo).getResultList();
     }
     
-    public void cambiarDeGrupo(Grupo grupo) throws NonexistentEntityException, Exception{
+    public boolean cambiarDeGrupo(Grupo grupo) throws NonexistentEntityException, Exception{
         ClaseJpaController controller = new ClaseJpaController(Persistence.createEntityManagerFactory("AredEspacioPU", null));
         this.idGrupo=grupo;
         controller.edit(this);
+        return true;
     }
 }

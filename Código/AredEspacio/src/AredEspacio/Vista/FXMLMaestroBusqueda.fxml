@@ -34,7 +34,7 @@
             <Button fx:id="deshabilitar" layoutX="684.0" layoutY="390.0" mnemonicParsing="false" onAction="#cargarDeshabilitar" prefHeight="25.0" prefWidth="79.0" text="Deshabilitar" />
             <Label fx:id="titulo" layoutX="254.0" layoutY="47.0" text="Buscar Maestro">
                <font>
-                  <Font name="System Italic" size="24.0" />
+                  <Font name="System Bold Italic" size="24.0" />
                </font>
                <opaqueInsets>
                   <Insets />

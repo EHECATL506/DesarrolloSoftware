@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AredEspacio.Controlador;
 
 import ControladorBD.ClaseJpaController;
-import Exceptions.IllegalOrphanException;
 import Modelo.Alumno;
 import Modelo.Clase;
 import Modelo.FilaHorario;
@@ -16,8 +10,6 @@ import Modelo.Mensaje;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,19 +24,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-/**
- * FXML Controller class
- *
- * @author Jonathan
- */
 public class FXMLAsignarGrupoAlumnoController extends MainController implements Initializable {
 
     @FXML
-    private ComboBox<?> cBClase;
-
+    private ComboBox cBClase;
     @FXML
     private TextField tFDescuento;
-
     @FXML
     private TableColumn<FilaHorario, String> tCHora;
     @FXML
@@ -70,7 +55,7 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
     private Alumno alumno;
     private Grupo grupo;
     ObservableList<FilaHorario> lista;
-    
+
     public void desplegarGrupos() {
         lista = FXCollections.observableArrayList();
         for (Clase g : alumno.getClaseList()) {
@@ -97,24 +82,21 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
         List<Grupo> temp = grupo.obtenerIdGrupo(sClase);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
         ClaseJpaController jpa = new ClaseJpaController(emf);
-        
+
         Clase clase = new Clase();
         clase.setIdGrupo(temp.get(0));
         clase.setIdAlumno(alumno);
-        for (Clase g : alumno.getClaseList() ) {
+        for (Clase g : alumno.getClaseList()) {
             if (g.getIdGrupo().getIdGrupo() != temp.get(0).getIdGrupo()) {
                 continue;
             } else {
                 jpa.create(clase);
-                Mensaje.informacion("El alumno ha sido asiganda al grupo de " + sClase );
+                Mensaje.informacion("El alumno ha sido asiganda al grupo de " + sClase);
                 desplegarGrupos();
             }
-             System.out.println("no");
+            System.out.println("no");
         }
-     
-       
-        
-        //lista.add(new FilaHorario());
+
     }
 
     @FXML
@@ -139,7 +121,7 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
                 clases.add(v);
             }
             cBClase.setItems(clases);
-            
+
             tCClase.setCellValueFactory(new PropertyValueFactory<>("Clase"));
             tCMaestro.setCellValueFactory(new PropertyValueFactory<>("Maestro"));
             tCDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
@@ -148,5 +130,4 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
             desplegarGrupos();
         });
     }
-
 }

@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMaestroController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMaestroController">
    <children>
-      <Pane layoutX="77.0" layoutY="41.0" prefHeight="500.0" prefWidth="780.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+      <Pane layoutX="77.0" layoutY="41.0" prefHeight="500.0" prefWidth="780.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
          <children>
             <Label layoutX="200.0" layoutY="135.0" text="Nombre:" />
             <Label layoutX="442.0" layoutY="135.0" text="Apellido(s):" />
@@ -44,7 +40,7 @@
             <TextField fx:id="campoCiudad" layoutX="260.0" layoutY="326.0" prefHeight="25.0" prefWidth="200.0" />
             <Label fx:id="titulo" layoutX="345.0" layoutY="50.0" text="Registrar Maestro">
                <font>
-                  <Font name="System Italic" size="24.0" />
+                  <Font name="System Bold Italic" size="24.0" />
                </font>
             </Label>
             <Button fx:id="botonOpcion" layoutX="660.0" layoutY="426.0" mnemonicParsing="false" onAction="#realizarFuncion" text="Registrar" />

@@ -103,10 +103,12 @@ public class FXMLGrupoController extends MainController implements Initializable
             String fin = this.spHorasFin.getValue() + ":" + this.spMinutosFin.getValue();
             Horario horario = new Horario();
             horario.setDia(dia);
-            horario.setHora(inicio+"-"+fin);
-            this.horarios.add(horario);
-            ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
-            this.tHorario.setItems(listaHorario);
+            horario.setHora(inicio + "-" + fin);
+            if (!this.horarios.contains(horario)) {
+                this.horarios.add(horario);
+                ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
+                this.tHorario.setItems(listaHorario);
+            }
         } else {
             Mensaje.advertencia("Seleccione un Dia");
         }
@@ -134,7 +136,7 @@ public class FXMLGrupoController extends MainController implements Initializable
                         GregorianCalendar gc = new GregorianCalendar();
                         grupo.setInicioDeGrupo(new Date(gc.getTimeInMillis()));
                         grupo.crear(this.horarios);
-                        Mensaje.informacion("Exito! al actualizar el grupo");
+                        Mensaje.informacion("Exito! al registrar el grupo");
                         this.escena.cargarEscena(EscenaPrincipal.EscenaGrupo);
                     }
                 } catch (Exception e) {

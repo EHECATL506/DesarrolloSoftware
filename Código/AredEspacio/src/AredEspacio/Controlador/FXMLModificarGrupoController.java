@@ -181,7 +181,7 @@ public class FXMLModificarGrupoController extends MainController implements Init
 
                     if (this.bActualizarMaestro.isVisible()) {
                         grupo.actualizar(this.horarios, this.horariosEliminados);
-                        Mensaje.informacion("Exito! al registrar el grupo");
+                        Mensaje.informacion("Exito! al actualizar el grupo");
                         this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarGrupo);
                     } else {
                         Maestro maestro = (Maestro) this.tMaestro.getSelectionModel().getSelectedItem();

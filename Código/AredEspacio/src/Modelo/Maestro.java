@@ -299,7 +299,14 @@ public class Maestro implements Serializable {
     public void setGrupoList(List<Grupo> grupoList) {
         this.grupoList = grupoList;
     }
+    public byte[] getFoto() {
+        return foto;
+    }
 
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -341,19 +348,21 @@ public class Maestro implements Serializable {
         this.noDeColaborador = numeroDeColaborador;
     }
 
-    public void crear() throws Exception {
+    public boolean crear() throws Exception {
         MaestroJpaController controller = new MaestroJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         this.crearNoDeColaborador();
         controller.create(this);
+        return true;
     }
 
-    public void actualizar() throws Exception {
+    public boolean actualizar() throws Exception {
         MaestroJpaController controller = new MaestroJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
         controller.edit(this);
+        return true;
     }
 
     public static List<Maestro> obtenerMaestroPorNoDeColaborador(String noDeColaborador) {
@@ -369,13 +378,5 @@ public class Maestro implements Serializable {
     public static List<Maestro> obtenerMaestroPorApellido(String apellidos) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
         return em.createNamedQuery("Maestro.findByApellidos").setParameter("apellidos", "%" + apellidos + "%").getResultList();
-    }
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
     }
 }
