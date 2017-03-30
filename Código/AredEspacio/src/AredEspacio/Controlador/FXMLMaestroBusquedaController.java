@@ -93,17 +93,17 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
     }
 
     public void cargarSiguienteEscena() {
-        try {
             Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
-            this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaMaestro,
-                    maestro, this.tipoMenu);
-        } catch (Exception e) {
-            Alert alerta = new Alert(Alert.AlertType.WARNING);
-            alerta.setHeaderText(null);
-            alerta.setTitle("Información");
-            alerta.setContentText("Seleccione un Maestro");
-            alerta.showAndWait();
-        }
+            if (maestro != null) {
+                this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaMaestro,
+                        maestro, this.tipoMenu);
+            } else {
+                Alert alerta = new Alert(Alert.AlertType.WARNING);
+                alerta.setHeaderText(null);
+                alerta.setTitle("Información");
+                alerta.setContentText("Seleccione un Maestro");
+                alerta.showAndWait();
+            }
     }
 
     @Override
@@ -111,10 +111,10 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
         this.tabla.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
                     Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
-                    if(maestro.getDeshabilitado()){
+                    if (maestro.getDeshabilitado()) {
                         this.deshabilitar.setText("Habilitar");
                         //this.deshabilitar.setPrefSize(78, 25);
-                    }else{
+                    } else {
                         this.deshabilitar.setText("Deshabilitar");
                         //this.deshabilitar.setPrefSize(78, 25);
                     }

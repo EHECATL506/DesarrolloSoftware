@@ -120,7 +120,17 @@ public class FXMLMaestroController extends MainController implements Initializab
         }
 
         if (this.maestro == null) {
-            maestro.setFoto(new Foto().agregarImagen(this.rutaFoto));
+            if (this.rutaFoto != null) {
+                maestro.setFoto(new Foto().agregarImagen(this.rutaFoto));
+            } else {
+                maestro.setFoto(null);
+            }
+        } else {
+            if (this.rutaFoto != null) {
+                maestro.setFoto(new Foto().agregarImagen(this.rutaFoto));
+            } else {
+                maestro.setFoto(maestro.getFoto());
+            }
         }
 
         if (this.campoGenero.getValue().toString().equals("Masculino")) {
@@ -204,7 +214,13 @@ public class FXMLMaestroController extends MainController implements Initializab
         this.campoMovil.setText(maestro.getTelefonoMovil());
         this.campoNombre.setText(maestro.getNombre());
         this.campoTelefono.setText(maestro.getTelefono());
-        this.foto.setImage(new Foto().obtenerImagen(maestro.getFoto()));
+
+        if (maestro.getFoto() != null) {
+            this.foto.setImage(new Foto().obtenerImagen(maestro.getFoto()));
+        } else {
+            this.foto.setImage(new Image("Recursos/Imagenes/ErrorDeImagen.png"));
+        }
+
         GregorianCalendar gregorian = new GregorianCalendar();
         gregorian.setTime(maestro.getFechaDeNacimiento());
         LocalDate localDate = gregorian.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -312,23 +328,25 @@ public class FXMLMaestroController extends MainController implements Initializab
         boolean bEstado = this.validarComboBox(this.campoEstado);
         boolean bFechaNacimiento = this.fechaNacimiento.getValue() != null;
         boolean bFoto;
-        if (this.maestro == null) {
-            bFoto = this.rutaFoto != null && !this.rutaFoto.equals("Recursos/Imagenes/ErrorDeImagen.png");
+
+        /*if (this.maestro == null) {
+            bFoto = this.rutaFoto != null; //&& !this.rutaFoto.equals("Recursos/Imagenes/ErrorDeImagen.png");
         } else {
             bFoto = true;
-        }
+        }*/
         if (bFechaNacimiento) {
             this.fechaNacimiento.setStyle(null);
         } else {
             this.fechaNacimiento.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
         }
-        if (bFoto) {
+
+        /*if (bFoto) {
             this.agregarFoto.setStyle(null);
         } else {
             this.agregarFoto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-        }
+        }*/
         if (bApellido && bCiudad && bCorreo && bDomicilio && bNombre && bTelefono && bMovil && bCP
-                && bGenero && bEstado && bFechaNacimiento && bFoto) {
+                && bGenero && bEstado && bFechaNacimiento) {
             return true;
         } else {
             this.alertaDeValidacion();
