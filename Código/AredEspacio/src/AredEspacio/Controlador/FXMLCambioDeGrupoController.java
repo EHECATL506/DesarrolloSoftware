@@ -6,6 +6,7 @@ import Modelo.Grupo;
 import Modelo.Mensaje;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -71,6 +72,8 @@ public class FXMLCambioDeGrupoController extends MainController implements Initi
 
     @FXML
     private TableColumn cApellidoDestino;
+    
+    private ArrayList<Clase> alumnosDestino;
 
     @FXML
     void cambiarAlumnos(ActionEvent event) {
@@ -81,15 +84,27 @@ public class FXMLCambioDeGrupoController extends MainController implements Initi
             if (grupo == null) {
                 Mensaje.informacion("Seleccione el grupo destino");
             } else {
-                try {
-                    for (Clase clase : this.alumnosDestino) {
-                        clase.cambiarDeGrupo(grupo);
+                boolean ban = true;
+                List<Clase> listaDeClases = Clase.obtenerClasesDelGrupo(grupo.getIdGrupo());
+                for (Clase c1 : listaDeClases) {
+                    for (Clase c2 : this.alumnosDestino) {
+                        if (c1.getIdAlumno().equals(c2.getIdAlumno())) {
+                            ban = false;
+                        }
                     }
-                    Mensaje.informacion("Exito! al cambiar de Grupo");
-                    this.escena.cargarEscena(EscenaPrincipal.EscenaCambiarDeGrupo);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Mensaje.advertencia("No hay conexión con la Base de Datos");
+                }
+                if (ban) {
+                    try {
+                        for (Clase clase : this.alumnosDestino) {
+                            clase.cambiarDeGrupo(grupo);
+                        }
+                        Mensaje.informacion("Exito! al cambiar de Grupo");
+                        this.escena.cargarEscena(EscenaPrincipal.EscenaCambiarDeGrupo);
+                    } catch (Exception ex) {
+                        Mensaje.advertencia("No hay conexión con la Base de Datos");
+                    }
+                } else {
+                    Mensaje.informacion("Hay un Alumno repetido en el grupo");
                 }
             }
         }
@@ -97,15 +112,13 @@ public class FXMLCambioDeGrupoController extends MainController implements Initi
 
     @FXML
     void removerlumno(ActionEvent event) {
-        Clase clase = (Clase) this.tAlumnosOrigen.getSelectionModel().getSelectedItem();
+        Clase clase = (Clase) this.tAlumnosDestino.getSelectionModel().getSelectedItem();
         if (clase != null) {
-            this.alumnosDestino.remove(clase);
+            this.alumnosDestino.remove(clase);           
             ObservableList clasesDestino = FXCollections.observableArrayList(this.alumnosDestino);
             this.tAlumnosDestino.setItems(clasesDestino);
         }
     }
-
-    private ArrayList<Clase> alumnosDestino;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -145,8 +158,16 @@ public class FXMLCambioDeGrupoController extends MainController implements Initi
 
         this.tAlumnosOrigen.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
+                    boolean ban = true;
                     Clase clase = (Clase) this.tAlumnosOrigen.getSelectionModel().getSelectedItem();
-                    if (!this.alumnosDestino.contains(clase) && clase != null) {
+                    if (clase != null) {
+                        for (Clase clas : this.alumnosDestino) {
+                            if (clas.getIdAlumno().equals(clase.getIdAlumno())) {
+                                ban = false;
+                            }
+                        }
+                    }
+                    if (!this.alumnosDestino.contains(clase) && clase != null && ban) {
                         this.alumnosDestino.add(clase);
                         ObservableList clasesDestino = FXCollections.observableArrayList(this.alumnosDestino);
                         this.tAlumnosDestino.setItems(clasesDestino);

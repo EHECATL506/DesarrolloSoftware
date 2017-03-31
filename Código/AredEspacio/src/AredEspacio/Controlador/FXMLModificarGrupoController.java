@@ -203,9 +203,9 @@ public class FXMLModificarGrupoController extends MainController implements Init
         }
     }
 
-    private void inicializarSpinner(Spinner spinner, int maximo, int aumento) {
+    private void inicializarSpinner(Spinner spinner,int minimo, int maximo, int aumento) {
         SpinnerValueFactory<Integer> valueFactory
-                = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, maximo, 0, aumento);
+                = new SpinnerValueFactory.IntegerSpinnerValueFactory(minimo, maximo, 0, aumento);
         spinner.setValueFactory(valueFactory);
     }
 
@@ -225,10 +225,10 @@ public class FXMLModificarGrupoController extends MainController implements Init
                 "Jueves", "Viernes", "Sábado", "Domingo"
         );
 
-        this.inicializarSpinner(this.sHorasInicio, 24, 1);
-        this.inicializarSpinner(this.spHorasFin, 24, 1);
-        this.inicializarSpinner(this.spMinutosInicio, 55, 5);
-        this.inicializarSpinner(this.spMinutosFin, 55, 5);
+        this.inicializarSpinner(this.sHorasInicio,6, 22, 1);
+        this.inicializarSpinner(this.spHorasFin,6, 22, 1);
+        this.inicializarSpinner(this.spMinutosInicio,0, 55, 5);
+        this.inicializarSpinner(this.spMinutosFin,0, 55, 5);
 
         this.cDia.setCellValueFactory(
                 new PropertyValueFactory<>("Dia")

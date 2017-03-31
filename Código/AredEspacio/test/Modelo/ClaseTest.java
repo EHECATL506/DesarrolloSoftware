@@ -11,7 +11,7 @@ public class ClaseTest {
 
     @Test
     public void pruebaObtenerClasesPorGrupo() {
-        List<Clase> clases = Clase.obtenerClasesDelGrupo(6);
+        List<Clase> clases = Clase.obtenerClasesDelGrupo(17);
         boolean resultado = clases.size() > 0;
         Assert.assertTrue("Prueba obtener Clases por Id de grupo", resultado);
     }
@@ -35,6 +35,6 @@ public class ClaseTest {
     public void pruebaCambiarDeGrupoIncorrectamente() throws Exception{
         Clase clase = Clase.obtenerClasesDelGrupo(6).get(0);
         boolean resultado = clase.cambiarDeGrupo(new Grupo());
-        Assert.assertTrue("Prueba cambiar grupo en clase", resultado);
+        Assert.assertTrue("Prueba cambiar grupo en clase incorrectamente", resultado);
     }    
 }
