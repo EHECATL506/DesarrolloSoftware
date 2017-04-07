@@ -9,10 +9,16 @@ import ControladorBD.AlumnoJpaController;
 import Modelo.Alumno;
 import Modelo.Clase;
 import Modelo.FilaHorario;
-import Modelo.Foto;
 import Modelo.Horario;
 import Modelo.Mensaje;
 import Modelo.Validar;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,12 +36,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -98,12 +109,11 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     @FXML
     private TableColumn<FilaHorario, String> tCNivel;
     
-    private Alumno alumno;
     private String rutaFoto;
     private String accion;
     
     //desplegarAlumno
-    public void desplegarAlumno()
+    public void desplegarAlumno(Alumno alumno)
     {
         if (accion.equals("CONSULTAR")) {
             lRegistro.setText("REGISTRADO: "+alumno.getFechaRegistro().toLocaleString());
@@ -135,13 +145,19 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
         cBEstado.setValue(alumno.getEstado());
         
         if (alumno.getFoto() != null) {
-            Foto foto = new Foto();
-            iVFoto.setImage(foto.obtenerImagen(alumno.getFoto()));
+            try {
+                ByteArrayInputStream in = new ByteArrayInputStream(alumno.getFoto());
+                BufferedImage bufferedImage;
+                bufferedImage = ImageIO.read(in);
+                iVFoto.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+             } catch (Exception ex) {
+                return;
+            }
         }
         
     }
     //limpiarCampos
-    public void limpiarCampos() {
+    private void limpiarCampos() {
         tFNombre.setText("");
         tFApellidos.setText("");
         dPNacimiento.setValue(null);
@@ -155,9 +171,8 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
         cBEstado.setValue(null);
         iVFoto.setImage(null);
     }
-    //consultarAlumno
-    public void consultarAlumno() {
-        //System.out.println("CONSULTAR");
+    //consultarHorario
+    public void consultarHorario(Alumno alumno) {
         ObservableList<FilaHorario> lista = FXCollections.observableArrayList();
         for (Clase grupo : alumno.getClaseList()) {
             
@@ -169,31 +184,26 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
                 String dia = horario.getDia();
                 String hora = horario.getHora();
                 lista.add(new FilaHorario(clase, maestro, dia, hora, nivel));
-            }
-            
+            }        
             tVHorario.setItems(lista);
         }
-       
     }
-    
     //modificarAlumno
-    public void modificarAlumno() throws Exception  {
+    public void modificarAlumno(Alumno alumno) throws Exception  {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
         AlumnoJpaController jpa = new AlumnoJpaController(emf);
+        if (rutaFoto != null) AgregarFoto(alumno);
+        
         jpa.edit(alumno);
         Mensaje.informacion("El alumno ha sido actualizado");
         escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
     }
     //guardarAlumno
-    public void guardarAlumno() {
+    public void guardarAlumno(Alumno alumno) throws Exception {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
         AlumnoJpaController jpa = new AlumnoJpaController(emf);
         
-        if (rutaFoto != null) {
-            Foto foto = new Foto();
-            alumno.setFoto(foto.agregarImagen(rutaFoto));
-        }
-        //alumno.setIdAlumno(1);
+        if (rutaFoto != null) AgregarFoto(alumno);
         //generarMatricula
         alumno.setFechaRegistro(new Date());
         alumno.setMatricula(String.format("MA-%1$05d", jpa.getAlumnoCount()));
@@ -203,83 +213,109 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
         Mensaje.informacion("El alumno ha sido registrado, su matricula es: " + alumno.getMatricula());
         limpiarCampos();
     }
-    
     //clicGuardar
     @FXML
-    public void guardar(ActionEvent event) throws Exception {
-        if (validarCampos() == 1) {
-            if (accion.equals("MODIFICAR")) modificarAlumno();
-            //else if (accion.equals("CONSULTAR")) consultarAlumno();
-            else if (accion.equals("REGISTRAR")) guardarAlumno();              
-        } else Mensaje.advertencia("Los campos han sido invalidos");
+    public void clicGuardar(ActionEvent event) throws Exception {
+        Alumno alumno = new Alumno();
+        if (accion.equals("MODIFICAR")) {
+            if (validarCampos((Alumno)this.parametros) == 1) modificarAlumno((Alumno)this.parametros);
+            else Mensaje.advertencia("Los campos han sido invalidos");
+        }
+        else if (accion.equals("REGISTRAR")) {
+            if (validarCampos(alumno) == 1) guardarAlumno(alumno);
+            else Mensaje.advertencia("Los campos han sido invalidos"); 
+        }  
+    }
+    
+    //setAgregarFoto
+    public void AgregarFoto(Alumno alumno ) throws Exception {
+        File ruta = new File(rutaFoto);
+        FileInputStream  file = new FileInputStream(ruta);
+        BufferedImage bufferedImage = ImageIO.read(file);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", out);
+        out.flush();
+        alumno.setFoto(out.toByteArray());
     }
     
     //clicAgregarFoto
     @FXML
-    public void agregarFoto(ActionEvent event) {
-        Foto fotoAlumno = new Foto();
-        rutaFoto = fotoAlumno.buscarImagen();
-        alumno.setFoto(fotoAlumno.agregarImagen(rutaFoto));
-        iVFoto.setImage(fotoAlumno.obtenerImagen(alumno.getFoto()));
+    public void clicAgregarFoto(ActionEvent event) {
+        FileChooser explorador = new FileChooser();
+        explorador.setTitle("Buscar Foto");
+        explorador.getExtensionFilters().add(new FileChooser.ExtensionFilter("Foto", "*.jpg","*.png"));
+        
+        try {
+            rutaFoto = explorador.showOpenDialog(new Stage()).getPath();
+            File ruta = new File(rutaFoto);
+            FileInputStream foto;
+            foto = new FileInputStream(ruta);
+            BufferedImage bufferedImage = ImageIO.read(foto);
+            if (bufferedImage != null) iVFoto.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
+        } catch (Exception ex) {
+            return;
+        }
     }
     
     //clicCancelar
     @FXML
-    void cancelar(ActionEvent event) {
+    void clicCancelar(ActionEvent event) {
         escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
     }
     
     //validarCampos
-    public int validarCampos() throws ParseException {
-        int b = 2048;
-        if (Validar.texto(tFNombre)) {b >>=1; alumno.setNombre(tFNombre.getText());}
-        if (Validar.texto(tFApellidos)) {b >>=1;alumno.setApellidos(tFApellidos.getText());}
-        if (Validar.correo(tFCorreo)) {b >>=1;alumno.setCorreo(tFCorreo.getText());}
-        if (Validar.fecha(dPNacimiento)) {b >>=1;alumno.setFechaNacimiento(new SimpleDateFormat("yyyy-MM-dd").parse(dPNacimiento.getValue().toString()));}
-        if (Validar.combo(cBGenero)) {b >>=1;alumno.setGenero(cBGenero.getValue());}
-        if (Validar.telefono(tFTelefono)) {b >>=1;alumno.setTelefono(tFTelefono.getText());}
-        if (Validar.celular(tFMovil)) {b >>=1;alumno.setMovil(tFMovil.getText());}
-        if (Validar.texto(tFDomicilio)) {b >>=1;alumno.setDomicilo(tFDomicilio.getText());}
-        if (Validar.codigoPostal(tFCodigoPostal)) {b >>=1;alumno.setCp(tFCodigoPostal.getText());}
-        if (Validar.texto(tFCiudad)) {b >>=1;alumno.setCiudad(tFCiudad.getText());}
-        if (Validar.combo(cBEstado)) {b >>=1;alumno.setEstado(cBEstado.getValue());}
-        //System.out.println(b);
-        return b;
+    public int validarCampos(Alumno alumno) throws ParseException {
+        int valido = 2048;
+        if (Validar.texto(tFNombre)) {valido >>=1; alumno.setNombre(tFNombre.getText());}
+        if (Validar.texto(tFApellidos)) {valido >>=1;alumno.setApellidos(tFApellidos.getText());}
+        if (Validar.correo(tFCorreo)) {valido >>=1;alumno.setCorreo(tFCorreo.getText());}
+        if (Validar.fecha(dPNacimiento)) {valido >>=1;alumno.setFechaNacimiento(new SimpleDateFormat("yyyy-MM-dd").parse(dPNacimiento.getValue().toString()));}
+        if (Validar.combo(cBGenero)) {valido >>=1;alumno.setGenero(cBGenero.getValue());}
+        if (Validar.telefono(tFTelefono)) {valido >>=1;alumno.setTelefono(tFTelefono.getText());}
+        if (Validar.celular(tFMovil)) {valido >>=1;alumno.setMovil(tFMovil.getText());}
+        if (Validar.texto(tFDomicilio)) {valido >>=1;alumno.setDomicilo(tFDomicilio.getText());}
+        if (Validar.codigoPostal(tFCodigoPostal)) {valido >>=1;alumno.setCp(tFCodigoPostal.getText());}
+        if (Validar.texto(tFCiudad)) {valido >>=1;alumno.setCiudad(tFCiudad.getText());}
+        if (Validar.combo(cBEstado)) {valido >>=1;alumno.setEstado(cBEstado.getValue());}
+        return valido;
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             accion = this.tipoMenu.toString();
             tVHorario.setVisible(false);
-            if (accion.equals("REGISTRAR")) {
-                alumno = new Alumno();
-                bGuardar.setText("Guardar");
-                lTitulo.setText("Registrar Alumno");
-                lMensaje.setText("Ingresa los datos personales del nuevo alumno");
-                bFoto.setText("Agregar foto del alumno");
-            } else if (accion.equals("CONSULTAR")) {
-                tVHorario.setVisible(true); 
-                bGuardar.setVisible(false);
-                lTitulo.setText("Consultar Alumno");
-                lMensaje.setText("Datos personales del alumno y horarios de sus clases");
-                bFoto.setVisible(false);
-                bCancelar.setText("Aceptar");
-                tCClase.setCellValueFactory(new PropertyValueFactory<>("Clase"));
-                tCMaestro.setCellValueFactory(new PropertyValueFactory<>("Maestro"));        
-                tCDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));        
-                tCHora.setCellValueFactory(new PropertyValueFactory<>("Hora"));
-                tCNivel.setCellValueFactory(new PropertyValueFactory<>("Nivel"));
-                alumno = (Alumno)this.parametros;
-                desplegarAlumno();
-                consultarAlumno();
-            } else if (accion.equals("MODIFICAR")) {
-                bGuardar.setText("Actualizar");
-                lTitulo.setText("Modificar Alumno");
-                lMensaje.setText("Modifica los nuevos datos personales del alumno");
-                bFoto.setText("Actualizar foto del alumno");
-                alumno = (Alumno)this.parametros;
-                desplegarAlumno();
-            }   
+            switch (accion) {
+                case "REGISTRAR":
+                    bGuardar.setText("Guardar");
+                    lTitulo.setText("Registrar Alumno");
+                    lMensaje.setText("Ingresa los datos personales del nuevo alumno");
+                    bFoto.setText("Agregar foto del alumno");
+                    break;
+                case "CONSULTAR":
+                    tVHorario.setVisible(true);
+                    bGuardar.setVisible(false);
+                    lTitulo.setText("Consultar Alumno");
+                    lMensaje.setText("Datos personales del alumno y horarios de sus clases");
+                    bFoto.setVisible(false);
+                    bCancelar.setText("Aceptar");
+                    tCClase.setCellValueFactory(new PropertyValueFactory<>("Clase"));
+                    tCMaestro.setCellValueFactory(new PropertyValueFactory<>("Maestro"));
+                    tCDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
+                    tCHora.setCellValueFactory(new PropertyValueFactory<>("Hora"));
+                    tCNivel.setCellValueFactory(new PropertyValueFactory<>("Nivel"));
+                    desplegarAlumno((Alumno)this.parametros);
+                    consultarHorario((Alumno)this.parametros);
+                    break;
+                case "MODIFICAR":
+                    bGuardar.setText("Actualizar");
+                    lTitulo.setText("Modificar Alumno");
+                    lMensaje.setText("Modifica los nuevos datos personales del alumno");   
+                    bFoto.setText("Actualizar foto del alumno");
+                    desplegarAlumno((Alumno)this.parametros);
+                    break;
+                default:
+                    break;
+            }
         });
         ObservableList genero = FXCollections.observableArrayList("Masculino","Femenino");
         ObservableList estados = FXCollections.observableArrayList("Aguascalientes","Baja California","Baja California Sur","Campeche","Chiapas","Chihuahua","Coahuila","Colima",
