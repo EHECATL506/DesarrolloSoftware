@@ -26,10 +26,6 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Mauricio Juárez
- */
 @Entity
 @Table(name = "grupo")
 @XmlRootElement
@@ -37,8 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g")
     , @NamedQuery(name = "Grupo.findByIdGrupo", query = "SELECT g FROM Grupo g WHERE g.idGrupo = :idGrupo")
     , @NamedQuery(name = "Grupo.findBySalon", query = "SELECT g FROM Grupo g WHERE g.salon = :salon")
-    , @NamedQuery(name = "Grupo.findByTipoDeDanza", query = "SELECT g FROM Grupo g WHERE g.tipoDeDanza LIKE :tipoDeDanza")
-    , @NamedQuery(name = "Grupo.findByDanza", query = "SELECT g FROM Grupo g WHERE g.tipoDeDanza LIKE :tipoDeDanza")
+    , @NamedQuery(name = "Grupo.findByNivel", query = "SELECT g FROM Grupo g WHERE g.nivel = :nivel")
     , @NamedQuery(name = "Grupo.findByInicioDeGrupo", query = "SELECT g FROM Grupo g WHERE g.inicioDeGrupo = :inicioDeGrupo")
     , @NamedQuery(name = "Grupo.findByFinDeGrupo", query = "SELECT g FROM Grupo g WHERE g.finDeGrupo = :finDeGrupo")})
 public class Grupo implements Serializable {
@@ -46,22 +41,15 @@ public class Grupo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Basic(optional = false)
     @Column(name = "idGrupo")
     private Integer idGrupo;
-
     @Basic(optional = false)
     @Column(name = "salon")
     private String salon;
     @Basic(optional = false)
-    @Column(name = "tipoDeDanza")
-    private String tipoDeDanza;
-
-    @Basic(optional = false)
     @Column(name = "nivel")
     private String nivel;
-
     @Basic(optional = false)
     @Column(name = "inicioDeGrupo")
     @Temporal(TemporalType.DATE)
@@ -71,21 +59,14 @@ public class Grupo implements Serializable {
     private Date finDeGrupo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupo")
     private List<Horario> horarioList;
-
     @JoinColumn(name = "idMaestro", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Maestro idMaestro;
-
-    /*@OneToOne(cascade = CascadeType.ALL, mappedBy = "idGrupo")
-    private Clase clase;
-     */
+    @JoinColumn(name = "idDanza", referencedColumnName = "idDanza")
+    @ManyToOne(optional = false)
+    private Danza idDanza;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupo")
     private List<Clase> claseList;
-
-    @XmlTransient
-    public List<Horario> getHorarioList() {
-        return horarioList;
-    }
 
     public Grupo() {
     }
@@ -94,18 +75,10 @@ public class Grupo implements Serializable {
         this.idGrupo = idGrupo;
     }
 
-    public String getNivel() {
-        return this.nivel;
-    }
-
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
-    }
-
-    public Grupo(Integer idGrupo, String salon, String tipoDeDanza, Date inicioDeGrupo) {
+    public Grupo(Integer idGrupo, String salon, String nivel, Date inicioDeGrupo) {
         this.idGrupo = idGrupo;
         this.salon = salon;
-        this.tipoDeDanza = tipoDeDanza;
+        this.nivel = nivel;
         this.inicioDeGrupo = inicioDeGrupo;
     }
 
@@ -125,12 +98,12 @@ public class Grupo implements Serializable {
         this.salon = salon;
     }
 
-    public String getTipoDeDanza() {
-        return tipoDeDanza;
+    public String getNivel() {
+        return nivel;
     }
 
-    public void setTipoDeDanza(String tipoDeDanza) {
-        this.tipoDeDanza = tipoDeDanza;
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
     }
 
     public Date getInicioDeGrupo() {
@@ -149,6 +122,11 @@ public class Grupo implements Serializable {
         this.finDeGrupo = finDeGrupo;
     }
 
+    @XmlTransient
+    public List<Horario> getHorarioList() {
+        return horarioList;
+    }
+
     public void setHorarioList(List<Horario> horarioList) {
         this.horarioList = horarioList;
     }
@@ -157,12 +135,25 @@ public class Grupo implements Serializable {
         return idMaestro;
     }
 
-    public String getMaestro() {
-        return this.idMaestro.getNombre() + " " + this.idMaestro.getApellidos();
-    }
-
     public void setIdMaestro(Maestro idMaestro) {
         this.idMaestro = idMaestro;
+    }
+
+    public Danza getIdDanza() {
+        return idDanza;
+    }
+
+    public void setIdDanza(Danza idDanza) {
+        this.idDanza = idDanza;
+    }
+
+    @XmlTransient
+    public List<Clase> getClaseList() {
+        return claseList;
+    }
+
+    public void setClaseList(List<Clase> claseList) {
+        this.claseList = claseList;
     }
 
     @Override
@@ -189,7 +180,16 @@ public class Grupo implements Serializable {
     public String toString() {
         return "Modelo.Grupo[ idGrupo=" + idGrupo + " ]";
     }
-
+   
+    public String getMaestro(){
+        return this.idMaestro.getNombre()+" "+ this.idMaestro.getApellidos();
+    }
+    
+    public String getTipoDeDanza(){
+        return this.idDanza.getTipoDanza();
+    }
+    
+    
     public boolean crear(ArrayList<Horario> horarios) {
         GrupoJpaController controller = new GrupoJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
@@ -198,6 +198,7 @@ public class Grupo implements Serializable {
         Horario.crearHorarios(horarios, this);
         return true;
     }
+    
 
     public static List<Grupo> listarGrupos() {
         return Persistence.createEntityManagerFactory("AredEspacioPU", null)
@@ -225,7 +226,7 @@ public class Grupo implements Serializable {
         }
         return true;
     }
-    
+    /*
     public List<Grupo> obtenerDanzas() {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
         return em.createNamedQuery("Grupo.findByTipoDeDanza").setParameter("tipoDeDanza", "%" + "" + "%").getResultList();
@@ -234,5 +235,5 @@ public class Grupo implements Serializable {
     public List<Grupo> obtenerIdGrupo(String tipoDanza) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
         return em.createNamedQuery("Grupo.findByDanza").setParameter("tipoDeDanza", "%" + tipoDanza + "%").getResultList();
-    }
+    }*/
 }

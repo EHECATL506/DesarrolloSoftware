@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MYSQL
-Source Server Version : 50717
+Source Server         : MySQL Server
+Source Server Version : 50718
 Source Host           : localhost:3306
 Source Database       : aredespacio
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-03-28 17:52:31
+Date: 2017-04-18 23:59:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,11 +26,11 @@ CREATE TABLE `alumno` (
   `apellidos` varchar(45) NOT NULL,
   `fechaNacimiento` date NOT NULL,
   `genero` varchar(45) NOT NULL,
-  `correo` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
+  `correo` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
   `movil` varchar(45) NOT NULL,
   `domicilo` varchar(45) NOT NULL,
-  `cp` varchar(45) NOT NULL,
+  `cp` varchar(45) DEFAULT NULL,
   `ciudad` varchar(45) NOT NULL,
   `estado` varchar(45) NOT NULL,
   `foto` longblob,
@@ -39,7 +39,20 @@ CREATE TABLE `alumno` (
   `status` varchar(10) NOT NULL DEFAULT 'Alta',
   `motivo` text,
   PRIMARY KEY (`idAlumno`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for asistencia
+-- ----------------------------
+DROP TABLE IF EXISTS `asistencia`;
+CREATE TABLE `asistencia` (
+  `idAsistencia` int(11) NOT NULL AUTO_INCREMENT,
+  `idClase` int(11) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  PRIMARY KEY (`idAsistencia`),
+  KEY `idClase` (`idClase`),
+  CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for clase
@@ -55,7 +68,7 @@ CREATE TABLE `clase` (
   KEY `idAlumno` (`idAlumno`) USING BTREE,
   CONSTRAINT `clase_ibfk_1` FOREIGN KEY (`idAlumno`) REFERENCES `alumno` (`idAlumno`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `clase_ibfk_2` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for contador
@@ -69,6 +82,16 @@ CREATE TABLE `contador` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+-- Table structure for danza
+-- ----------------------------
+DROP TABLE IF EXISTS `danza`;
+CREATE TABLE `danza` (
+  `idDanza` int(11) NOT NULL AUTO_INCREMENT,
+  `tipoDanza` varchar(45) NOT NULL,
+  PRIMARY KEY (`idDanza`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for grupo
 -- ----------------------------
 DROP TABLE IF EXISTS `grupo`;
@@ -76,14 +99,16 @@ CREATE TABLE `grupo` (
   `idGrupo` int(11) NOT NULL AUTO_INCREMENT,
   `salon` varchar(10) NOT NULL,
   `idMaestro` int(11) NOT NULL,
-  `tipoDeDanza` varchar(45) NOT NULL,
+  `idDanza` int(11) NOT NULL,
   `nivel` varchar(45) NOT NULL,
   `inicioDeGrupo` date NOT NULL,
   `finDeGrupo` date DEFAULT NULL,
   PRIMARY KEY (`idGrupo`),
   KEY `idMaestro` (`idMaestro`),
-  CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`idMaestro`) REFERENCES `maestro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  KEY `idDanza` (`idDanza`),
+  CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`idMaestro`) REFERENCES `maestro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `grupo_ibfk_2` FOREIGN KEY (`idDanza`) REFERENCES `danza` (`idDanza`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for horario
@@ -97,7 +122,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`),
   KEY `idGrupo` (`idGrupo`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for maestro
@@ -108,19 +133,19 @@ CREATE TABLE `maestro` (
   `noDeColaborador` varchar(12) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `apellidos` varchar(45) NOT NULL,
-  `foto` longblob NOT NULL,
+  `foto` longblob,
   `fechaDeNacimiento` date NOT NULL,
   `genero` tinyint(1) NOT NULL,
-  `correoElectronico` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
+  `correoElectronico` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
   `telefonoMovil` varchar(45) NOT NULL,
   `domicilio` varchar(45) NOT NULL,
   `ciudad` varchar(45) NOT NULL,
-  `codigoPostal` varchar(45) NOT NULL,
+  `codigoPostal` varchar(45) DEFAULT NULL,
   `estado` varchar(45) NOT NULL,
   `fechaDeRegistro` date NOT NULL,
   `deshabilitado` tinyint(1) NOT NULL,
   `fechaDeDeshabilitacion` date DEFAULT NULL,
   `motivoDeDeshabilitacion` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;

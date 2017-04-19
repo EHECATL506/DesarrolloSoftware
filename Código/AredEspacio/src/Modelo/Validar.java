@@ -67,8 +67,11 @@ public class Validar {
     //validarCombo
     public static boolean combo(ComboBox texto) {
         texto.setStyle(null);
-        if (texto.getValue() != null) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        if (texto.getValue() != null) 
+            return true;
+        else 
+            texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+        return false;
     }
     
     public static boolean area(TextArea texto) {

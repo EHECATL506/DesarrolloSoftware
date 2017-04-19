@@ -40,7 +40,7 @@ public class GrupoAsignado {
     
     public static List<GrupoAsignado> obtenerGruposAsignado(Maestro maestro){
         List<GrupoAsignado> grupos = new ArrayList<>();
-        for(Grupo grupo : maestro.getGrupoList()){
+        /*for(Grupo grupo : maestro.getGrupoList()){
             for(Horario horario : grupo.getHorarioList()){
                 grupos.add(
                     new GrupoAsignado(grupo.getIdGrupo(),grupo.getSalon(),grupo.getTipoDeDanza()
@@ -49,6 +49,7 @@ public class GrupoAsignado {
                 );
             }
         }
+        */
         return grupos;
     }
     

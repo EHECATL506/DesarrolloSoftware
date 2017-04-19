@@ -174,7 +174,11 @@ public class FXMLModificarGrupoController extends MainController implements Init
                 try {
                     Grupo grupo = (Grupo) this.parametros;
                     grupo.setSalon(this.tfSalon.getText());
-                    grupo.setTipoDeDanza(this.tfTipoDeDanza.getText());
+                    
+
+                    //grupo.setTipoDeDanza(this.tfTipoDeDanza.getText());
+                    
+                    
                     grupo.setNivel(this.txNivel.getText());
                     GregorianCalendar gc = new GregorianCalendar();
                     grupo.setInicioDeGrupo(new Date(gc.getTimeInMillis()));
@@ -247,9 +251,14 @@ public class FXMLModificarGrupoController extends MainController implements Init
             this.horarios = new ArrayList(grupo.getHorarioList());
             this.horariosEliminados = new ArrayList<>();
             this.tfSalon.setText(grupo.getSalon());
-            this.tfTipoDeDanza.setText(grupo.getTipoDeDanza());
+            
+            //this.tfTipoDeDanza.setText(grupo.getTipoDeDanza());
+            
             this.txNivel.setText(grupo.getNivel());
-            this.lMaestro.setText("Maestro: " + grupo.getMaestro());
+            
+            //this.lMaestro.setText("Maestro: " + grupo.getMaestro());
+            
+            
             ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
             this.tHorario.setItems(listaHorario);
             this.lMaestro.setLayoutX(340);

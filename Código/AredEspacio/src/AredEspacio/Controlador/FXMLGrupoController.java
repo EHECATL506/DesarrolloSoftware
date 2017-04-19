@@ -1,6 +1,7 @@
 package AredEspacio.Controlador;
 
 import AredEspacio.EscenaPrincipal;
+import Modelo.Danza;
 import Modelo.Grupo;
 import Modelo.Horario;
 import Modelo.Maestro;
@@ -31,9 +32,9 @@ public class FXMLGrupoController extends MainController implements Initializable
     private TextField tfSalon;
 
     @FXML
-    private TextField txNivel;
+    private ComboBox txNivel;
     @FXML
-    private TextField tfTipoDeDanza;
+    private ComboBox tfTipoDeDanza;
 
     @FXML
     private TableView tMaestro;
@@ -120,8 +121,11 @@ public class FXMLGrupoController extends MainController implements Initializable
             Mensaje.advertencia("Agregue almenos un dia con su hora de inicio y fin al horario");
         } else {
             boolean salon = Validar.texto(this.tfSalon);
-            boolean danza = Validar.texto(this.tfTipoDeDanza);
-            boolean nivel = Validar.texto(this.txNivel);
+            
+            boolean danza = Validar.combo(this.tfTipoDeDanza);
+            
+            
+            boolean nivel = Validar.combo(this.txNivel);
             if (salon && danza && nivel) {
                 try {
                     Maestro maestro = (Maestro) this.tMaestro.getSelectionModel().getSelectedItem();
@@ -130,8 +134,9 @@ public class FXMLGrupoController extends MainController implements Initializable
                     } else {
                         Grupo grupo = new Grupo();
                         grupo.setSalon(this.tfSalon.getText());
-                        grupo.setTipoDeDanza(this.tfTipoDeDanza.getText());
-                        grupo.setNivel(this.txNivel.getText());
+                        Danza newDanza = Danza.buscarPorTipoDanza(this.tfTipoDeDanza.getValue().toString());
+                        grupo.setIdDanza(newDanza);
+                        grupo.setNivel(this.txNivel.getValue().toString());
                         grupo.setIdMaestro(maestro);
                         GregorianCalendar gc = new GregorianCalendar();
                         grupo.setInicioDeGrupo(new Date(gc.getTimeInMillis()));
@@ -175,6 +180,13 @@ public class FXMLGrupoController extends MainController implements Initializable
         this.cbDia.getItems().addAll("Lunes", "Martes", "Miércoles",
                 "Jueves", "Viernes", "Sábado", "Domingo"
         );
+        
+        this.txNivel.getItems().addAll("Basico","Intermedio","Avanzado");
+        
+        for(Danza danza:Danza.obtenerTodas()){
+            this.tfTipoDeDanza.getItems().add(danza.getTipoDanza());
+        }
+        
         this.inicializarSpinner(this.sHorasInicio,6, 22, 1);
         this.inicializarSpinner(this.spHorasFin,6, 22, 1);
         this.inicializarSpinner(this.spMinutosInicio,0, 55, 5);

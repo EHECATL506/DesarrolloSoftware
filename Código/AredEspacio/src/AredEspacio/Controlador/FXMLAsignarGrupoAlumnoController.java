@@ -57,7 +57,7 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
     ObservableList<FilaHorario> lista;
 
     public void desplegarGrupos() {
-        lista = FXCollections.observableArrayList();
+        /*lista = FXCollections.observableArrayList();
         for (Clase g : alumno.getClaseList()) {
 
             String clase = g.getIdGrupo().getTipoDeDanza();
@@ -72,11 +72,12 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
 
             tVHorario.setItems(lista);
         }
-
+        */
     }
 
     @FXML
     void bAgregar(ActionEvent event) {
+       /*
         String sClase = (String) cBClase.getValue();
         System.out.println(sClase);
         List<Grupo> temp = grupo.obtenerIdGrupo(sClase);
@@ -96,7 +97,7 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
             }
             System.out.println("no");
         }
-
+        */
     }
 
     @FXML
@@ -111,7 +112,7 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Platform.runLater(() -> {
+        /*Platform.runLater(() -> {
             grupo = new Grupo();
 
             List<Grupo> danzas = grupo.obtenerDanzas();
@@ -129,5 +130,6 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
             alumno = (Alumno) this.parametros;
             desplegarGrupos();
         });
+        */
     }
 }

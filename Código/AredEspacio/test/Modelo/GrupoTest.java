@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class GrupoTest {
-    
+    /*
     public GrupoTest() {
     }
     
@@ -55,4 +55,5 @@ public class GrupoTest {
         Grupo grupo = new Grupo();
         grupo.actualizar(null, null);
     }
+*/
 }

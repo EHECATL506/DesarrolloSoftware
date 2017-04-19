@@ -173,7 +173,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     }
     //consultarHorario
     public void consultarHorario(Alumno alumno) {
-        ObservableList<FilaHorario> lista = FXCollections.observableArrayList();
+      /*  ObservableList<FilaHorario> lista = FXCollections.observableArrayList();
         for (Clase grupo : alumno.getClaseList()) {
             
             String clase = grupo.getIdGrupo().getTipoDeDanza();
@@ -187,6 +187,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
             }        
             tVHorario.setItems(lista);
         }
+        */
     }
     //modificarAlumno
     public void modificarAlumno(Alumno alumno) throws Exception  {
