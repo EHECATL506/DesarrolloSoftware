@@ -79,5 +79,6 @@
       <Label layoutX="42.0" layoutY="198.0" text="Nivel:" />
       <ComboBox fx:id="tfTipoDeDanza" layoutX="126.0" layoutY="164.0" prefHeight="25.0" prefWidth="123.0" />
       <ComboBox fx:id="txNivel" layoutX="87.0" layoutY="194.0" prefHeight="25.0" prefWidth="189.0" />
+      <Button layoutX="251.0" layoutY="164.0" mnemonicParsing="false" onAction="#agregarDanza" text="+" />
    </children>
 </AnchorPane>

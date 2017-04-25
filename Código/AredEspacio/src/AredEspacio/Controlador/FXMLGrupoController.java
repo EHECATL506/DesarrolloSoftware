@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FXMLGrupoController extends MainController implements Initializable {
@@ -85,6 +87,26 @@ public class FXMLGrupoController extends MainController implements Initializable
     private Button bRegistrarGrupo;
     private ArrayList<Horario> horarios;
 
+    
+    @FXML
+    void agregarDanza() {
+        TextInputDialog dialogo = new TextInputDialog();
+        
+        dialogo.setTitle("Danza");
+        dialogo.setHeaderText("Registrar nueva Danza");
+        dialogo.setContentText("Ingrese el nombre de la Danza:");
+        Optional<String> result = dialogo.showAndWait();
+        result.ifPresent(danza ->{ 
+                if(Validar.texto(new TextField(danza))){
+                    this.tfTipoDeDanza.getItems().add(danza);
+                    new Danza(danza).crear();
+                }else{
+                    Mensaje.advertencia("La danza que ingreso es invalida");
+                }
+        }
+        );
+    }
+    
     @FXML
     void eliminarDelHorario() {
         try {

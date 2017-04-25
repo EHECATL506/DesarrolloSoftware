@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import ControladorBD.DanzaJpaController;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -47,6 +48,10 @@ public class Danza implements Serializable {
 
     public Danza(Integer idDanza) {
         this.idDanza = idDanza;
+    }
+
+    public Danza(String tipoDanza) {
+        this.tipoDanza = tipoDanza;
     }
 
     public Danza(Integer idDanza, String tipoDanza) {
@@ -104,5 +109,15 @@ public class Danza implements Serializable {
     return (Danza) Persistence.createEntityManagerFactory("AredEspacioPU",null)
                 .createEntityManager()
             .createNamedQuery("Danza.findByTipoDanza").setParameter("tipoDanza", tipoDanza).getSingleResult();
+    }
+
+    public boolean crear() {
+        if(this.tipoDanza==null || this.tipoDanza.equals("")){
+            return false;
+        }
+        DanzaJpaController danza = new DanzaJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU",null));
+        danza.create(this);
+        return true;
     }
 }
