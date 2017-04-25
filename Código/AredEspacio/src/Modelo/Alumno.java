@@ -320,18 +320,4 @@ public class Alumno implements Serializable {
     public String toString() {
         return "Modelo.Alumno[ idAlumno=" + idAlumno + " ]";
     }
-
-    public static List<Alumno> obtenerCoincidenciasPorApellidos(String apellidos) {
-        return obtenerController().createNamedQuery("Alumno.findByApellidos")
-                .setParameter("apellidos", "%" + apellidos + "%").getResultList();
-    }
-
-    public static List<Alumno> obtenerCoincidenciasPorMatricula(String matricula) {
-        return obtenerController().createNamedQuery("Alumno.findByMatricula")
-                .setParameter("matricula", "%" + matricula + "%").getResultList();
-    }
-
-    public static EntityManager obtenerController() {
-        return Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-    }
 }

@@ -111,6 +111,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     
     private String rutaFoto;
     private String accion;
+    private AlumnoJpaController jpaAlumno;
     
     //desplegarAlumno
     public void desplegarAlumno(Alumno alumno)
@@ -170,6 +171,8 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
         tFCodigoPostal.setText("");
         cBEstado.setValue(null);
         iVFoto.setImage(null);
+        rutaFoto = null;
+        
     }
     //consultarHorario
     public void consultarHorario(Alumno alumno) {
@@ -191,26 +194,20 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     }
     //modificarAlumno
     public void modificarAlumno(Alumno alumno) throws Exception  {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
-        AlumnoJpaController jpa = new AlumnoJpaController(emf);
         if (rutaFoto != null) AgregarFoto(alumno);
-        
-        jpa.edit(alumno);
+        jpaAlumno.edit(alumno);
         Mensaje.informacion("El alumno ha sido actualizado");
         escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
     }
     //guardarAlumno
-    public void guardarAlumno(Alumno alumno) throws Exception {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
-        AlumnoJpaController jpa = new AlumnoJpaController(emf);
-        
+    public void guardarAlumno(Alumno alumno) throws Exception {        
         if (rutaFoto != null) AgregarFoto(alumno);
         //generarMatricula
         alumno.setFechaRegistro(new Date());
-        alumno.setMatricula(String.format("MA-%1$05d", jpa.getAlumnoCount()));
+        alumno.setMatricula(String.format("MA-%1$05d", jpaAlumno.getAlumnoCount()));
         alumno.setStatus("Alta");
         
-        jpa.create(alumno);
+        jpaAlumno.create(alumno);
         Mensaje.informacion("El alumno ha sido registrado, su matricula es: " + alumno.getMatricula());
         limpiarCampos();
     }
@@ -284,6 +281,9 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
             accion = this.tipoMenu.toString();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
+            jpaAlumno = new AlumnoJpaController(emf);
+            
             tVHorario.setVisible(false);
             switch (accion) {
                 case "REGISTRAR":

@@ -200,4 +200,18 @@ public class AlumnoJpaController implements Serializable {
         }
     }
     
+    public List<Alumno> obtenerPorApellidos (String apellidos) {
+        EntityManager em = getEntityManager();
+        List<Alumno> a = em.createNamedQuery("Alumno.findByApellidos")
+                .setParameter("apellidos", "%" + apellidos + "%").getResultList();
+        return a;
+    }
+    
+    public List<Alumno> obtenerPorMatricula (String matricula) {
+        EntityManager em = getEntityManager();
+        List<Alumno> a = em.createNamedQuery("Alumno.findByMatricula")
+                .setParameter("matricula", "%" + matricula + "%").getResultList();
+        return a;
+    }
+    
 }

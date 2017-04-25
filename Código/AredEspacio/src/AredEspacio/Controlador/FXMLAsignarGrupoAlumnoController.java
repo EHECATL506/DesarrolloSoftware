@@ -1,8 +1,12 @@
 package AredEspacio.Controlador;
 
+import ControladorBD.AlumnoJpaController;
 import ControladorBD.ClaseJpaController;
+import ControladorBD.DanzaJpaController;
+import ControladorBD.GrupoJpaController;
 import Modelo.Alumno;
 import Modelo.Clase;
+import Modelo.Danza;
 import Modelo.FilaHorario;
 import Modelo.Grupo;
 import Modelo.Horario;
@@ -20,14 +24,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 
 public class FXMLAsignarGrupoAlumnoController extends MainController implements Initializable {
 
     @FXML
-    private ComboBox cBClase;
+    private ComboBox<String> cBDanza;
     @FXML
     private TextField tFDescuento;
     @FXML
@@ -38,6 +42,8 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
     private TextField tFCantidad;
     @FXML
     private TableView<FilaHorario> tVHorario;
+    @FXML
+    private TableView<FilaHorario> tVGrupo;
     @FXML
     private TextField tFTotal;
     @FXML
@@ -52,11 +58,18 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
     private TextField tFPago;
     @FXML
     private TableColumn<FilaHorario, String> tCMaestro;
-    private Alumno alumno;
-    private Grupo grupo;
-    ObservableList<FilaHorario> lista;
-
-    public void desplegarGrupos() {
+    List<Danza> danzas;
+    
+    
+    
+    //ObservableList<FilaHorario> lista;
+    private ClaseJpaController jpaClase;
+    private DanzaJpaController jpaDanza;
+    private GrupoJpaController jpaGrupo;
+    
+    public void desplegarGrupos(Danza danza) {
+        List<Grupo> grupos = jpaGrupo.obtenerPorDanza(danza);
+        System.out.println(grupos);
         /*lista = FXCollections.observableArrayList();
         for (Clase g : alumno.getClaseList()) {
 
@@ -77,6 +90,14 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
 
     @FXML
     void bAgregar(ActionEvent event) {
+        String danza = cBDanza.getValue();
+        Danza da = null;
+            for (Danza d : danzas) {
+                if (d.getTipoDanza().equals(danza)) {
+                    da = d;
+                }                
+            }
+            desplegarGrupos(da);
        /*
         String sClase = (String) cBClase.getValue();
         System.out.println(sClase);
@@ -112,24 +133,34 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*Platform.runLater(() -> {
-            grupo = new Grupo();
-
-            List<Grupo> danzas = grupo.obtenerDanzas();
-            ObservableList clases = FXCollections.observableArrayList();
-            for (Grupo o : danzas) {
-                String v = o.getTipoDeDanza();
-                clases.add(v);
+        Platform.runLater(() -> {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
+            jpaClase = new ClaseJpaController(emf);
+            jpaGrupo = new GrupoJpaController(emf);
+            jpaDanza = new DanzaJpaController(emf);
+            
+            //desplegarDanzas
+            danzas = jpaDanza.findDanzaEntities();
+            ObservableList oLDanzas = FXCollections.observableArrayList();
+            for (Danza o : danzas) {
+                String v = o.getTipoDanza();
+                oLDanzas.add(v);
             }
-            cBClase.setItems(clases);
-
+            cBDanza.setItems(oLDanzas);
+            
+            
+            
+            
+            
+            
+            /*
             tCClase.setCellValueFactory(new PropertyValueFactory<>("Clase"));
             tCMaestro.setCellValueFactory(new PropertyValueFactory<>("Maestro"));
             tCDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
             tCHora.setCellValueFactory(new PropertyValueFactory<>("Hora"));
             alumno = (Alumno) this.parametros;
-            desplegarGrupos();
+            
+            */
         });
-        */
     }
 }

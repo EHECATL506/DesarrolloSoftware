@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Grupo.findByIdGrupo", query = "SELECT g FROM Grupo g WHERE g.idGrupo = :idGrupo")
     , @NamedQuery(name = "Grupo.findBySalon", query = "SELECT g FROM Grupo g WHERE g.salon = :salon")
     , @NamedQuery(name = "Grupo.findByNivel", query = "SELECT g FROM Grupo g WHERE g.nivel = :nivel")
+    //buscar por danza
+    , @NamedQuery(name = "Grupo.findByIdDanza", query = "SELECT g FROM Grupo g WHERE g.idDanza = :idDanza")
     , @NamedQuery(name = "Grupo.findByInicioDeGrupo", query = "SELECT g FROM Grupo g WHERE g.inicioDeGrupo = :inicioDeGrupo")
     , @NamedQuery(name = "Grupo.findByFinDeGrupo", query = "SELECT g FROM Grupo g WHERE g.finDeGrupo = :finDeGrupo")})
 public class Grupo implements Serializable {

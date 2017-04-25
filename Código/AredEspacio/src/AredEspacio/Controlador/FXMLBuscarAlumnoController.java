@@ -6,6 +6,7 @@
 package AredEspacio.Controlador;
 
 import AredEspacio.EscenaPrincipal;
+import ControladorBD.AlumnoJpaController;
 import Modelo.Alumno;
 import Modelo.Mensaje;
 import Modelo.TipoDeMenu;
@@ -24,6 +25,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  * FXML Controller class
@@ -54,83 +57,117 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     private Button bModificar;
     @FXML
     private Button bInscribir;
-    private List<Alumno> alumnos;
+    private AlumnoJpaController jpaAlumno;
+
+    //buscarPorApellidos
+    public List<Alumno> buscarPorApellidos(String busqueda) {
+        List<Alumno> alumnos = jpaAlumno.obtenerPorApellidos(busqueda);
+        if (alumnos.size() > 0) {
+            bConsultar.setDisable(false);
+            bModificar.setDisable(false);
+            bEliminar.setDisable(false);
+            bInscribir.setDisable(false);
+        }
+        return alumnos;
+    }
     
+    //buscarPorMatricula
+    public List<Alumno> buscarPorMatricula (String busqueda) {
+        List<Alumno> alumnos = jpaAlumno.obtenerPorMatricula(busqueda);
+        if (alumnos.size() > 0) {
+            bConsultar.setDisable(false);
+            bModificar.setDisable(false);
+            bEliminar.setDisable(false);
+            bInscribir.setDisable(false);
+        }
+        return alumnos;
+    }
+    
+    //desplegarAlumnos
+    public void desplegarAlumnos () {
+        List<Alumno> alumnos = jpaAlumno.findAlumnoEntities();
+        if (alumnos.size() > 0) {
+            ObservableList lista = FXCollections.observableArrayList(alumnos);
+            tVResultados.setItems(lista);
+            bConsultar.setDisable(false);
+            bModificar.setDisable(false);
+            bEliminar.setDisable(false);
+            bInscribir.setDisable(false);
+        }
+    }
     //clicBuscar
     @FXML
     void buscar(ActionEvent event) {
         String busqueda = tFBusqueda.getText();
-        
+
         if (cBCriterio.getValue() == "Apellidos") {
-            alumnos = Alumno.obtenerCoincidenciasPorApellidos(busqueda);
+            List<Alumno> alumnos = buscarPorApellidos(busqueda);
             ObservableList lista = FXCollections.observableArrayList(alumnos);
             tVResultados.setItems(lista);
-            if (alumnos.size() > 0) {
-                bConsultar.setDisable(false);
-                bModificar.setDisable(false);
-                bEliminar.setDisable(false);
-                bInscribir.setDisable(false);
-            }
-        }
-        else if (cBCriterio.getValue() == "Matricula") {
-            alumnos = Alumno.obtenerCoincidenciasPorMatricula(busqueda);
+        } else if (cBCriterio.getValue() == "Matricula") {
+            List<Alumno> alumnos = buscarPorMatricula(busqueda);
             ObservableList lista = FXCollections.observableArrayList(alumnos);
             tVResultados.setItems(lista);
-            if (alumnos.size() > 0) {
-                bConsultar.setDisable(false);
-                bModificar.setDisable(false);
-                bEliminar.setDisable(false);
-                bInscribir.setDisable(false);
-            }
-        } else if (cBCriterio.getValue() == null) 
+        } else if (cBCriterio.getValue() == null) {
             Mensaje.advertencia("No se ha seleccionado el criterio");
+        }
     }
-    
+
     @FXML
     void inscribir(ActionEvent event) {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
-        if (row != null )
+        if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaAgregarGrupo, row, TipoDeMenu.AGREGAR);
-        else
+        } else {
             Mensaje.advertencia("No se ha seleccionado el alumno");
+        }
     }
-    
+
     //clicConsultar
     @FXML
     void consultar(ActionEvent event) {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
-        if (row != null )
+        if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaRegistrarAlumno, row, TipoDeMenu.CONSULTAR);
-        else
+        } else {
             Mensaje.advertencia("No se ha seleccionado el alumno");
+        }
     }
-   //clicDarDeBaja
+    //clicDarDeBaja
+
     @FXML
     void eliminar(ActionEvent event) {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
-        if (row != null )
+        if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaEliminarAlumno, row, TipoDeMenu.ELIMINAR);
-        else
+        } else {
             Mensaje.advertencia("No se ha seleccionado el alumno");
+        }
     }
+
     //clicModificar
     @FXML
     void modificar(ActionEvent event) {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
-        if (row != null )
+        if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaRegistrarAlumno, row, TipoDeMenu.MODIFICAR);
-            
-        else
+        } else {
             Mensaje.advertencia("No se ha seleccionado el alumno");
+        }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList criterio = FXCollections.observableArrayList("Matricula","Apellidos");
+        ObservableList criterio = FXCollections.observableArrayList("Matricula", "Apellidos");
         cBCriterio.setItems(criterio);
         tCMatricula.setCellValueFactory(new PropertyValueFactory<>("Matricula"));
-        tCNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));        
-        tCApellidos.setCellValueFactory(new PropertyValueFactory<>("Apellidos"));        
+        tCNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        tCApellidos.setCellValueFactory(new PropertyValueFactory<>("Apellidos"));
         tCStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
+        jpaAlumno = new AlumnoJpaController(emf);
+        desplegarAlumnos();
+
     }
 }

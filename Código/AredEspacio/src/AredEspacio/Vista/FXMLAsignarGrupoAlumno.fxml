@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -12,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLAsignarGrupoAlumnoController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLAsignarGrupoAlumnoController">
    <children>
       <StackPane layoutX="14.0" layoutY="87.0" prefHeight="403.0" prefWidth="763.0">
          <children>
@@ -21,22 +25,17 @@
                   <Pane prefHeight="425.0" prefWidth="763.0">
                      <children>
                         <Label layoutX="17.0" layoutY="33.0" text="Tipo de Danza:" />
-                        <Label layoutX="65.0" layoutY="66.0" text="Nivel:" />
-                        <ComboBox fx:id="cBClase" layoutX="102.0" layoutY="28.0" minHeight="30.0" prefWidth="150.0" promptText="Selecciona la danza" />
-                        <TableView fx:id="tVHorario" layoutX="268.0" layoutY="28.0" prefHeight="144.0" prefWidth="477.0">
+                        <ComboBox fx:id="cBDanza" layoutX="102.0" layoutY="28.0" minHeight="30.0" prefWidth="150.0" promptText="Selecciona la danza" />
+                        <TableView fx:id="tVHorario" layoutX="577.0" layoutY="30.0" prefHeight="177.0" prefWidth="185.0">
                           <columns>
-                            <TableColumn fx:id="tCClase" prefWidth="75.0" text="CLASE" />
-                            <TableColumn fx:id="tCMaestro" prefWidth="100.0" text="MAESTRO" />
-                              <TableColumn fx:id="tCDia" prefWidth="70.0" text="DIA" />
-                              <TableColumn fx:id="tCHora" prefWidth="108.0" text="HORA" />
-                              <TableColumn fx:id="tCNivel" prefWidth="120.0" text="NIVEL" />
+                              <TableColumn fx:id="tCDia" prefWidth="94.0" text="DIA" />
+                              <TableColumn fx:id="tCHora" prefWidth="84.0" text="HORA" />
                           </columns>
                         </TableView>
                         <Label layoutX="456.0" layoutY="6.0" text="HORARIO" />
-                        <Button layoutX="190.0" layoutY="140.0" mnemonicParsing="false" onAction="#bAgregar" text="Agregar" />
-                        <Button layoutX="134.0" layoutY="140.0" mnemonicParsing="false" onAction="#bQuitar" text="Quitar" />
-                        <TextField fx:id="tFNivel" layoutX="103.0" layoutY="62.0" minHeight="30.0" />
-                        <Pane layoutX="99.0" layoutY="189.0" prefHeight="200.0" prefWidth="648.0" style="-fx-background-color: #f5f5f0; -fx-border-style: solid;">
+                        <Button layoutX="196.0" layoutY="93.0" mnemonicParsing="false" onAction="#bAgregar" text="Agregar" />
+                        <Button layoutX="137.0" layoutY="93.0" mnemonicParsing="false" onAction="#bQuitar" text="Quitar" />
+                        <Pane layoutX="94.0" layoutY="225.0" prefHeight="155.0" prefWidth="648.0" style="-fx-background-color: #f5f5f0; -fx-border-style: solid;">
                            <children>
                               <Label layoutX="13.0" layoutY="32.0" text="Cantidad a Pagar:" />
                               <TextField fx:id="tFResta" layoutX="389.0" layoutY="60.0" minHeight="30.0" />
@@ -50,6 +49,13 @@
                               <Label layoutX="47.0" layoutY="64.0" text="Descuento:" />
                            </children>
                         </Pane>
+                        <TableView fx:id="tVGrupo" layoutX="266.0" layoutY="28.0" prefHeight="90.0" prefWidth="303.0">
+                          <columns>
+                            <TableColumn fx:id="tCSalon" prefWidth="67.0" text="SALÓN" />
+                            <TableColumn fx:id="tCNivel" prefWidth="59.0" text="NIVEL" />
+                            <TableColumn fx:id="tCMaestro" minWidth="0.0" prefWidth="171.0" text="MAESTRO" />
+                          </columns>
+                        </TableView>
                      </children>
                   </Pane>
                </children>

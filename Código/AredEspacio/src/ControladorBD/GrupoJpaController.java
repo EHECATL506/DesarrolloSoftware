@@ -7,6 +7,7 @@ package ControladorBD;
 
 import Exceptions.IllegalOrphanException;
 import Exceptions.NonexistentEntityException;
+import Modelo.Danza;
 import Modelo.Grupo;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -229,4 +230,11 @@ public class GrupoJpaController implements Serializable {
         }
     }
     
+    public List<Grupo> obtenerPorDanza (Danza danza) {
+         EntityManager em = getEntityManager();
+         List<Grupo> g = em.createNamedQuery("Grupo.findByIdDanza")
+                .setParameter("idDanza", "%" + danza + "%").getResultList();
+        return g;
+    }
+
 }
