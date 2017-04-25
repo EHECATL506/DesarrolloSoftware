@@ -13,6 +13,9 @@ File Encoding         : 65001
 Date: 2017-04-18 23:59:52
 */
 
+CREATE SCHEMA IF NOT EXISTS `aredespacio` DEFAULT CHARACTER SET utf8 ;
+USE `aredespacio` ;
+
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -62,6 +65,7 @@ CREATE TABLE `clase` (
   `idClase` int(11) NOT NULL AUTO_INCREMENT,
   `idGrupo` int(11) NOT NULL,
   `idAlumno` int(11) NOT NULL,
+  `fechaRegistro` date NOT NULL,
   PRIMARY KEY (`idClase`),
   UNIQUE KEY `idClase` (`idClase`) USING BTREE,
   KEY `idGrupo` (`idGrupo`) USING BTREE,
