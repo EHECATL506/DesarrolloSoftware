@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -118,16 +119,51 @@ public class FXMLGrupoController extends MainController implements Initializable
         }
     }
 
+    private boolean validarDia(String dia){
+        for(Horario horario: this.horarios){
+            if(horario.getDia().equals(dia)){
+                Mensaje.advertencia("No puede tener dos clases el mismo dia");
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean validarHora(int horasInicio, int minutosInicio, int horasFin, int minutosFin){
+        if(horasInicio>horasFin){
+            Mensaje.advertencia("La hora de inicio debe ser menor que la de fin");
+            return false;
+        }
+        int minutos = (horasFin - horasInicio)*60 + minutosFin - minutosInicio;
+        
+        if(minutos>120){
+            Mensaje.advertencia("Las clases no pueden durar mas de 2 horas");
+            return false;
+        }
+        
+        if(minutos<30){
+            Mensaje.advertencia("Las clases deben durar mas de 30 minutos");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
     @FXML
     void agregarAlHorario(ActionEvent event) {
         if (!(this.cbDia.getValue() == null)) {
+            boolean valido=false;
             String dia = this.cbDia.getValue().toString();
-            String inicio = this.sHorasInicio.getValue() + ":" + this.spMinutosInicio.getValue();
-            String fin = this.spHorasFin.getValue() + ":" + this.spMinutosFin.getValue();
-            Horario horario = new Horario();
-            horario.setDia(dia);
-            horario.setHora(inicio + "-" + fin);
-            if (!this.horarios.contains(horario)) {
+            int horasInicio = Integer.parseInt(this.sHorasInicio.getValue().toString());
+            int minutosInicio = Integer.parseInt(this.spMinutosInicio.getValue().toString());
+            int horasFin = Integer.parseInt(this.spHorasFin.getValue().toString());
+            int minutosFin = Integer.parseInt(this.spMinutosFin.getValue().toString());
+            String horas = horasInicio+":"+minutosInicio+"-"+horasFin+":"+minutosFin;
+            valido = this.validarDia(dia) &&
+                    this.validarHora(horasInicio, minutosInicio, horasFin, minutosFin);
+            if (valido) {
+                Horario horario = new Horario(dia,horas);
                 this.horarios.add(horario);
                 ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
                 this.tHorario.setItems(listaHorario);
@@ -142,13 +178,11 @@ public class FXMLGrupoController extends MainController implements Initializable
         if (this.horarios.isEmpty()) {
             Mensaje.advertencia("Agregue almenos un dia con su hora de inicio y fin al horario");
         } else {
-            boolean salon = Validar.texto(this.tfSalon);
+            //boolean salon = Validar.texto(this.tfSalon);
             
             boolean danza = Validar.combo(this.tfTipoDeDanza);
-            
-            
             boolean nivel = Validar.combo(this.txNivel);
-            if (salon && danza && nivel) {
+            if (danza && nivel) {
                 try {
                     Maestro maestro = (Maestro) this.tMaestro.getSelectionModel().getSelectedItem();
                     if (maestro == null) {
@@ -181,6 +215,9 @@ public class FXMLGrupoController extends MainController implements Initializable
         spinner.setValueFactory(valueFactory);
     }
 
+    
+   
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.cNoDeColaborador.setCellValueFactory(
@@ -195,9 +232,17 @@ public class FXMLGrupoController extends MainController implements Initializable
 
         this.horarios = new ArrayList<>();
 
+        List<Maestro> maestros= new ArrayList<>();
+        for(Maestro maestro:Maestro.obtenerMaestroPorNombre("")){
+            if(!maestro.getDeshabilitado()){
+               maestros.add(maestro);
+            }
+        }
+        
         ObservableList lista = FXCollections.observableArrayList(
-                Maestro.obtenerMaestroPorNombre("")
+                maestros
         );
+        
         this.tMaestro.setItems(lista);
         this.cbDia.getItems().addAll("Lunes", "Martes", "Miércoles",
                 "Jueves", "Viernes", "Sábado", "Domingo"

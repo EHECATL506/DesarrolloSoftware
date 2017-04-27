@@ -476,9 +476,11 @@ public class FXMLMaestroController extends MainController implements Initializab
                     this.alertaSinConexion();
                 }
                 this.alerta("Información", "Ya esta habilitado el Maestro");
-                this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarMaestro);
+                this.escena.cargarEscenaConParametros(
+                        EscenaPrincipal.EscenaBuscarMaestro,null,TipoDeMenu.DESHABILITAR);
             } else {
-                this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarMaestro);
+                this.escena.cargarEscenaConParametros(
+                        EscenaPrincipal.EscenaBuscarMaestro,null,TipoDeMenu.DESHABILITAR);
             }
         } else {
             this.botonOpcion.setVisible(true);

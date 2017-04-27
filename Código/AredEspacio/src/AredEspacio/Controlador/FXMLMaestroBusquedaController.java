@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -107,16 +108,35 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) { 
+        Platform.runLater(()->{
+            switch (tipoMenu) {
+                case CONSULTAR:
+                    this.consultar.setLayoutX(676);
+                    this.modificar.setVisible(false);
+                    this.deshabilitar.setVisible(false);
+                    break;
+                case MODIFICAR:
+                    this.modificar.setLayoutX(674);
+                    this.consultar.setVisible(false);
+                    this.deshabilitar.setVisible(false);
+                    break;
+                case DESHABILITAR:
+                    this.deshabilitar.setLayoutX(674);
+                    this.consultar.setVisible(false);
+                    this.modificar.setVisible(false);
+                    break;
+            }
+            
+        });
+        
         this.tabla.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
                     Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
                     if (maestro.getDeshabilitado()) {
                         this.deshabilitar.setText("Habilitar");
-                        //this.deshabilitar.setPrefSize(78, 25);
                     } else {
                         this.deshabilitar.setText("Deshabilitar");
-                        //this.deshabilitar.setPrefSize(78, 25);
                     }
                 });
 
@@ -141,5 +161,6 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
         this.modificar.setDisable(true);
         this.deshabilitar.setDisable(true);
         this.tipoDeBusqueda.setItems(opciones);
+        this.tipoDeBusqueda.getSelectionModel().select(1);
     }
 }

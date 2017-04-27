@@ -23,15 +23,15 @@
             </Label>
             <Button fx:id="buscar" layoutX="602.0" layoutY="112.0" mnemonicParsing="false" onAction="#buscarMaestro" prefHeight="25.0" prefWidth="72.0" text="Buscar" />
             <TextField fx:id="datoDeBusqueda" layoutX="289.0" layoutY="112.0" prefHeight="25.0" prefWidth="286.0" />
-            <TableView fx:id="tabla" layoutX="32.0" layoutY="163.0" prefHeight="252.0" prefWidth="642.0" tableMenuButtonVisible="true">
+            <TableView fx:id="tabla" layoutX="32.0" layoutY="163.0" prefHeight="252.0" prefWidth="720.0" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="columnaNoDeColaborador" prefWidth="120.0" resizable="false" text="No. de Colaborador" />
-                <TableColumn fx:id="columnaNombre" prefWidth="171.0" resizable="false" text="Nombre" />
-                  <TableColumn fx:id="columnaApellidos" prefWidth="209.0" resizable="false" text="Apellidos" />
-                  <TableColumn fx:id="columnaEstado" prefWidth="127.0" text="Estado" />
+                <TableColumn fx:id="columnaNombre" prefWidth="205.0" resizable="false" text="Nombre" />
+                  <TableColumn fx:id="columnaApellidos" prefWidth="226.0" resizable="false" text="Apellidos" />
+                  <TableColumn fx:id="columnaEstado" prefWidth="158.0" text="Estado" />
               </columns>
             </TableView>
-            <Button fx:id="deshabilitar" layoutX="684.0" layoutY="390.0" mnemonicParsing="false" onAction="#cargarDeshabilitar" prefHeight="25.0" prefWidth="79.0" text="Deshabilitar" />
+            <Button fx:id="deshabilitar" layoutX="674.0" layoutY="430.0" mnemonicParsing="false" onAction="#cargarDeshabilitar" prefHeight="25.0" prefWidth="79.0" text="Deshabilitar" />
             <Label fx:id="titulo" layoutX="254.0" layoutY="47.0" text="Buscar Maestro">
                <font>
                   <Font name="System Bold Italic" size="24.0" />
@@ -43,8 +43,8 @@
                   <Insets left="50.0" right="50.0" />
                </padding>
             </Label>
-            <Button fx:id="modificar" layoutX="684.0" layoutY="351.0" mnemonicParsing="false" onAction="#cargarModificar" prefHeight="25.0" prefWidth="79.0" text="Modificar" />
-            <Button fx:id="consultar" layoutX="684.0" layoutY="314.0" mnemonicParsing="false" onAction="#cargarConsultar" prefHeight="25.0" prefWidth="79.0" text="Consultar" />
+            <Button fx:id="modificar" layoutX="500.0" layoutY="430.0" mnemonicParsing="false" onAction="#cargarModificar" prefHeight="25.0" prefWidth="79.0" text="Modificar" />
+            <Button fx:id="consultar" layoutX="500.0" layoutY="430.0" mnemonicParsing="false" onAction="#cargarConsultar" prefHeight="25.0" prefWidth="79.0" text="Consultar" />
          </children></Pane>
    </children>
 </AnchorPane>

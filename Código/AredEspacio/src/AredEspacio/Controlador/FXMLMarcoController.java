@@ -30,9 +30,24 @@ public class FXMLMarcoController extends MainController implements Initializable
     }
 
     @FXML
-    public void buscarMaestro() {
-        this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarMaestro, null, null);
+    public void consultarMaestro() {
+        this.escena.cargarEscenaConParametros(
+                EscenaPrincipal.EscenaBuscarMaestro,null,TipoDeMenu.CONSULTAR);
     }
+    
+    @FXML
+    public void modificarMaestro() {
+        this.escena.cargarEscenaConParametros(
+                EscenaPrincipal.EscenaBuscarMaestro,null, TipoDeMenu.MODIFICAR);
+    }
+    
+    @FXML
+    public void deshabilitarMaestro() {
+        this.escena.cargarEscenaConParametros(
+                EscenaPrincipal.EscenaBuscarMaestro,null, TipoDeMenu.DESHABILITAR);
+    }
+    
+    
 
     @FXML
     public void registrarAlumno() {

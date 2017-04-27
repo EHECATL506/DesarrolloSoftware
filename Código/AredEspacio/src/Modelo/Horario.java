@@ -55,6 +55,11 @@ public class Horario implements Serializable {
     
     public Horario() {
     }
+
+    public Horario(String dia, String hora) {
+        this.dia = dia;
+        this.hora = hora;
+    }
     
     public String getInicio() {
         String[] split = this.hora.split("-");
@@ -123,8 +128,8 @@ public class Horario implements Serializable {
         if (this != null && object == null) {
             return false;
         }
-        
         Horario other = (Horario) object;
+        
         return this.dia.equals(other.getDia())
                 && this.hora.equals(other.getHora());
         /*

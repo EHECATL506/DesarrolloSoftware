@@ -20,8 +20,7 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="tfSalon" layoutX="87.0" layoutY="132.0" prefHeight="25.0" prefWidth="189.0" />
-      <TextField fx:id="tfTipoDeDanza" layoutX="126.0" layoutY="164.0" />
+      <TextField fx:id="tfSalon" layoutX="87.0" layoutY="132.0" prefHeight="25.0" prefWidth="201.0" />
       <TableView fx:id="tMaestro" layoutX="320.0" layoutY="132.0" prefHeight="120.0" prefWidth="442.0" visible="false">
         <columns>
           <TableColumn fx:id="cNoDeColaborador" prefWidth="116.0" text="No. de Colaborador" />
@@ -72,14 +71,16 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="bActualizar" layoutX="551.0" layoutY="161.0" mnemonicParsing="false" onAction="#actualizarHorario" text="Actualizar" />
-            <Button fx:id="bEliminarHorario" layoutX="385.0" layoutY="161.0" mnemonicParsing="false" onAction="#eliminarDelHorario" text="Eliminar" />
+            <Button fx:id="bActualizar" layoutX="477.0" layoutY="161.0" mnemonicParsing="false" onAction="#actualizarHorario" text="Actualizar" />
+            <Button fx:id="bEliminarHorario" layoutX="556.0" layoutY="161.0" mnemonicParsing="false" onAction="#eliminarDelHorario" text="Eliminar" />
             <Button layoutX="629.0" layoutY="161.0" mnemonicParsing="false" onAction="#agregarAlHorario" text="Agregar" />
          </children>
       </Pane>
       <Button fx:id="bActualizarGrupo" layoutX="657.0" layoutY="494.0" mnemonicParsing="false" onAction="#actualizarGrupo" text="Actualizar Grupo" />
       <Button fx:id="bActualizarMaestro" layoutX="340.0" layoutY="164.0" mnemonicParsing="false" onAction="#actualizarMaestro" text="Actualizar Maestro" />
       <Label layoutX="43.0" layoutY="203.0" text="Nivel:" />
-      <TextField fx:id="txNivel" layoutX="87.0" layoutY="199.0" prefHeight="25.0" prefWidth="189.0" />
+      <ComboBox fx:id="txNivel" layoutX="87.0" layoutY="199.0" prefHeight="25.0" prefWidth="201.0" />
+      <ComboBox fx:id="tfTipoDeDanza" layoutX="123.0" layoutY="164.0" prefHeight="25.0" prefWidth="137.0" />
+      <Button layoutX="262.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+" />
    </children>
 </AnchorPane>

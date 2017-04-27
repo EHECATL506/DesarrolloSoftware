@@ -1,6 +1,7 @@
 package AredEspacio.Controlador;
 
 import AredEspacio.EscenaPrincipal;
+import Modelo.Danza;
 import Modelo.Grupo;
 import Modelo.Horario;
 import Modelo.Maestro;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -33,10 +35,10 @@ public class FXMLModificarGrupoController extends MainController implements Init
     private TextField tfSalon;
 
     @FXML
-    private TextField txNivel;
-    
+    private ComboBox txNivel;
+
     @FXML
-    private TextField tfTipoDeDanza;
+    private ComboBox tfTipoDeDanza;
 
     @FXML
     private TableView tMaestro;
@@ -98,18 +100,54 @@ public class FXMLModificarGrupoController extends MainController implements Init
     @FXML
     void agregarAlHorario(ActionEvent event) {
         if (!(this.cbDia.getValue() == null)) {
+            boolean valido = false;
             String dia = this.cbDia.getValue().toString();
-            String inicio = this.sHorasInicio.getValue() + ":" + this.spMinutosInicio.getValue();
-            String fin = this.spHorasFin.getValue() + ":" + this.spMinutosFin.getValue();
-            Horario horario = new Horario();
-            horario.setDia(dia);
-            horario.setHora(inicio + "-" + fin);
-            this.horarios.add(horario);
-            ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
-            this.tHorario.setItems(listaHorario);
+            int horasInicio = Integer.parseInt(this.sHorasInicio.getValue().toString());
+            int minutosInicio = Integer.parseInt(this.spMinutosInicio.getValue().toString());
+            int horasFin = Integer.parseInt(this.spHorasFin.getValue().toString());
+            int minutosFin = Integer.parseInt(this.spMinutosFin.getValue().toString());
+            String horas = horasInicio + ":" + minutosInicio + "-" + horasFin + ":" + minutosFin;
+            valido = this.validarDia(dia)
+                    && this.validarHora(horasInicio, minutosInicio, horasFin, minutosFin);
+            if (valido) {
+                Horario horario = new Horario(dia, horas);
+                this.horarios.add(horario);
+                ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
+                this.tHorario.setItems(listaHorario);
+            }
         } else {
             Mensaje.advertencia("Seleccione un Dia");
         }
+    }
+
+    private boolean validarDia(String dia) {
+        for (Horario horario : this.horarios) {
+            if (horario.getDia().equals(dia)) {
+                Mensaje.advertencia("No puede tener dos clases el mismo dia");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarHora(int horasInicio, int minutosInicio, int horasFin, int minutosFin) {
+        if (horasInicio > horasFin) {
+            Mensaje.advertencia("La hora de inicio debe ser menor que la de fin");
+            return false;
+        }
+        int minutos = (horasFin - horasInicio) * 60 + minutosFin - minutosInicio;
+
+        if (minutos > 120) {
+            Mensaje.advertencia("Las clases no pueden durar mas de 2 horas");
+            return false;
+        }
+
+        if (minutos < 30) {
+            Mensaje.advertencia("Las clases deben durar mas de 30 minutos");
+            return false;
+        }
+
+        return true;
     }
 
     @FXML
@@ -119,7 +157,15 @@ public class FXMLModificarGrupoController extends MainController implements Init
         this.lMaestro.setLayoutX(460);
         this.lMaestro.setLayoutY(102);
         this.lMaestro.setText("Seleccione el Maestro");
-        ObservableList listaHorario = FXCollections.observableArrayList(Maestro.obtenerMaestroPorApellido(""));
+
+        List<Maestro> maestros = new ArrayList<>();
+        for (Maestro maestro : Maestro.obtenerMaestroPorNombre("")) {
+            if (!maestro.getDeshabilitado()) {
+                maestros.add(maestro);
+            }
+        }
+        ObservableList listaHorario
+                = FXCollections.observableArrayList(maestros);
         this.tMaestro.setItems(listaHorario);
     }
 
@@ -134,32 +180,52 @@ public class FXMLModificarGrupoController extends MainController implements Init
         } catch (Exception e) {
         }
     }
+      /*
+    private boolean validarDiaID(String dia, Integer id) {
+        for (Horario horario : this.horarios) {
+            if (!horario.getIdHorario().equals(id)) {
+                if (horario.getDia().equals(dia)) {
+                    Mensaje.advertencia("No puede tener dos clases el mismo dia");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }*/
 
     @FXML
     void actualizarHorario(ActionEvent event) {
-        Horario horario = (Horario) this.tHorario.getSelectionModel().getSelectedItem();
+        /*Horario horario = (Horario) this.tHorario.getSelectionModel().getSelectedItem();
         if (horario != null) {
             if (!(this.cbDia.getValue() == null)) {
-                Horario auxiliar = new Horario();
-                String dia = this.cbDia.getValue().toString();
-                String inicio = this.sHorasInicio.getValue() + ":" + this.spMinutosInicio.getValue();
-                String fin = this.spHorasFin.getValue() + ":" + this.spMinutosFin.getValue();
-                auxiliar.setDia(dia);
-                auxiliar.setHora(inicio + "-" + fin);
-                auxiliar.setIdGrupo(horario.getIdGrupo());
-                auxiliar.setIdHorario(horario.getIdHorario());
+                boolean valido = false;
 
-                this.horarios.remove(horario);
-                this.horarios.add(auxiliar);
-                ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
-                this.tHorario.setItems(listaHorario);
+                String dia = this.cbDia.getValue().toString();
+                int horasInicio = Integer.parseInt(this.sHorasInicio.getValue().toString());
+                int minutosInicio = Integer.parseInt(this.spMinutosInicio.getValue().toString());
+                int horasFin = Integer.parseInt(this.spHorasFin.getValue().toString());
+                int minutosFin = Integer.parseInt(this.spMinutosFin.getValue().toString());
+                String horas = horasInicio + ":" + minutosInicio + "-" + horasFin + ":" + minutosFin;
+
+                if (horario.getIdHorario() != null) {
+                    valido = this.validarDiaID(dia, horario.getIdHorario())
+                            && this.validarHora(horasInicio, minutosInicio, horasFin, minutosFin);
+                    if (valido) {
+                        this.horarios.remove(horario);
+                        horario.setDia(dia);
+                        horario.setHora(horas);
+                        this.horarios.add(horario);
+                        ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
+                        this.tHorario.setItems(listaHorario);
+                    }
+                }
 
             } else {
                 Mensaje.advertencia("Seleccione un Dia");
             }
         } else {
             Mensaje.advertencia("Seleccione un horario");
-        }
+        }*/
     }
 
     @FXML
@@ -167,22 +233,17 @@ public class FXMLModificarGrupoController extends MainController implements Init
         if (this.horarios.isEmpty()) {
             Mensaje.advertencia("Agregue almenos un dia con su hora de inicio y fin al horario");
         } else {
-            boolean salon = Validar.texto(this.tfSalon);
-            boolean danza = Validar.texto(this.tfTipoDeDanza);
-            boolean nivel = Validar.texto(this.txNivel);
-            if (salon && danza && nivel) {
+            boolean danza = Validar.combo(this.tfTipoDeDanza);
+            boolean nivel = Validar.combo(this.txNivel);
+            if (danza && nivel) {
                 try {
                     Grupo grupo = (Grupo) this.parametros;
                     grupo.setSalon(this.tfSalon.getText());
-                    
-
-                    //grupo.setTipoDeDanza(this.tfTipoDeDanza.getText());
-                    
-                    
-                    grupo.setNivel(this.txNivel.getText());
+                    Danza newDanza = Danza.buscarPorTipoDanza(this.tfTipoDeDanza.getValue().toString());
+                    grupo.setIdDanza(newDanza);
+                    grupo.setNivel(this.txNivel.getValue().toString());
                     GregorianCalendar gc = new GregorianCalendar();
                     grupo.setInicioDeGrupo(new Date(gc.getTimeInMillis()));
-
                     if (this.bActualizarMaestro.isVisible()) {
                         grupo.actualizar(this.horarios, this.horariosEliminados);
                         Mensaje.informacion("Exito! al actualizar el grupo");
@@ -207,7 +268,7 @@ public class FXMLModificarGrupoController extends MainController implements Init
         }
     }
 
-    private void inicializarSpinner(Spinner spinner,int minimo, int maximo, int aumento) {
+    private void inicializarSpinner(Spinner spinner, int minimo, int maximo, int aumento) {
         SpinnerValueFactory<Integer> valueFactory
                 = new SpinnerValueFactory.IntegerSpinnerValueFactory(minimo, maximo, 0, aumento);
         spinner.setValueFactory(valueFactory);
@@ -215,6 +276,7 @@ public class FXMLModificarGrupoController extends MainController implements Init
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.bActualizar.setVisible(false);
         this.cNoDeColaborador.setCellValueFactory(
                 new PropertyValueFactory<>("NoDeColaborador")
         );
@@ -229,10 +291,10 @@ public class FXMLModificarGrupoController extends MainController implements Init
                 "Jueves", "Viernes", "Sábado", "Domingo"
         );
 
-        this.inicializarSpinner(this.sHorasInicio,6, 22, 1);
-        this.inicializarSpinner(this.spHorasFin,6, 22, 1);
-        this.inicializarSpinner(this.spMinutosInicio,0, 55, 5);
-        this.inicializarSpinner(this.spMinutosFin,0, 55, 5);
+        this.inicializarSpinner(this.sHorasInicio, 6, 22, 1);
+        this.inicializarSpinner(this.spHorasFin, 6, 22, 1);
+        this.inicializarSpinner(this.spMinutosInicio, 0, 55, 5);
+        this.inicializarSpinner(this.spMinutosFin, 0, 55, 5);
 
         this.cDia.setCellValueFactory(
                 new PropertyValueFactory<>("Dia")
@@ -246,19 +308,19 @@ public class FXMLModificarGrupoController extends MainController implements Init
                 new PropertyValueFactory<>("Fin")
         );
 
+        this.txNivel.getItems().addAll("Basico", "Intermedio", "Avanzado");
+        for (Danza danza : Danza.obtenerTodas()) {
+            this.tfTipoDeDanza.getItems().add(danza.getTipoDanza());
+        }
+
         Platform.runLater(() -> {
             Grupo grupo = (Grupo) this.parametros;
             this.horarios = new ArrayList(grupo.getHorarioList());
             this.horariosEliminados = new ArrayList<>();
             this.tfSalon.setText(grupo.getSalon());
-            
-            //this.tfTipoDeDanza.setText(grupo.getTipoDeDanza());
-            
-            this.txNivel.setText(grupo.getNivel());
-            
-            //this.lMaestro.setText("Maestro: " + grupo.getMaestro());
-            
-            
+            this.tfTipoDeDanza.getSelectionModel().select(grupo.getTipoDeDanza());
+            this.txNivel.getSelectionModel().select(grupo.getNivel());
+            this.lMaestro.setText("Maestro: " + grupo.getMaestro());
             ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
             this.tHorario.setItems(listaHorario);
             this.lMaestro.setLayoutX(340);
