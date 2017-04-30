@@ -290,7 +290,7 @@ public class FXMLMaestroController extends MainController implements Initializab
         }
     }
 
-    public void alertaDeValidacion() {
+    public void alertaDeValidacion() {  
         Alert alerta = new Alert(AlertType.WARNING);
         alerta.setTitle("Advertencia");
         alerta.setHeaderText("Corrija los campos marcados en rojo");

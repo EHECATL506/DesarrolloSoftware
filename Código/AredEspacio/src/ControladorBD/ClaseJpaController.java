@@ -5,7 +5,7 @@
  */
 package ControladorBD;
 
-import Exceptions.NonexistentEntityException;
+import ControladorBD.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -13,13 +13,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import Modelo.Alumno;
 import Modelo.Clase;
+import Modelo.Grupo;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Mauricio Juárez
+ * @author Jonathan
  */
 public class ClaseJpaController implements Serializable {
 
@@ -42,10 +43,19 @@ public class ClaseJpaController implements Serializable {
                 idAlumno = em.getReference(idAlumno.getClass(), idAlumno.getIdAlumno());
                 clase.setIdAlumno(idAlumno);
             }
+            Grupo idGrupo = clase.getIdGrupo();
+            if (idGrupo != null) {
+                idGrupo = em.getReference(idGrupo.getClass(), idGrupo.getIdGrupo());
+                clase.setIdGrupo(idGrupo);
+            }
             em.persist(clase);
             if (idAlumno != null) {
                 idAlumno.getClaseList().add(clase);
                 idAlumno = em.merge(idAlumno);
+            }
+            if (idGrupo != null) {
+                idGrupo.getClaseList().add(clase);
+                idGrupo = em.merge(idGrupo);
             }
             em.getTransaction().commit();
         } finally {
@@ -63,9 +73,15 @@ public class ClaseJpaController implements Serializable {
             Clase persistentClase = em.find(Clase.class, clase.getIdClase());
             Alumno idAlumnoOld = persistentClase.getIdAlumno();
             Alumno idAlumnoNew = clase.getIdAlumno();
+            Grupo idGrupoOld = persistentClase.getIdGrupo();
+            Grupo idGrupoNew = clase.getIdGrupo();
             if (idAlumnoNew != null) {
                 idAlumnoNew = em.getReference(idAlumnoNew.getClass(), idAlumnoNew.getIdAlumno());
                 clase.setIdAlumno(idAlumnoNew);
+            }
+            if (idGrupoNew != null) {
+                idGrupoNew = em.getReference(idGrupoNew.getClass(), idGrupoNew.getIdGrupo());
+                clase.setIdGrupo(idGrupoNew);
             }
             clase = em.merge(clase);
             if (idAlumnoOld != null && !idAlumnoOld.equals(idAlumnoNew)) {
@@ -75,6 +91,14 @@ public class ClaseJpaController implements Serializable {
             if (idAlumnoNew != null && !idAlumnoNew.equals(idAlumnoOld)) {
                 idAlumnoNew.getClaseList().add(clase);
                 idAlumnoNew = em.merge(idAlumnoNew);
+            }
+            if (idGrupoOld != null && !idGrupoOld.equals(idGrupoNew)) {
+                idGrupoOld.getClaseList().remove(clase);
+                idGrupoOld = em.merge(idGrupoOld);
+            }
+            if (idGrupoNew != null && !idGrupoNew.equals(idGrupoOld)) {
+                idGrupoNew.getClaseList().add(clase);
+                idGrupoNew = em.merge(idGrupoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -109,6 +133,11 @@ public class ClaseJpaController implements Serializable {
             if (idAlumno != null) {
                 idAlumno.getClaseList().remove(clase);
                 idAlumno = em.merge(idAlumno);
+            }
+            Grupo idGrupo = clase.getIdGrupo();
+            if (idGrupo != null) {
+                idGrupo.getClaseList().remove(clase);
+                idGrupo = em.merge(idGrupo);
             }
             em.remove(clase);
             em.getTransaction().commit();

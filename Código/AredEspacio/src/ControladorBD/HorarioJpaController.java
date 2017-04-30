@@ -165,4 +165,12 @@ public class HorarioJpaController implements Serializable {
         }
     }
     
+    //Obtener Horario en funcion del grupo
+    public List<Horario> obtenerPorGrupo(Grupo grupo) {
+        EntityManager em = getEntityManager();
+        List<Horario> h = em.createNamedQuery("Horario.findByGrupo")
+                .setParameter("idGrupo", grupo).getResultList();
+        return h;        
+    }
+    
 }

@@ -1,32 +1,49 @@
 package AredEspacio.Controlador;
 
+import AredEspacio.EscenaPrincipal;
 import ControladorBD.AlumnoJpaController;
 import ControladorBD.ClaseJpaController;
 import ControladorBD.DanzaJpaController;
 import ControladorBD.GrupoJpaController;
+import ControladorBD.HorarioJpaController;
 import Modelo.Alumno;
 import Modelo.Clase;
 import Modelo.Danza;
+import Modelo.FilaClase;
 import Modelo.FilaHorario;
 import Modelo.Grupo;
 import Modelo.Horario;
 import Modelo.Mensaje;
+import Modelo.TipoDeMenu;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 
 public class FXMLAsignarGrupoAlumnoController extends MainController implements Initializable {
 
@@ -42,8 +59,7 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
     private TextField tFCantidad;
     @FXML
     private TableView<FilaHorario> tVHorario;
-    @FXML
-    private TableView<FilaHorario> tVGrupo;
+
     @FXML
     private TextField tFTotal;
     @FXML
@@ -53,82 +69,140 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
     @FXML
     private TextField tFNivel;
     @FXML
-    private TableColumn<FilaHorario, String> tCNivel;
-    @FXML
     private TextField tFPago;
+
+    //columnas de grupo
     @FXML
-    private TableColumn<FilaHorario, String> tCMaestro;
+    private TableView<Grupo> tVGrupo;
+    @FXML
+    private TableColumn<?, ?> tCSalon;
+    @FXML
+    private TableColumn<?, ?> tCNivel;
+    @FXML
+    private TableColumn<?, ?> tCMaestro;
+    @FXML
+    private Button clicInscribir;
+
+    @FXML
+    private TableView<FilaClase> tVClase;
+    @FXML
+    private TableColumn<FilaClase, String> tCAlumno;
+    @FXML
+    private TableColumn<FilaClase, String> tCGrupo;
+    @FXML
+    private TableColumn<FilaClase, String> tCFechaIngreso;
+
+    @FXML
+    private Button clicAgregar;
+
     List<Danza> danzas;
-    
-    
-    
+
     //ObservableList<FilaHorario> lista;
     private ClaseJpaController jpaClase;
     private DanzaJpaController jpaDanza;
     private GrupoJpaController jpaGrupo;
-    
+    private HorarioJpaController jpaHorario;
+
+    private Alumno alumno;
+
     public void desplegarGrupos(Danza danza) {
         List<Grupo> grupos = jpaGrupo.obtenerPorDanza(danza);
-        System.out.println(grupos);
-        /*lista = FXCollections.observableArrayList();
-        for (Clase g : alumno.getClaseList()) {
+        ObservableList oLGrupos = FXCollections.observableArrayList(grupos);
+        tVGrupo.setItems(oLGrupos);
 
-            String clase = g.getIdGrupo().getTipoDeDanza();
-            String maestro = (g.getIdGrupo().getIdMaestro().getNombre() + " ")
-                    + g.getIdGrupo().getIdMaestro().getApellidos();
-            String nivel = g.getIdGrupo().getNivel();
-            for (Horario horario : g.getIdGrupo().getHorarioList()) {
-                String dia = horario.getDia();
-                String hora = horario.getHora();
-                lista.add(new FilaHorario(clase, maestro, dia, hora, nivel));
+        //desplegarHorario al seleccionar el grupo
+        tVGrupo.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                //obtener la fila del grupo seleccionado
+                Grupo grupo = tVGrupo.getSelectionModel().getSelectedItem();
+
+                //obtener lista de los horarios
+                List<Horario> horario = jpaHorario.obtenerPorGrupo(grupo);
+                ObservableList oLHorario = FXCollections.observableArrayList(horario);
+
+                tVHorario.setItems(oLHorario);
             }
+        });
+        Clase clase = new Clase();
+        clase.setIdAlumno(alumno);
+        //clicAgregarClase
+        clicAgregar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Grupo grupo = tVGrupo.getSelectionModel().getSelectedItem();
+                if (grupo != null) {
+                    clase.setIdGrupo(grupo);
+                    clase.setFechaRegistro(new Date());
 
-            tVHorario.setItems(lista);
-        }
-        */
+                    jpaClase.create(clase);
+                    //creaste una clase 
+
+                    ObservableList<FilaClase> oLlista = FXCollections.observableArrayList();
+                    FilaClase fClase = new FilaClase(alumno.getNombre() + alumno.getApellidos(),
+                            grupo.getSalon(), clase.getFechaRegistro().toString());
+                    oLlista.add(fClase);
+                    tVClase.setItems(oLlista);
+
+                    //desplegar clase
+                    Mensaje.informacion("EL ALUMNO HA SIDO AÑADIDO AL GRUPO: " + grupo.getSalon());
+                } else {
+                    Mensaje.advertencia("No se ha seleccionado un grupo");
+                }
+
+            }
+        });
+
+        //inscribirClase
+        clicInscribir.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                FilaClase clase = tVClase.getSelectionModel().getSelectedItem();
+                Dialog dIncripcion = new Dialog();
+                dIncripcion.setTitle("Pago Incripción");
+                dIncripcion.setHeaderText("Horario que tiene asignado el maestro: ");
+                dIncripcion.getDialogPane().getButtonTypes().add(ButtonType.APPLY);
+                TextField tFCantidad = new TextField();
+                TextField tFDescuento = new TextField();
+                TextField tFPaga = new TextField();
+                TextField tFTotal = new TextField();
+                
+                HBox panel1 = new HBox(15);
+                panel1.getChildren().addAll(
+                        new Label("   Cantidad a Pagar:"), tFCantidad,
+                        new Label("    Descuento:"), tFDescuento );
+                
+                HBox panel2 = new HBox(15);
+                panel2.getChildren().addAll(
+                        new Label("Cantidad que Paga:"), tFPaga,
+                        new Label("Total a Pagar:"), tFTotal
+                        
+                );
+                
+                VBox panel3 = new VBox(10);
+                panel3.getChildren().addAll(panel1, panel2);
+
+                                
+                
+                dIncripcion.getDialogPane().setContent(panel3);
+                dIncripcion.show();
+            }
+        });
+
     }
 
     @FXML
     void bAgregar(ActionEvent event) {
-        String danza = cBDanza.getValue();
-        Danza da = null;
-            for (Danza d : danzas) {
-                if (d.getTipoDanza().equals(danza)) {
-                    da = d;
-                }                
-            }
-            desplegarGrupos(da);
-       /*
-        String sClase = (String) cBClase.getValue();
-        System.out.println(sClase);
-        List<Grupo> temp = grupo.obtenerIdGrupo(sClase);
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
-        ClaseJpaController jpa = new ClaseJpaController(emf);
+        String danzaSeleccionada = cBDanza.getValue();
+        Danza danza = null;
 
-        Clase clase = new Clase();
-        clase.setIdGrupo(temp.get(0));
-        clase.setIdAlumno(alumno);
-        for (Clase g : alumno.getClaseList()) {
-            if (g.getIdGrupo().getIdGrupo() != temp.get(0).getIdGrupo()) {
-                continue;
-            } else {
-                jpa.create(clase);
-                Mensaje.informacion("El alumno ha sido asiganda al grupo de " + sClase);
-                desplegarGrupos();
+        for (Danza d : danzas) {
+            if (d.getTipoDanza().equals(danzaSeleccionada)) {
+                danza = d;
             }
-            System.out.println("no");
         }
-        */
-    }
-
-    @FXML
-    void bQuitar(ActionEvent event) {
-
-    }
-
-    @FXML
-    void bInscribir(ActionEvent event) {
-
+        desplegarGrupos(danza);
     }
 
     @Override
@@ -138,7 +212,8 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
             jpaClase = new ClaseJpaController(emf);
             jpaGrupo = new GrupoJpaController(emf);
             jpaDanza = new DanzaJpaController(emf);
-            
+            jpaHorario = new HorarioJpaController(emf);
+            alumno = (Alumno) this.parametros;
             //desplegarDanzas
             danzas = jpaDanza.findDanzaEntities();
             ObservableList oLDanzas = FXCollections.observableArrayList();
@@ -147,20 +222,17 @@ public class FXMLAsignarGrupoAlumnoController extends MainController implements 
                 oLDanzas.add(v);
             }
             cBDanza.setItems(oLDanzas);
-            
-            
-            
-            
-            
-            
-            /*
-            tCClase.setCellValueFactory(new PropertyValueFactory<>("Clase"));
+
+            tCSalon.setCellValueFactory(new PropertyValueFactory<>("Salon"));
+            tCNivel.setCellValueFactory(new PropertyValueFactory<>("Nivel"));
             tCMaestro.setCellValueFactory(new PropertyValueFactory<>("Maestro"));
+
             tCDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
             tCHora.setCellValueFactory(new PropertyValueFactory<>("Hora"));
-            alumno = (Alumno) this.parametros;
-            
-            */
+
+            tCAlumno.setCellValueFactory(new PropertyValueFactory<>("Alumno"));
+            tCGrupo.setCellValueFactory(new PropertyValueFactory<>("Grupo"));
+            tCFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("FechaIngreso"));
         });
     }
 }

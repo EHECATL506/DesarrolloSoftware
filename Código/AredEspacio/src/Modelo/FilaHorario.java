@@ -13,26 +13,12 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class FilaHorario {
 
-    private final SimpleStringProperty clase;
-    private final SimpleStringProperty maestro;
     private final SimpleStringProperty dia;
     private final SimpleStringProperty hora;
-    private final SimpleStringProperty nivel;
 
-    public FilaHorario(String clase, String maestro, String dia, String hora, String nivel) {
-        this.clase = new SimpleStringProperty(clase);
-        this.maestro = new SimpleStringProperty(maestro);
+    public FilaHorario(String dia, String hora) {
         this.dia = new SimpleStringProperty(dia);
         this.hora = new SimpleStringProperty(hora);
-        this.nivel = new SimpleStringProperty(nivel);
-    }
-
-    public String getClase() {
-        return clase.get();
-    }
-
-    public String getMaestro() {
-        return maestro.get();
     }
 
     public String getDia() {
@@ -41,9 +27,5 @@ public class FilaHorario {
 
     public String getHora() {
         return hora.get();
-    }
-    
-    public String getNivel() {
-        return nivel.get();
     }
 }

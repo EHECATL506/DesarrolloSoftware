@@ -8,6 +8,7 @@ package Modelo;
 import ControladorBD.ClaseJpaController;
 import Exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -22,6 +23,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,9 +36,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c")
-    , @NamedQuery(name = "Clase.findByIdGrupo", query = "SELECT c FROM Clase c WHERE c.idGrupo.idGrupo = :idGrupo")
-    , @NamedQuery(name = "Clase.findByIdClase", query = "SELECT c FROM Clase c WHERE c.idClase = :idClase")})
+    , @NamedQuery(name = "Clase.findByIdAlumno", query = "SELECT c FROM Clase c WHERE c.idAlumno = :idAlumno")
+    , @NamedQuery(name = "Clase.findByIdGrupo", query = "SELECT c FROM Clase c WHERE c.idGrupo = :idGrupo")
+    , @NamedQuery(name = "Clase.findByIdClase", query = "SELECT c FROM Clase c WHERE c.idClase = :idClase")
+    , @NamedQuery(name = "Clase.findByFechaRegistro", query = "SELECT c FROM Clase c WHERE c.fechaRegistro = :fechaRegistro")})
 public class Clase implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "fechaRegistro")
+    @Temporal(TemporalType.DATE)
+    private Date fechaRegistro;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -128,5 +138,13 @@ public class Clase implements Serializable {
         this.idGrupo=grupo;
         controller.edit(this);
         return true;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
     }
 }

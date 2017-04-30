@@ -75,6 +75,23 @@ CREATE TABLE `clase` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+-- Table structure for Pago
+-- ----------------------------
+DROP TABLE IF EXISTS `Pago`;
+CREATE TABLE `PAgo` (
+`idPago`  int(11) NOT NULL AUTO_INCREMENT ,
+`folio`  varchar(12) NOT NULL ,
+`idClase`  int(11) NOT NULL,
+`descuento`  float NOT NULL ,
+`abono`  float NOT NULL ,
+`fechaPago`  date NOT NULL ,
+`status` varchar(10) NOT NULL,
+`tipoDePago`  varchar(32) NOT NULL ,
+PRIMARY KEY (`idPago`),
+KEY `idClase` (`idClase`),
+CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+-- ----------------------------
 -- Table structure for contador
 -- ----------------------------
 DROP TABLE IF EXISTS `contador`;

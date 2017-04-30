@@ -233,7 +233,7 @@ public class GrupoJpaController implements Serializable {
     public List<Grupo> obtenerPorDanza (Danza danza) {
          EntityManager em = getEntityManager();
          List<Grupo> g = em.createNamedQuery("Grupo.findByIdDanza")
-                .setParameter("idDanza", "%" + danza + "%").getResultList();
+                .setParameter("idDanza" , danza ).getResultList();
         return g;
     }
 
