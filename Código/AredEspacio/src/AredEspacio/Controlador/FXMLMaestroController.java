@@ -527,29 +527,41 @@ public class FXMLMaestroController extends MainController implements Initializab
         panel.setVgap(10);
         panel.setPadding(new Insets(10, 10, 10, 10));
         TableView tabla = new TableView();
+        
         TableColumn cId = new TableColumn();
         cId.setPrefWidth(40);
         cId.setText("ID");
         cId.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        
         TableColumn cSalon = new TableColumn();
         cSalon.setText("Salon");
-        cSalon.setPrefWidth(100);
+        cSalon.setPrefWidth(80);
         cSalon.setCellValueFactory(new PropertyValueFactory<>("Salon"));
+        
         TableColumn cTipoDeDanza = new TableColumn();
         cTipoDeDanza.setText("Tipo de Danza");
         cTipoDeDanza.setPrefWidth(160);
         cTipoDeDanza.setCellValueFactory(new PropertyValueFactory<>("TipoDeDanza"));
+        
+        TableColumn cNivel = new TableColumn();
+        cNivel.setText("Nivel");
+        cNivel.setPrefWidth(100);
+        cNivel.setCellValueFactory(new PropertyValueFactory<>("Nivel"));
+        
+        
+        
+        
         TableColumn cDia = new TableColumn();
         cDia.setText("Día");
-        cDia.setPrefWidth(120);
+        cDia.setPrefWidth(100);
         cDia.setCellValueFactory(new PropertyValueFactory<>("Dia"));
         TableColumn cHora = new TableColumn();
         cHora.setText("Hora");
-        cHora.setPrefWidth(180);
+        cHora.setPrefWidth(120);
         cHora.setCellValueFactory(new PropertyValueFactory<>("Hora"));
         ObservableList lista = FXCollections.observableArrayList(GrupoAsignado.obtenerGruposAsignado(maestro));
         tabla.setItems(lista);
-        tabla.getColumns().addAll(cId, cSalon, cTipoDeDanza, cDia, cHora);
+        tabla.getColumns().addAll(cId, cSalon, cTipoDeDanza,cNivel, cDia, cHora);
         tabla.setPrefHeight(200);
         tabla.setPrefWidth(600);
         panel.setPadding(new Insets(5));
