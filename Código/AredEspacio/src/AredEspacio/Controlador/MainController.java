@@ -19,5 +19,8 @@ public class MainController{
     public void setTipoMenu(TipoDeMenu nenu) {
         tipoMenu = nenu;
     }
+    public TipoDeMenu getTipoDeMenu() {
+        return this.tipoMenu;
+    }
     
 }

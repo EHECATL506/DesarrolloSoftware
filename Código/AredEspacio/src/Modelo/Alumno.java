@@ -54,6 +54,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Alumno.findByStatus", query = "SELECT a FROM Alumno a WHERE a.status = :status")})
 public class Alumno implements Serializable {
 
+    @Lob
+    @Column(name = "foto")
+    private byte[] foto;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,9 +101,6 @@ public class Alumno implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
-    @Lob
-    @Column(name = "foto")
-    private byte[] foto;
     @Basic(optional = false)
     @Column(name = "fechaRegistro")
     @Temporal(TemporalType.DATE)
@@ -247,13 +248,6 @@ public class Alumno implements Serializable {
         this.estado = estado;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     public Date getFechaRegistro() {
         return fechaRegistro;
@@ -319,5 +313,13 @@ public class Alumno implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Alumno[ idAlumno=" + idAlumno + " ]";
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

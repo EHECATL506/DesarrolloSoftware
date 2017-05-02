@@ -56,8 +56,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Maestro.findByFechaDeDeshabilitacion", query = "SELECT m FROM Maestro m WHERE m.fechaDeDeshabilitacion = :fechaDeDeshabilitacion")})
 public class Maestro implements Serializable {
 
-    @Basic(optional = false)
-    @Lob
+    @Lob()
     @Column(name = "foto")
     private byte[] foto;
 
@@ -299,13 +298,6 @@ public class Maestro implements Serializable {
     public void setGrupoList(List<Grupo> grupoList) {
         this.grupoList = grupoList;
     }
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
     
     @Override
     public int hashCode() {
@@ -378,5 +370,13 @@ public class Maestro implements Serializable {
     public static List<Maestro> obtenerMaestroPorApellido(String apellidos) {
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
         return em.createNamedQuery("Maestro.findByApellidos").setParameter("apellidos", "%" + apellidos + "%").getResultList();
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }

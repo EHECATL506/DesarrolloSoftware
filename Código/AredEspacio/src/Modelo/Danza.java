@@ -9,6 +9,7 @@ import ControladorBD.DanzaJpaController;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,9 +17,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +35,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Danza.findByIdDanza", query = "SELECT d FROM Danza d WHERE d.idDanza = :idDanza")
     , @NamedQuery(name = "Danza.findByTipoDanza", query = "SELECT d FROM Danza d WHERE d.tipoDanza = :tipoDanza")})
 public class Danza implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDanza")
+    private List<Grupo> grupoList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -119,5 +125,14 @@ public class Danza implements Serializable {
                 Persistence.createEntityManagerFactory("AredEspacioPU",null));
         danza.create(this);
         return true;
+    }
+
+    @XmlTransient
+    public List<Grupo> getGrupoList() {
+        return grupoList;
+    }
+
+    public void setGrupoList(List<Grupo> grupoList) {
+        this.grupoList = grupoList;
     }
 }

@@ -48,17 +48,33 @@ public class FXMLMarcoController extends MainController implements Initializable
     }
     
     
-
+    //Administrar Alumno
     @FXML
     public void registrarAlumno() {
         escena.cargarEscenaConParametros(EscenaPrincipal.EscenaRegistrarAlumno, null, TipoDeMenu.REGISTRAR);
     }
 
     @FXML
-    public void buscarAlumno() {
-        escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
+    public void consultarAlumno() {
+        escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.CONSULTAR);
     }
-
+    
+    @FXML
+    public void modificarAlumno() {
+        escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.MODIFICAR);
+    }
+    
+    @FXML
+    public void eliminarAlumno() {
+        escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.ELIMINAR);
+    }
+    
+    //Pagos e Incripciones
+    @FXML
+    public void incribirAlumno() {
+        escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.INCRIBIR);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

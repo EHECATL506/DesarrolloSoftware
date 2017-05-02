@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLAsignarGrupoAlumnoController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLIncribirAlumnoController">
    <children>
       <StackPane layoutX="14.0" layoutY="87.0" prefHeight="403.0" prefWidth="763.0">
          <children>
@@ -26,7 +26,7 @@
                      <children>
                         <Label layoutX="17.0" layoutY="33.0" text="Tipo de Danza:" />
                         <ComboBox fx:id="cBDanza" layoutX="102.0" layoutY="28.0" minHeight="30.0" prefHeight="30.0" prefWidth="159.0" promptText="Selecciona la danza" />
-                        <Button layoutX="269.0" layoutY="31.0" mnemonicParsing="false" onAction="#bAgregar" text="Buscar" />
+                        <Button layoutX="269.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicBuscar" text="Buscar" />
                         <Pane layoutX="21.0" layoutY="275.0" prefHeight="125.0" prefWidth="721.0" style="-fx-background-color: #f5f5f0; -fx-border-style: solid;">
                            <children>
                               <TableView fx:id="tVClase" layoutX="14.0" layoutY="20.0" prefHeight="95.0" prefWidth="376.0">
@@ -69,7 +69,7 @@
             </HBox>
          </children>
       </StackPane>
-      <Label layoutX="334.0" layoutY="41.0" text="Inscribir Clase">
+      <Label layoutX="334.0" layoutY="41.0" text="Inscribir Alumno">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>

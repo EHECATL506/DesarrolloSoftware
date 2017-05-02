@@ -16,13 +16,21 @@ import javafx.scene.control.TextField;
  * @author Jonathan
  */
 public class Validar {
-     //validarTexto
+    public static boolean cantidad(TextField texto) {
+        texto.setStyle(null);
+        Pattern auto = Pattern.compile("^[0-9]{1,4}.[0-9]{2}$");
+        boolean valido = auto.matcher(texto.getText()).find();
+        if (valido) return true;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
+    }
+   
+//validarTexto
     public static boolean texto(TextField texto) {
         texto.setStyle(null);
         Pattern auto = Pattern.compile("^([0-9A-Za-zñÑáéíóúÁÉÍÓÚ]+\\s?[0-9A-Za-zñÑáéíóúÁÉÍÓÚ,&.-:+%=/?@#]*\\s?)+$");
         boolean valido = auto.matcher(texto.getText()).find();
         if (valido && (texto.getText().length() < 45) ) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     }
     //validarCorreo
     public static boolean correo(TextField texto) {
@@ -30,7 +38,7 @@ public class Validar {
         Pattern correo = Pattern.compile("^[_A-Za-z0-9]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         boolean valido = correo.matcher(texto.getText()).find();
         if (valido) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     }
     //validarNumero
     public static boolean codigoPostal(TextField texto) {
@@ -38,7 +46,7 @@ public class Validar {
         Pattern postal = Pattern.compile("^\\d{5}$");
         boolean valido = postal.matcher(texto.getText()).find();
         if (valido) return true;    
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     } 
     //validarCelular
     public static boolean celular(TextField texto) {
@@ -46,7 +54,7 @@ public class Validar {
         Pattern digito = Pattern.compile("^\\d{10}$");
         boolean valido = digito.matcher(texto.getText()).find();
         if (valido) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     }
     //validarTelefono
     public static boolean telefono(TextField texto) {
@@ -54,7 +62,7 @@ public class Validar {
         Pattern telefono = Pattern.compile("^\\d{7,10}$");
         boolean valido = telefono.matcher(texto.getText()).find();
         if (valido) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     }
     //validarFecha
     public static boolean fecha(DatePicker texto) {
@@ -62,7 +70,7 @@ public class Validar {
         Pattern fecha = Pattern.compile("^\\d{4}-\\d{2}-\\d{1,2}$");
         boolean valido = fecha.matcher( (texto.getValue() == null) ? "" : texto.getValue().toString() ).find();        
         if (valido) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     }
     //validarCombo
     public static boolean combo(ComboBox texto) {
@@ -70,7 +78,7 @@ public class Validar {
         if (texto.getValue() != null) 
             return true;
         else 
-            texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
         return false;
     }
     
@@ -79,6 +87,6 @@ public class Validar {
         Pattern auto = Pattern.compile("^([0-9A-Za-zñÑáéíóúÁÉÍÓÚ]+\\s?[0-9A-Za-zñÑáéíóúÁÉÍÓÚ,&.-:+%=/?@#]*\\s?)+$");
         boolean valido = auto.matcher(texto.getText()).find();
         if (valido && (texto.getText().length() < 64)) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");return false;
+        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
     }
 }

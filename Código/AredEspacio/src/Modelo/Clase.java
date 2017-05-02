@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +21,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -41,6 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Clase.findByIdClase", query = "SELECT c FROM Clase c WHERE c.idClase = :idClase")
     , @NamedQuery(name = "Clase.findByFechaRegistro", query = "SELECT c FROM Clase c WHERE c.fechaRegistro = :fechaRegistro")})
 public class Clase implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idClase")
+    private List<Pago> pagoList;
 
     @Basic(optional = false)
     @Column(name = "fechaRegistro")
@@ -146,5 +152,14 @@ public class Clase implements Serializable {
 
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    @XmlTransient
+    public List<Pago> getPagoList() {
+        return pagoList;
+    }
+
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
 }

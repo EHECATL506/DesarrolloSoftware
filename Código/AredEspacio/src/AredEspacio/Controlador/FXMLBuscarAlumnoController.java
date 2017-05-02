@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -50,15 +51,10 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     @FXML
     private TableColumn<?, ?> tCStatus;
     @FXML
-    private Button bEliminar;
-    @FXML
-    private Button bConsultar;
-    @FXML
-    private Button bModificar;
-    @FXML
-    private Button bInscribir;
+    private Button bClicAccion;
+    
     private AlumnoJpaController jpaAlumno;
-
+/*
     //buscarPorApellidos
     public List<Alumno> buscarPorApellidos(String busqueda) {
         List<Alumno> alumnos = jpaAlumno.obtenerPorApellidos(busqueda);
@@ -82,24 +78,42 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
         }
         return alumnos;
     }
-    
+  */  
     //desplegarAlumnos
     public void desplegarAlumnos () {
         List<Alumno> alumnos = jpaAlumno.findAlumnoEntities();
         if (alumnos.size() > 0) {
             ObservableList lista = FXCollections.observableArrayList(alumnos);
             tVResultados.setItems(lista);
-            bConsultar.setDisable(false);
-            bModificar.setDisable(false);
-            bEliminar.setDisable(false);
-            bInscribir.setDisable(false);
+            bClicAccion.setDisable(false);
+            bClicAccion.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (getTipoDeMenu().equals(TipoDeMenu.INCRIBIR)) {
+                       
+                        inscribir();
+                    }
+                    if (getTipoDeMenu().equals(TipoDeMenu.CONSULTAR)) {
+                        bClicAccion.setText("Consultar");
+                        consultar();
+                    }
+                    if (getTipoDeMenu().equals(TipoDeMenu.MODIFICAR)) {
+                        bClicAccion.setText("Modificar");
+                        modificar();
+                    }
+                    else if (getTipoDeMenu().equals(TipoDeMenu.ELIMINAR)) {
+                        bClicAccion.setText("Eliminar");
+                        eliminar();
+                    }                
+                }            
+            });
         }
     }
     //clicBuscar
     @FXML
     void buscar(ActionEvent event) {
         String busqueda = tFBusqueda.getText();
-
+        /*
         if (cBCriterio.getValue() == "Apellidos") {
             List<Alumno> alumnos = buscarPorApellidos(busqueda);
             ObservableList lista = FXCollections.observableArrayList(alumnos);
@@ -111,21 +125,22 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
         } else if (cBCriterio.getValue() == null) {
             Mensaje.advertencia("No se ha seleccionado el criterio");
         }
+*/
     }
-
-    @FXML
-    void inscribir(ActionEvent event) {
+    
+    //clicIncribir
+    private void inscribir() {
+        bClicAccion.setText("Incribir");
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
         if (row != null) {
-            escena.cargarEscenaConParametros(EscenaPrincipal.EscenaAgregarGrupo, row, TipoDeMenu.AGREGAR);
+            escena.cargarEscenaConParametros(EscenaPrincipal.EscenaIncribirAlumno, row, TipoDeMenu.INCRIBIR);
         } else {
             Mensaje.advertencia("No se ha seleccionado el alumno");
         }
     }
 
     //clicConsultar
-    @FXML
-    void consultar(ActionEvent event) {
+    private void consultar() {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
         if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaRegistrarAlumno, row, TipoDeMenu.CONSULTAR);
@@ -133,10 +148,9 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
             Mensaje.advertencia("No se ha seleccionado el alumno");
         }
     }
-    //clicDarDeBaja
 
-    @FXML
-    void eliminar(ActionEvent event) {
+    //clicDarDeBaja
+    private void eliminar() {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
         if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaEliminarAlumno, row, TipoDeMenu.ELIMINAR);
@@ -146,8 +160,7 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     }
 
     //clicModificar
-    @FXML
-    void modificar(ActionEvent event) {
+    private void modificar() {
         Alumno row = tVResultados.getSelectionModel().getSelectedItem();
         if (row != null) {
             escena.cargarEscenaConParametros(EscenaPrincipal.EscenaRegistrarAlumno, row, TipoDeMenu.MODIFICAR);

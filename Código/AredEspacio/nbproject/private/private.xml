@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/Modelo/FilaClase.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/ClaseJpaController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/Modelo/FilaHorario.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/AredEspacio/Controlador/FXMLAsignarGrupoAlumnoController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/DanzaJpaController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/AlumnoJpaController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/HorarioJpaController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/MaestroJpaController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/AredEspacio/Controlador/FXMLCambioDeGrupoController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/AredEspacio/Controlador/FXMLBuscarAlumnoController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/GrupoJpaController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/AredEspacio/Controlador/FXMLEliminarAlumnoController.java</file>
-            <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/Modelo/Horario.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

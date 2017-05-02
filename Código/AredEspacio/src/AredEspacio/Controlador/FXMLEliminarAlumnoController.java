@@ -83,7 +83,7 @@ public class FXMLEliminarAlumnoController extends MainController implements Init
     }
     @FXML
     void cancelar(ActionEvent event) {
-        escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
+        escena.cargarEscena(EscenaPrincipal.EscenaInicio);
     }
     
     @FXML
@@ -100,7 +100,7 @@ public class FXMLEliminarAlumnoController extends MainController implements Init
             }
             jpa.edit(alumno);
             Mensaje.informacion("El alumno ha sido dado de " + alumno.getStatus()); 
-            escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
+            escena.cargarEscena(EscenaPrincipal.EscenaInicio);
         }
         else Mensaje.advertencia("No se ha capturado el motivo");
                

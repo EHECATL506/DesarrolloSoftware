@@ -258,10 +258,10 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     //clicCancelar
     @FXML
     void clicCancelar(ActionEvent event) {
-        escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
+        escena.cargarEscena(EscenaPrincipal.EscenaInicio );
     }
     
-    //validarCampos
+    //validarAlumno
     public int validarCampos(Alumno alumno) throws ParseException {
         int valido = 2048;
         if (Validar.texto(tFNombre)) {valido >>=1; alumno.setNombre(tFNombre.getText());}

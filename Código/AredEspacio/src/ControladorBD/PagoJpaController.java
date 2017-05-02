@@ -6,15 +6,16 @@
 package ControladorBD;
 
 import ControladorBD.exceptions.NonexistentEntityException;
-import Modelo.Pago;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import Modelo.Clase;
+import Modelo.Pago;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,7 +37,16 @@ public class PagoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Clase idClase = pago.getIdClase();
+            if (idClase != null) {
+                idClase = em.getReference(idClase.getClass(), idClase.getIdClase());
+                pago.setIdClase(idClase);
+            }
             em.persist(pago);
+            if (idClase != null) {
+                idClase.getPagoList().add(pago);
+                idClase = em.merge(idClase);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +60,22 @@ public class PagoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Pago persistentPago = em.find(Pago.class, pago.getIdPago());
+            Clase idClaseOld = persistentPago.getIdClase();
+            Clase idClaseNew = pago.getIdClase();
+            if (idClaseNew != null) {
+                idClaseNew = em.getReference(idClaseNew.getClass(), idClaseNew.getIdClase());
+                pago.setIdClase(idClaseNew);
+            }
             pago = em.merge(pago);
+            if (idClaseOld != null && !idClaseOld.equals(idClaseNew)) {
+                idClaseOld.getPagoList().remove(pago);
+                idClaseOld = em.merge(idClaseOld);
+            }
+            if (idClaseNew != null && !idClaseNew.equals(idClaseOld)) {
+                idClaseNew.getPagoList().add(pago);
+                idClaseNew = em.merge(idClaseNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +104,11 @@ public class PagoJpaController implements Serializable {
                 pago.getIdPago();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The pago with id " + id + " no longer exists.", enfe);
+            }
+            Clase idClase = pago.getIdClase();
+            if (idClase != null) {
+                idClase.getPagoList().remove(pago);
+                idClase = em.merge(idClase);
             }
             em.remove(pago);
             em.getTransaction().commit();

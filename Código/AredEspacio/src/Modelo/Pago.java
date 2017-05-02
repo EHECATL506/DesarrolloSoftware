@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p")
     , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")
+    , @NamedQuery(name = "Pago.findByIdClase", query = "SELECT p FROM Pago p WHERE p.idClase = :idClase")
     , @NamedQuery(name = "Pago.findByFolio", query = "SELECT p FROM Pago p WHERE p.folio = :folio")
     , @NamedQuery(name = "Pago.findByDescuento", query = "SELECT p FROM Pago p WHERE p.descuento = :descuento")
     , @NamedQuery(name = "Pago.findByAbono", query = "SELECT p FROM Pago p WHERE p.abono = :abono")
@@ -63,6 +66,9 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipoDePago")
     private String tipoDePago;
+    @JoinColumn(name = "idClase", referencedColumnName = "idClase")
+    @ManyToOne(optional = false)
+    private Clase idClase;
 
     public Pago() {
     }
@@ -137,6 +143,14 @@ public class Pago implements Serializable {
         this.tipoDePago = tipoDePago;
     }
 
+    public Clase getIdClase() {
+        return idClase;
+    }
+
+    public void setIdClase(Clase idClase) {
+        this.idClase = idClase;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -159,7 +173,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "AredEspacio.Pago[ idPago=" + idPago + " ]";
+        return "Modelo.Pago[ idPago=" + idPago + " ]";
     }
     
 }
