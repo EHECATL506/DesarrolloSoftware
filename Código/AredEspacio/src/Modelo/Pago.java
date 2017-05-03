@@ -66,9 +66,14 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipoDePago")
     private String tipoDePago;
+    
     @JoinColumn(name = "idClase", referencedColumnName = "idClase")
     @ManyToOne(optional = false)
     private Clase idClase;
+    
+    @JoinColumn(name = "idPromocion", referencedColumnName = "idPromocion")
+    @ManyToOne(optional = false)
+    private Promocion idPromocion;
 
     public Pago() {
     }
@@ -87,6 +92,14 @@ public class Pago implements Serializable {
         this.tipoDePago = tipoDePago;
     }
 
+    public Promocion getIdPromocion() {
+        return idPromocion;
+    }
+
+    public void setIdPromocion(Promocion idPromocion) {
+        this.idPromocion = idPromocion;
+    }
+    
     public Integer getIdPago() {
         return idPago;
     }
