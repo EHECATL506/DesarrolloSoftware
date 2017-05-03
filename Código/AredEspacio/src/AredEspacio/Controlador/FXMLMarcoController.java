@@ -16,7 +16,19 @@ public class FXMLMarcoController extends MainController implements Initializable
     
     @FXML
     public void modificarGrupo() {
-        this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarGrupo);
+        this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarGrupo,
+                null, TipoDeMenu.MODIFICAR);
+    }
+    
+    @FXML
+    public void deshabilitarGrupo(){
+        this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarGrupo,
+                null, TipoDeMenu.DESHABILITAR);
+    }
+    
+    @FXML
+    public void listaDeDanzas(){
+        //TODO
     }
 
     @FXML

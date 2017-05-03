@@ -83,6 +83,12 @@ public class FXMLGrupoController extends MainController implements Initializable
 
     @FXML
     private Button bEliminarHorario;
+    
+    @FXML
+    private TextField tfCosto;
+    
+    @FXML
+    private Spinner<Integer> spPorcentaje;
 
     @FXML
     private Button bRegistrarGrupo;
@@ -178,11 +184,10 @@ public class FXMLGrupoController extends MainController implements Initializable
         if (this.horarios.isEmpty()) {
             Mensaje.advertencia("Agregue almenos un dia con su hora de inicio y fin al horario");
         } else {
-            //boolean salon = Validar.texto(this.tfSalon);
-            
             boolean danza = Validar.combo(this.tfTipoDeDanza);
             boolean nivel = Validar.combo(this.txNivel);
-            if (danza && nivel) {
+            boolean costo = Validar.cantidadSinPunto(this.tfCosto);
+            if (danza && nivel && costo) {
                 try {
                     Maestro maestro = (Maestro) this.tMaestro.getSelectionModel().getSelectedItem();
                     if (maestro == null) {
@@ -190,6 +195,8 @@ public class FXMLGrupoController extends MainController implements Initializable
                     } else {
                         Grupo grupo = new Grupo();
                         grupo.setSalon(this.tfSalon.getText());
+                        grupo.setCosto(Integer.parseInt(this.tfCosto.getText()));
+                        grupo.setPorcentaje(this.spPorcentaje.getValue());
                         Danza newDanza = Danza.buscarPorTipoDanza(this.tfTipoDeDanza.getValue().toString());
                         grupo.setIdDanza(newDanza);
                         grupo.setNivel(this.txNivel.getValue().toString());
@@ -201,6 +208,7 @@ public class FXMLGrupoController extends MainController implements Initializable
                         this.escena.cargarEscena(EscenaPrincipal.EscenaGrupo);
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Mensaje.advertencia("No hay conexión con la base de Datos");
                 }
             } else {
@@ -258,6 +266,7 @@ public class FXMLGrupoController extends MainController implements Initializable
         this.inicializarSpinner(this.spHorasFin,6, 22, 1);
         this.inicializarSpinner(this.spMinutosInicio,0, 55, 5);
         this.inicializarSpinner(this.spMinutosFin,0, 55, 5);
+        this.inicializarSpinner(this.spPorcentaje, 0, 100, 5);
 
         this.cDia.setCellValueFactory(
                 new PropertyValueFactory<>("Dia")

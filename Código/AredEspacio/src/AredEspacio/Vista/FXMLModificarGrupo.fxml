@@ -15,7 +15,7 @@
    <children>
       <Label layoutX="41.0" layoutY="136.0" text="Salon:" />
       <Label layoutX="41.0" layoutY="168.0" text="Tipo de Danza:" />
-      <Label layoutX="303.0" layoutY="38.0" text="Registrar Grupo">
+      <Label layoutX="303.0" layoutY="42.0" text="Registrar Grupo">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
@@ -82,5 +82,9 @@
       <ComboBox fx:id="txNivel" layoutX="87.0" layoutY="199.0" prefHeight="25.0" prefWidth="201.0" />
       <ComboBox fx:id="tfTipoDeDanza" layoutX="123.0" layoutY="164.0" prefHeight="25.0" prefWidth="137.0" />
       <Button layoutX="262.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+" />
+      <TextField fx:id="tfCosto" layoutX="87.0" layoutY="232.0" prefHeight="25.0" prefWidth="65.0" />
+      <Label layoutX="43.0" layoutY="235.0" text="Costo:" />
+      <Label layoutX="156.0" layoutY="235.0" text="Porcentaje:" />
+      <Spinner fx:id="spPorcentaje" layoutX="227.0" layoutY="231.0" prefHeight="25.0" prefWidth="60.0" />
    </children>
 </AnchorPane>

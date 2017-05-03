@@ -6,6 +6,7 @@ import Modelo.Grupo;
 import Modelo.Horario;
 import Modelo.Maestro;
 import Modelo.Mensaje;
+import Modelo.TipoDeMenu;
 import Modelo.Validar;
 import java.net.URL;
 import java.sql.Date;
@@ -33,6 +34,9 @@ public class FXMLModificarGrupoController extends MainController implements Init
 
     @FXML
     private TextField tfSalon;
+    
+    @FXML
+    private TextField tfCosto;
 
     @FXML
     private ComboBox txNivel;
@@ -79,6 +83,9 @@ public class FXMLModificarGrupoController extends MainController implements Init
     @FXML
     private Spinner<Integer> spMinutosFin;
 
+    @FXML
+    private Spinner<Integer> spPorcentaje;
+    
     @FXML
     private Button bActualizar;
 
@@ -180,18 +187,6 @@ public class FXMLModificarGrupoController extends MainController implements Init
         } catch (Exception e) {
         }
     }
-      /*
-    private boolean validarDiaID(String dia, Integer id) {
-        for (Horario horario : this.horarios) {
-            if (!horario.getIdHorario().equals(id)) {
-                if (horario.getDia().equals(dia)) {
-                    Mensaje.advertencia("No puede tener dos clases el mismo dia");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }*/
 
     @FXML
     void actualizarHorario(ActionEvent event) {
@@ -235,10 +230,13 @@ public class FXMLModificarGrupoController extends MainController implements Init
         } else {
             boolean danza = Validar.combo(this.tfTipoDeDanza);
             boolean nivel = Validar.combo(this.txNivel);
-            if (danza && nivel) {
+            boolean costo = Validar.cantidadSinPunto(this.tfCosto);
+            if (danza && nivel && costo) {
                 try {
                     Grupo grupo = (Grupo) this.parametros;
                     grupo.setSalon(this.tfSalon.getText());
+                    grupo.setCosto(Integer.parseInt(this.tfCosto.getText()));
+                    grupo.setPorcentaje(this.spPorcentaje.getValue());
                     Danza newDanza = Danza.buscarPorTipoDanza(this.tfTipoDeDanza.getValue().toString());
                     grupo.setIdDanza(newDanza);
                     grupo.setNivel(this.txNivel.getValue().toString());
@@ -247,7 +245,8 @@ public class FXMLModificarGrupoController extends MainController implements Init
                     if (this.bActualizarMaestro.isVisible()) {
                         grupo.actualizar(this.horarios, this.horariosEliminados);
                         Mensaje.informacion("Exito! al actualizar el grupo");
-                        this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarGrupo);
+                        this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarGrupo
+                                ,null, TipoDeMenu.MODIFICAR);
                     } else {
                         Maestro maestro = (Maestro) this.tMaestro.getSelectionModel().getSelectedItem();
                         if (maestro == null) {
@@ -255,8 +254,9 @@ public class FXMLModificarGrupoController extends MainController implements Init
                         } else {
                             grupo.setIdMaestro(maestro);
                             grupo.actualizar(this.horarios, this.horariosEliminados);
-                            Mensaje.informacion("Exito! al registrar el grupo");
-                            this.escena.cargarEscena(EscenaPrincipal.EscenaBuscarGrupo);
+                            Mensaje.informacion("Exito! al actualizar el grupo");
+                            this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarGrupo
+                                ,null, TipoDeMenu.MODIFICAR);
                         }
                     }
                 } catch (Exception e) {
@@ -295,6 +295,7 @@ public class FXMLModificarGrupoController extends MainController implements Init
         this.inicializarSpinner(this.spHorasFin, 6, 22, 1);
         this.inicializarSpinner(this.spMinutosInicio, 0, 55, 5);
         this.inicializarSpinner(this.spMinutosFin, 0, 55, 5);
+        this.inicializarSpinner(this.spPorcentaje, 0, 100, 5);
 
         this.cDia.setCellValueFactory(
                 new PropertyValueFactory<>("Dia")
@@ -318,6 +319,8 @@ public class FXMLModificarGrupoController extends MainController implements Init
             this.horarios = new ArrayList(grupo.getHorarioList());
             this.horariosEliminados = new ArrayList<>();
             this.tfSalon.setText(grupo.getSalon());
+            this.tfCosto.setText(String.valueOf(grupo.getCosto()));
+            this.spPorcentaje.getValueFactory().setValue(grupo.getPorcentaje());
             this.tfTipoDeDanza.getSelectionModel().select(grupo.getTipoDeDanza());
             this.txNivel.getSelectionModel().select(grupo.getNivel());
             this.lMaestro.setText("Maestro: " + grupo.getMaestro());

@@ -59,6 +59,14 @@ public class Grupo implements Serializable {
     @Column(name = "finDeGrupo")
     @Temporal(TemporalType.DATE)
     private Date finDeGrupo;
+    
+    @Basic(optional = false)
+    @Column(name = "costo")
+    private int costo;
+    @Basic(optional = false)
+    @Column(name = "porcentaje")
+    private int porcentaje;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idGrupo")
     private List<Horario> horarioList;
     @JoinColumn(name = "idMaestro", referencedColumnName = "id")
@@ -73,6 +81,22 @@ public class Grupo implements Serializable {
     public Grupo() {
     }
 
+    public int getCosto() {
+        return costo;
+    }
+
+    public int getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
+
+    public void setPorcentaje(int porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+   
     public Grupo(Integer idGrupo) {
         this.idGrupo = idGrupo;
     }

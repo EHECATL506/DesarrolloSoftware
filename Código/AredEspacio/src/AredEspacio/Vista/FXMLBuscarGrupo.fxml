@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="AredEspacio.Controlador.FXMLBuscarGrupoController">
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLBuscarGrupoController">
    <children>
       <TableView fx:id="tGrupo" layoutX="39.0" layoutY="147.0" prefHeight="300.0" prefWidth="708.0" tableMenuButtonVisible="true">
         <columns>
@@ -18,11 +17,12 @@
             <TableColumn fx:id="cMaestro" prefWidth="279.0" text="Maestro Asignado" />
         </columns>
       </TableView>
-      <Button layoutX="644.0" layoutY="465.0" mnemonicParsing="false" onAction="#cargarModificar" text="Modificar Grupo" />
+      <Button fx:id="modificar" layoutX="644.0" layoutY="465.0" mnemonicParsing="false" onAction="#cargarModificar" text="Modificar Grupo" />
       <Label layoutX="325.0" layoutY="68.0" text="Buscar Grupo">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
+      <Button fx:id="deshabilitar" layoutX="631.0" layoutY="465.0" mnemonicParsing="false" onAction="#deshabilitarGrupo" text="Deshabilitar Grupo" />
    </children>
 </AnchorPane>

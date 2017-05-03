@@ -20,8 +20,8 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="tfSalon" layoutX="87.0" layoutY="132.0" prefHeight="25.0" prefWidth="189.0" />
-      <TableView fx:id="tMaestro" layoutX="320.0" layoutY="132.0" prefHeight="120.0" prefWidth="442.0">
+      <TextField fx:id="tfSalon" layoutX="87.0" layoutY="132.0" prefHeight="25.0" prefWidth="199.0" />
+      <TableView fx:id="tMaestro" layoutX="320.0" layoutY="132.0" prefHeight="124.0" prefWidth="442.0">
         <columns>
           <TableColumn fx:id="cNoDeColaborador" prefWidth="116.0" text="No. de Colaborador" />
           <TableColumn fx:id="cNombre" prefWidth="138.0" text="Nombre" />
@@ -29,7 +29,7 @@
         </columns>
       </TableView>
       <Label layoutX="461.0" layoutY="103.0" text="Seleccione un Maestro:" />
-      <Pane layoutX="41.0" layoutY="275.0" prefHeight="200.0" prefWidth="721.0" style="-fx-border-color: #256473; -fx-background-color: #EBEFF0;">
+      <Pane layoutX="40.0" layoutY="275.0" prefHeight="200.0" prefWidth="721.0" style="-fx-border-color: #256473; -fx-background-color: #EBEFF0;">
          <children>
             <TableView fx:id="tHorario" layoutX="7.0" layoutY="7.0" prefHeight="187.0" prefWidth="357.0">
               <columns>
@@ -75,10 +75,14 @@
             <Button fx:id="bEliminarHorario" layoutX="385.0" layoutY="161.0" mnemonicParsing="false" onAction="#eliminarDelHorario" text="Eliminar del horario" />
          </children>
       </Pane>
-      <Button fx:id="bRegistrarGrupo" layoutX="662.0" layoutY="498.0" mnemonicParsing="false" onAction="#registrarGrupo" text="Registrar Grupo" />
+      <Button fx:id="bRegistrarGrupo" layoutX="662.0" layoutY="486.0" mnemonicParsing="false" onAction="#registrarGrupo" text="Registrar Grupo" />
       <Label layoutX="42.0" layoutY="198.0" text="Nivel:" />
-      <ComboBox fx:id="tfTipoDeDanza" layoutX="126.0" layoutY="164.0" prefHeight="25.0" prefWidth="123.0" />
-      <ComboBox fx:id="txNivel" layoutX="87.0" layoutY="194.0" prefHeight="25.0" prefWidth="189.0" />
-      <Button layoutX="251.0" layoutY="164.0" mnemonicParsing="false" onAction="#agregarDanza" text="+" />
+      <ComboBox fx:id="tfTipoDeDanza" layoutX="126.0" layoutY="164.0" prefHeight="25.0" prefWidth="133.0" />
+      <ComboBox fx:id="txNivel" layoutX="87.0" layoutY="194.0" prefHeight="25.0" prefWidth="199.0" />
+      <Button layoutX="261.0" layoutY="164.0" mnemonicParsing="false" onAction="#agregarDanza" text="+" />
+      <TextField fx:id="tfCosto" layoutX="87.0" layoutY="228.0" prefHeight="25.0" prefWidth="65.0" />
+      <Label layoutX="43.0" layoutY="232.0" text="Costo:" />
+      <Label layoutX="162.0" layoutY="232.0" text="Porcentaje:" />
+      <Spinner fx:id="spPorcentaje" layoutX="225.0" layoutY="228.0" prefHeight="25.0" prefWidth="60.0" />
    </children>
 </AnchorPane>

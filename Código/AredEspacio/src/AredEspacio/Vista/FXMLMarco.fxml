@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMarcoController">
+<AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMarcoController">
    <children>
       <MenuBar fx:id="menu" layoutY="2.0" style="-fx-font-size: 14;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -32,9 +29,11 @@
             <Menu mnemonicParsing="false" text="Grupo">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#registrarGrupo" text="Registrar" />
-                  <MenuItem mnemonicParsing="false" onAction="#modificarGrupo" text="Buscar" />
+                  <MenuItem mnemonicParsing="false" onAction="#modificarGrupo" text="Modificar" />
+                  <MenuItem mnemonicParsing="false" onAction="#deshabilitarGrupo" text="Deshabilitar" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#cambiarAlumnoDeGrupo" text="Cambiar Alumno" />
+                  <MenuItem mnemonicParsing="false" onAction="#listaDeDanzas" text="Danza" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Incripción">
