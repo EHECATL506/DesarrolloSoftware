@@ -27,6 +27,8 @@ public class EscenaPrincipal extends Application {
     public static String EscenaBuscarGrupo = "Vista/FXMLBuscarGrupo.fxml";
     public static String EscenaCambiarDeGrupo = "Vista/FXMLCambioDeGrupo.fxml";
     public static String EscenaIncribirAlumno = "Vista/FXMLIncribirAlumno.fxml";
+    public static String EscenaRegistrarEgreso = "Vista/FXMLEgreso.fxml";
+
 
 
     @Override

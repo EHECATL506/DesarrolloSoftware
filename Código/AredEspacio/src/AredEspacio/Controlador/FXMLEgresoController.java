@@ -1,8 +1,6 @@
 package AredEspacio.Controlador;
 
 import AredEspacio.EscenaPrincipal;
-import ControladorBD.EgresosJpaController;
-import Modelo.Egresos;
 import Modelo.Maestro;
 import java.net.URL;
 import java.util.Calendar;
@@ -26,30 +24,31 @@ import javax.persistence.Persistence;
  *
  * @author EHECA
  */
-public class FXMLEgresosController extends MainController implements Initializable {
+public class FXMLEgresoController extends MainController implements Initializable {
     @FXML
-    private TableColumn<?, ?> columnaid;
+    private TableColumn columnaid;
     @FXML
     private TextField campomaestro;
     @FXML
     private TextField campomonto;
     @FXML
-    private TableColumn<?, ?> columnanombre;
+    private TableColumn columnanombre;
     @FXML
     private Button botonoregistra;
     @FXML
     private Button botoncancelar;
     @FXML
-    private TableView<?> tablamaestros;
+    private TableView tablamaestros;
     @FXML
-    private TableColumn<?, ?> columnaapellido;
+    private TableColumn columnaapellido;
     @FXML
     private TextArea campomotivo;
    
     @FXML
     void registraEgresos(ActionEvent event) {
+        /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
-       EgresosJpaController erjpa = new EgresosJpaController(emf);
+        EgresosJpaController erjpa = new EgresosJpaController(emf);
         Calendar calendario=GregorianCalendar.getInstance();
         java.util.Date fecha=new java.util.Date();
         fecha.setTime(calendario.getTimeInMillis());
@@ -67,7 +66,7 @@ public class FXMLEgresosController extends MainController implements Initializab
         }
         catch(Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     @FXML

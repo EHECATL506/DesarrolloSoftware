@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ControladorBD;
 
+import Modelo.Egreso;
 import ControladorBD.exceptions.NonexistentEntityException;
-import Modelo.Egresos;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -18,11 +13,11 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author EHECA
+ * @author Mauricio
  */
-public class EgresosJpaController implements Serializable {
+public class EgresoJpaController implements Serializable {
 
-    public EgresosJpaController(EntityManagerFactory emf) {
+    public EgresoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -31,12 +26,12 @@ public class EgresosJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Egresos egresos) {
+    public void create(Egreso egreso) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(egresos);
+            em.persist(egreso);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,19 +40,19 @@ public class EgresosJpaController implements Serializable {
         }
     }
 
-    public void edit(Egresos egresos) throws NonexistentEntityException, Exception {
+    public void edit(Egreso egreso) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            egresos = em.merge(egresos);
+            egreso = em.merge(egreso);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = egresos.getIdpago();
-                if (findEgresos(id) == null) {
-                    throw new NonexistentEntityException("The egresos with id " + id + " no longer exists.");
+                Integer id = egreso.getIdPago();
+                if (findEgreso(id) == null) {
+                    throw new NonexistentEntityException("The egreso with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -73,14 +68,14 @@ public class EgresosJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Egresos egresos;
+            Egreso egreso;
             try {
-                egresos = em.getReference(Egresos.class, id);
-                egresos.getIdpago();
+                egreso = em.getReference(Egreso.class, id);
+                egreso.getIdPago();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The egresos with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The egreso with id " + id + " no longer exists.", enfe);
             }
-            em.remove(egresos);
+            em.remove(egreso);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -89,19 +84,19 @@ public class EgresosJpaController implements Serializable {
         }
     }
 
-    public List<Egresos> findEgresosEntities() {
-        return findEgresosEntities(true, -1, -1);
+    public List<Egreso> findEgresoEntities() {
+        return findEgresoEntities(true, -1, -1);
     }
 
-    public List<Egresos> findEgresosEntities(int maxResults, int firstResult) {
-        return findEgresosEntities(false, maxResults, firstResult);
+    public List<Egreso> findEgresoEntities(int maxResults, int firstResult) {
+        return findEgresoEntities(false, maxResults, firstResult);
     }
 
-    private List<Egresos> findEgresosEntities(boolean all, int maxResults, int firstResult) {
+    private List<Egreso> findEgresoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Egresos.class));
+            cq.select(cq.from(Egreso.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -113,20 +108,20 @@ public class EgresosJpaController implements Serializable {
         }
     }
 
-    public Egresos findEgresos(Integer id) {
+    public Egreso findEgreso(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Egresos.class, id);
+            return em.find(Egreso.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getEgresosCount() {
+    public int getEgresoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Egresos> rt = cq.from(Egresos.class);
+            Root<Egreso> rt = cq.from(Egreso.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

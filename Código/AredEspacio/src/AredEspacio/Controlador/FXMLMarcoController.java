@@ -87,6 +87,10 @@ public class FXMLMarcoController extends MainController implements Initializable
         escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.INCRIBIR);
     }
     
+    public void registrarEgreso(){
+       this.escena.cargarEscena(EscenaPrincipal.EscenaRegistrarEgreso);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
