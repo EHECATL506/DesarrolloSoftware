@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-02 23:59:09
+Date: 2017-05-04 18:23:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -93,6 +93,19 @@ CREATE TABLE `danza` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for egreso
+-- ----------------------------
+DROP TABLE IF EXISTS `egreso`;
+CREATE TABLE `egreso` (
+  `idPago` int(11) NOT NULL AUTO_INCREMENT,
+  `monto` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `motivo` text NOT NULL,
+  `IdMaestro` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idPago`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
 -- Table structure for grupo
 -- ----------------------------
 DROP TABLE IF EXISTS `grupo`;
@@ -104,12 +117,14 @@ CREATE TABLE `grupo` (
   `nivel` varchar(45) NOT NULL,
   `inicioDeGrupo` date NOT NULL,
   `finDeGrupo` date DEFAULT NULL,
+  `costo` int(11) NOT NULL,
+  `porcentaje` int(11) NOT NULL,
   PRIMARY KEY (`idGrupo`),
   KEY `idMaestro` (`idMaestro`),
   KEY `idDanza` (`idDanza`),
   CONSTRAINT `grupo_ibfk_1` FOREIGN KEY (`idMaestro`) REFERENCES `maestro` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `grupo_ibfk_2` FOREIGN KEY (`idDanza`) REFERENCES `danza` (`idDanza`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for horario
@@ -123,7 +138,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`),
   KEY `idGrupo` (`idGrupo`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for maestro
@@ -149,7 +164,7 @@ CREATE TABLE `maestro` (
   `fechaDeDeshabilitacion` date DEFAULT NULL,
   `motivoDeDeshabilitacion` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for pago
