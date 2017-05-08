@@ -1,10 +1,17 @@
 package AredEspacio.Controlador;
 
+import AredEspacio.EscenaPrincipal;
+import Modelo.Asistencia;
 import Modelo.Clase;
 import Modelo.Grupo;
+import Modelo.Mensaje;
 import Modelo.TipoDeMenu;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -43,25 +50,39 @@ public class FXMLPaseDeListaController extends MainController implements Initial
     @FXML
     private VBox vNombre;
 
-    private ArrayList<CheckBox> checkList;
+    private Map<CheckBox, Clase> checkList;
 
     @FXML
     void desmarcarTodos(ActionEvent event) {
         this.checkList.forEach(
-                (check) -> check.setSelected(false)
+                (check, clase) -> check.setSelected(false)
         );
     }
 
     @FXML
     void marcarTodos(ActionEvent event) {
         this.checkList.forEach(
-                (check) -> check.setSelected(true)
+                (check, clase) -> check.setSelected(true)
         );
     }
 
     @FXML
     void registrarAsistencia(ActionEvent event) {
-
+        Date fecha = new Date(new GregorianCalendar().getTimeInMillis());
+        try {
+            this.checkList.forEach((check, clase)
+                    -> {
+                Asistencia asistencia = new Asistencia();
+                asistencia.setIdClase(clase);
+                asistencia.setAsistio(check.isSelected());
+                asistencia.setFecha(fecha);
+                asistencia.crear();
+            });
+            Mensaje.informacion("Exito!! al registrar la asistencia del grupo");
+            this.escena.cargarEscena(EscenaPrincipal.EscenaPaseDeLista);
+        } catch (Exception e) {
+            Mensaje.advertencia("No hay conexión, Intentelo mas tarde");
+        }
     }
 
     @Override
@@ -83,7 +104,7 @@ public class FXMLPaseDeListaController extends MainController implements Initial
         this.cMaestro.setCellValueFactory(
                 new PropertyValueFactory<>("Maestro")
         );
-        this.checkList = new ArrayList<>();
+        this.checkList = new HashMap<>();
 
         ArrayList<Grupo> grupos = new ArrayList<>();
         Grupo.listarGrupos().forEach((grupo) -> {
@@ -107,9 +128,7 @@ public class FXMLPaseDeListaController extends MainController implements Initial
                                 String nombre = "        "
                                 + clase.getNombre() + " " + clase.getApellidos();
                                 CheckBox check = new CheckBox(nombre);
-                                check.setId(""+clase.getIdClase());
-                                
-                                this.checkList.add(check);
+                                this.checkList.put(check, clase);
                                 this.vNombre.getChildren().add(check);
                             }
                     );

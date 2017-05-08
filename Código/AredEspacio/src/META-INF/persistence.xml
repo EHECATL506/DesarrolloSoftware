@@ -12,6 +12,7 @@
     <class>Modelo.Pago</class>
     <class>Modelo.Promocion</class>
     <class>Modelo.Egreso</class>
+    <class>Modelo.Asistencia</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/aredespacio?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="admin"/>

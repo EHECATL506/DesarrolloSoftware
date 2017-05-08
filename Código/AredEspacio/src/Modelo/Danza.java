@@ -126,6 +126,26 @@ public class Danza implements Serializable {
         danza.create(this);
         return true;
     }
+    
+    public boolean actualizar() throws Exception {
+        if(this.tipoDanza==null || this.tipoDanza.equals("")){
+            return false;
+        }
+        DanzaJpaController danza = new DanzaJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU",null));
+        danza.edit(this);
+        return true;
+    }
+    
+    public boolean eliminar() throws Exception {
+        if(this.tipoDanza==null || this.tipoDanza.equals("")){
+            return false;
+        }
+        DanzaJpaController danza = new DanzaJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU",null));
+        danza.destroy(this.idDanza);
+        return true;
+    }
 
     @XmlTransient
     public List<Grupo> getGrupoList() {

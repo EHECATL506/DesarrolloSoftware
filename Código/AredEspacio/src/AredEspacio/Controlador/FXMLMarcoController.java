@@ -33,7 +33,7 @@ public class FXMLMarcoController extends MainController implements Initializable
     
     @FXML
     public void listaDeDanzas(){
-        //TODO
+        this.escena.cargarEscena(EscenaPrincipal.EscenaListaDeDanza);
     }
 
     @FXML
