@@ -57,6 +57,7 @@
             <Menu mnemonicParsing="false" text="Otros">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#registrarEgreso" text="Registrar Egresos" />
+                  <MenuItem mnemonicParsing="false" onAction="#paseDeAsistencia" text="Pase de Asistencia" />
               </items>
             </Menu>
         </menus>

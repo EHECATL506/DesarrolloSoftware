@@ -10,6 +10,11 @@ import javafx.fxml.Initializable;
 public class FXMLMarcoController extends MainController implements Initializable {
 
     @FXML
+    public void paseDeAsistencia(){
+        this.escena.cargarEscena(EscenaPrincipal.EscenaPaseDeLista);
+    }
+    
+    @FXML
     public void cambiarAlumnoDeGrupo(){
         this.escena.cargarEscena(EscenaPrincipal.EscenaCambiarDeGrupo);
     }

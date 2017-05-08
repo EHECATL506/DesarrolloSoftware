@@ -14,6 +14,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Clase.findAll", query = "SELECT c FROM Clase c")
     , @NamedQuery(name = "Clase.findByIdAlumno", query = "SELECT c FROM Clase c WHERE c.idAlumno = :idAlumno")
-    , @NamedQuery(name = "Clase.findByIdGrupo", query = "SELECT c FROM Clase c WHERE c.idGrupo = :idGrupo")
+    , @NamedQuery(name = "Clase.findByIdGrupo", query = "SELECT c FROM Clase c WHERE c.idGrupo.idGrupo = :idGrupo")
     , @NamedQuery(name = "Clase.findByIdClase", query = "SELECT c FROM Clase c WHERE c.idClase = :idClase")
     , @NamedQuery(name = "Clase.findByFechaRegistro", query = "SELECT c FROM Clase c WHERE c.fechaRegistro = :fechaRegistro")})
 public class Clase implements Serializable {
@@ -145,6 +146,13 @@ public class Clase implements Serializable {
         controller.edit(this);
         return true;
     }
+    
+    public static List<Clase> buscarClasesPorIdDeGrupo(int id){
+        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
+        return em.createNamedQuery("Clase.findByIdGrupo")
+                .setParameter("idGrupo", id).getResultList();
+    }
+    
 
     public Date getFechaRegistro() {
         return fechaRegistro;
@@ -161,5 +169,5 @@ public class Clase implements Serializable {
 
     public void setPagoList(List<Pago> pagoList) {
         this.pagoList = pagoList;
-    }
+    } 
 }

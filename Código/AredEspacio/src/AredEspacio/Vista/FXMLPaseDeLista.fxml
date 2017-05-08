@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLPaseDeListaController">
+   <children>
+      <Label layoutX="364.0" layoutY="57.0" text="Pase de Lista">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tGrupos" layoutX="69.0" layoutY="117.0" prefHeight="132.0" prefWidth="649.0" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn fx:id="cID" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="cSalon" prefWidth="75.0" text="Salon" />
+            <TableColumn fx:id="cDanza" prefWidth="105.0" text="Danza" />
+            <TableColumn fx:id="cNivel" prefWidth="106.0" text="Nivel" />
+            <TableColumn fx:id="cMaestro" prefWidth="281.0" text="Maestro" />
+        </columns>
+      </TableView>
+      <Label layoutX="70.0" layoutY="89.0" text="Seleccione un grupo para pasar lista" />
+      <Label layoutX="157.0" layoutY="261.0" text="Lista de Alumnos">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane hbarPolicy="NEVER" layoutX="176.0" layoutY="293.0" prefHeight="209.0" prefWidth="320.0" style="-fx-border-color: gray; -fx-background-color: white;">
+         <content>
+            <VBox fx:id="vNombre" prefHeight="197.0" prefWidth="366.0" spacing="5.0">
+               <children>
+                  <Label text="Marque a los alumnos que asistieron" textFill="#000000c2">
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <Button layoutX="524.0" layoutY="477.0" mnemonicParsing="false" onAction="#registrarAsistencia" text="Registrar Asistencia" />
+      <Button layoutX="530.0" layoutY="293.0" mnemonicParsing="false" onAction="#marcarTodos" prefHeight="25.0" prefWidth="106.0" text="Marcar Todos" />
+      <Button layoutX="530.0" layoutY="326.0" mnemonicParsing="false" onAction="#desmarcarTodos" text="Desmarcar todos" />
+   </children>
+</AnchorPane>
