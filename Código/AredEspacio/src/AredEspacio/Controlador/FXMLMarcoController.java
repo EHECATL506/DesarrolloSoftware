@@ -10,29 +10,34 @@ import javafx.fxml.Initializable;
 public class FXMLMarcoController extends MainController implements Initializable {
 
     @FXML
-    public void paseDeAsistencia(){
+    public void verPromociones() {
+        this.escena.cargarEscena(EscenaPrincipal.EscenaPromocion);
+    }
+
+    @FXML
+    public void paseDeAsistencia() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaPaseDeLista);
     }
-    
+
     @FXML
-    public void cambiarAlumnoDeGrupo(){
+    public void cambiarAlumnoDeGrupo() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaCambiarDeGrupo);
     }
-    
+
     @FXML
     public void modificarGrupo() {
         this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarGrupo,
                 null, TipoDeMenu.MODIFICAR);
     }
-    
+
     @FXML
-    public void deshabilitarGrupo(){
+    public void deshabilitarGrupo() {
         this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarGrupo,
                 null, TipoDeMenu.DESHABILITAR);
     }
-    
+
     @FXML
-    public void listaDeDanzas(){
+    public void listaDeDanzas() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaListaDeDanza);
     }
 
@@ -49,22 +54,21 @@ public class FXMLMarcoController extends MainController implements Initializable
     @FXML
     public void consultarMaestro() {
         this.escena.cargarEscenaConParametros(
-                EscenaPrincipal.EscenaBuscarMaestro,null,TipoDeMenu.CONSULTAR);
+                EscenaPrincipal.EscenaBuscarMaestro, null, TipoDeMenu.CONSULTAR);
     }
-    
+
     @FXML
     public void modificarMaestro() {
         this.escena.cargarEscenaConParametros(
-                EscenaPrincipal.EscenaBuscarMaestro,null, TipoDeMenu.MODIFICAR);
+                EscenaPrincipal.EscenaBuscarMaestro, null, TipoDeMenu.MODIFICAR);
     }
-    
+
     @FXML
     public void deshabilitarMaestro() {
         this.escena.cargarEscenaConParametros(
-                EscenaPrincipal.EscenaBuscarMaestro,null, TipoDeMenu.DESHABILITAR);
+                EscenaPrincipal.EscenaBuscarMaestro, null, TipoDeMenu.DESHABILITAR);
     }
-    
-    
+
     //Administrar Alumno
     @FXML
     public void registrarAlumno() {
@@ -75,27 +79,27 @@ public class FXMLMarcoController extends MainController implements Initializable
     public void consultarAlumno() {
         escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.CONSULTAR);
     }
-    
+
     @FXML
     public void modificarAlumno() {
         escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.MODIFICAR);
     }
-    
+
     @FXML
     public void eliminarAlumno() {
         escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.ELIMINAR);
     }
-    
+
     //Pagos e Incripciones
     @FXML
     public void incribirAlumno() {
         escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno, null, TipoDeMenu.INCRIBIR);
     }
-    
-    public void registrarEgreso(){
-       this.escena.cargarEscena(EscenaPrincipal.EscenaRegistrarEgreso);
+
+    public void registrarEgreso() {
+        this.escena.cargarEscena(EscenaPrincipal.EscenaRegistrarEgreso);
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

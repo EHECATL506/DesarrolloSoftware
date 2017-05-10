@@ -30,6 +30,7 @@ public class EscenaPrincipal extends Application {
     public static String EscenaRegistrarEgreso = "Vista/FXMLEgreso.fxml";
     public static String EscenaPaseDeLista = "Vista/FXMLPaseDeLista.fxml";
     public static String EscenaListaDeDanza = "Vista/FXMLDanza.fxml";
+    public static String EscenaPromocion = "Vista/FXMLPromocion.fxml";
 
 
     @Override

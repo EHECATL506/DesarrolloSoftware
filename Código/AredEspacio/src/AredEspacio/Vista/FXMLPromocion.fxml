@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLPromocionController">
+   <children>
+      <Label layoutX="325.0" layoutY="68.0" text="Promociones">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tPromociones" layoutX="10.0" layoutY="165.0" prefHeight="361.0" prefWidth="298.0">
+        <columns>
+          <TableColumn fx:id="cvTipo" text="Tipo" />
+          <TableColumn fx:id="cvDescripcion" prefWidth="147.0" text="Descripción" />
+            <TableColumn fx:id="cvDescuento" prefWidth="67.0" text="Descuento" />
+        </columns>
+      </TableView>
+      <Label layoutX="39.0" layoutY="134.0" text="Promociones Vigentes" textFill="#000000c6">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="descripcion" disable="true" layoutX="318.0" layoutY="186.0" prefHeight="119.0" prefWidth="235.0" />
+      <Spinner fx:id="descuento" disable="true" layoutX="712.0" layoutY="208.0" prefHeight="25.0" prefWidth="65.0" />
+      <Label layoutX="318.0" layoutY="165.0" text="Descripción:" />
+      <Label layoutX="567.0" layoutY="169.0" text="Tipo:" />
+      <Label layoutX="567.0" layoutY="212.0" text="Porcentaje de descuento:" />
+      <ComboBox fx:id="tipo" disable="true" layoutX="602.0" layoutY="165.0" prefHeight="25.0" prefWidth="173.0" />
+      <Button fx:id="bNuevo" layoutX="712.0" layoutY="275.0" mnemonicParsing="false" onAction="#agregarNuevaPromocion" prefHeight="25.0" prefWidth="68.0" text="Nuevo" />
+      <Button fx:id="bActualizar" disable="true" layoutX="634.0" layoutY="275.0" mnemonicParsing="false" onAction="#actualizarPromocion" text="Actualizar" />
+      <Button fx:id="bEliminar" disable="true" layoutX="564.0" layoutY="275.0" mnemonicParsing="false" onAction="#eliminarPromocion" text="Eliminar" />
+      <Pane layoutX="318.0" layoutY="326.0" prefHeight="200.0" prefWidth="464.0" style="-fx-border-color: gray;">
+         <children>
+            <Label alignment="TOP_CENTER" layoutX="145.0" layoutY="14.0" text="Combinar Promociones" textFill="#000000d0">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="bCrear" disable="true" layoutX="391.0" layoutY="161.0" mnemonicParsing="false" onAction="#crearPromocionCombinada" prefHeight="25.0" prefWidth="60.0" text="Crear" />
+            <TableView fx:id="tCombinarPromocion" layoutX="9.0" layoutY="47.0" prefHeight="146.0" prefWidth="368.0" style="-fx-border-color: black;">
+               <columns>
+                  <TableColumn fx:id="ccTipo" text="Tipo" />
+                  <TableColumn fx:id="ccDescripcion" prefWidth="215.0" text="Descripción" />
+                  <TableColumn fx:id="ccDescuento" prefWidth="74.0" text="Descuento" />
+               </columns>
+            </TableView>
+            <Button fx:id="bAgregar" disable="true" layoutX="391.0" layoutY="54.0" mnemonicParsing="false" onAction="#agregarPromocionParaCombinar" prefHeight="25.0" prefWidth="60.0" text="Agregar" />
+            <Button fx:id="bLimpiar" disable="true" layoutX="391.0" layoutY="88.0" mnemonicParsing="false" onAction="#limpiarCombinar" prefWidth="60.0" text="Limpiar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -42,11 +42,9 @@
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Promociones">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Crear" />
-                  <MenuItem mnemonicParsing="false" text="Modificar" />
-              </items>
-            </Menu>
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#verPromociones" text="Promociones" />
+               </items></Menu>
             <Menu mnemonicParsing="false" text="Notificaciones" />
             <Menu mnemonicParsing="false" text="Reportes">
               <items>
