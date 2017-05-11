@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-04 18:23:47
+Date: 2017-05-11 17:36:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,7 +39,7 @@ CREATE TABLE `alumno` (
   `status` varchar(10) NOT NULL DEFAULT 'Alta',
   `motivo` text,
   PRIMARY KEY (`idAlumno`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for asistencia
@@ -48,11 +48,12 @@ DROP TABLE IF EXISTS `asistencia`;
 CREATE TABLE `asistencia` (
   `idAsistencia` int(11) NOT NULL AUTO_INCREMENT,
   `idClase` int(11) DEFAULT NULL,
+  `asistio` bit(1) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
   PRIMARY KEY (`idAsistencia`),
   KEY `idClase` (`idClase`),
   CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for clase
@@ -69,7 +70,7 @@ CREATE TABLE `clase` (
   KEY `idAlumno` (`idAlumno`) USING BTREE,
   CONSTRAINT `clase_ibfk_1` FOREIGN KEY (`idAlumno`) REFERENCES `alumno` (`idAlumno`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `clase_ibfk_2` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for contador
@@ -185,7 +186,7 @@ CREATE TABLE `pago` (
   KEY `idPromocion` (`idPromocion`),
   CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pago_ibfk_2` FOREIGN KEY (`idPromocion`) REFERENCES `promocion` (`idPromocion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for promocion
@@ -197,4 +198,4 @@ CREATE TABLE `promocion` (
   `descripcion` varchar(60) NOT NULL,
   `descuento` float NOT NULL,
   PRIMARY KEY (`idPromocion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
