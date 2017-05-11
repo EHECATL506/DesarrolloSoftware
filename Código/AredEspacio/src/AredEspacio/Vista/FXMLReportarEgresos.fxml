@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLReportarEgresosController">
+     <children>
+      <Label layoutX="297.0" layoutY="66.0" text="Historial de Egresos">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font></Label>
+      <Button fx:id="botonguardar" layoutX="151.0" layoutY="488.0" mnemonicParsing="false" onAction="#exportar" prefHeight="25.0" prefWidth="112.0" text="Exportar en" />
+      <Button fx:id="botoncancelar" layoutX="548.0" layoutY="488.0" mnemonicParsing="false" onAction="#atras" prefHeight="25.0" prefWidth="112.0" text="Atras" />
+      <TableView fx:id="tablaegresos" layoutX="81.0" layoutY="113.0" prefHeight="346.0" prefWidth="664.0">
+        <columns>
+          <TableColumn fx:id="columnaidegreso" prefWidth="75.0" text="IdEgreso" />
+          <TableColumn fx:id="columnamonto" prefWidth="75.0" text="Monto" />
+            <TableColumn fx:id="columnamotivo" prefWidth="75.0" text="Motivo" />
+            <TableColumn fx:id="columnafecha" prefWidth="100.0" text="Fecha de pago" />
+            <TableColumn fx:id="columanidmaestro" prefWidth="91.0" text="IdMaestro" />
+            <TableColumn fx:id="columnanombre" prefWidth="121.0" text="Nombre" />
+            <TableColumn fx:id="columnaapellido" prefWidth="125.0" text="Apellido" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -31,8 +31,9 @@ public class EscenaPrincipal extends Application {
     public static String EscenaPaseDeLista = "Vista/FXMLPaseDeLista.fxml";
     public static String EscenaListaDeDanza = "Vista/FXMLDanza.fxml";
     public static String EscenaPromocion = "Vista/FXMLPromocion.fxml";
+    public static String EscenaReporte="Vista/FXMLReportarEgresos.fxml";
 
-
+    
     @Override
     public void start(Stage stage) throws Exception {
         Group root = new Group();

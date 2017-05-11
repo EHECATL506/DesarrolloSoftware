@@ -99,7 +99,11 @@ public class FXMLMarcoController extends MainController implements Initializable
     public void registrarEgreso() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaRegistrarEgreso);
     }
-
+    
+    @FXML
+    void registraReporte() {
+        this.escena.cargarEscena(EscenaPrincipal.EscenaReporte);
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
