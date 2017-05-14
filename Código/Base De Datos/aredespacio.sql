@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-11 17:36:43
+Date: 2017-05-13 23:49:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,18 +70,7 @@ CREATE TABLE `clase` (
   KEY `idAlumno` (`idAlumno`) USING BTREE,
   CONSTRAINT `clase_ibfk_1` FOREIGN KEY (`idAlumno`) REFERENCES `alumno` (`idAlumno`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `clase_ibfk_2` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Table structure for contador
--- ----------------------------
-DROP TABLE IF EXISTS `contador`;
-CREATE TABLE `contador` (
-  `idContador` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) NOT NULL,
-  `contador` int(11) NOT NULL,
-  PRIMARY KEY (`idContador`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for danza
@@ -139,7 +128,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`),
   KEY `idGrupo` (`idGrupo`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for maestro
@@ -165,7 +154,7 @@ CREATE TABLE `maestro` (
   `fechaDeDeshabilitacion` date DEFAULT NULL,
   `motivoDeDeshabilitacion` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for pago
