@@ -123,7 +123,8 @@ public class FXMLPaseDeListaController extends MainController implements Initial
                     this.vNombre.getChildren().clear();
                     this.vNombre.getChildren().add(tituloNombre);
                     this.checkList.clear();
-                    Clase.buscarClasesPorIdDeGrupo(grupo.getIdGrupo()).forEach(
+                    //---->Clase
+                    Clase.obtenerClasesDelGrupo(grupo.getIdGrupo()).forEach(
                             (clase) -> {
                                 String nombre = "        "
                                 + clase.getNombre() + " " + clase.getApellidos();

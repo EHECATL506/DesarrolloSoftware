@@ -16,18 +16,21 @@ import javafx.scene.control.ButtonType;
 public class Mensaje {
     public static void informacion(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
     
     public static void advertencia(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
     
     public static boolean confirmacion(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         Optional<ButtonType> conf = alerta.showAndWait();
         if (conf.get() == ButtonType.OK ) return true;

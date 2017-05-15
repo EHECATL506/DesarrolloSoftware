@@ -150,11 +150,11 @@ public class Clase implements Serializable {
         return true;
     }
     
-    public static List<Clase> buscarClasesPorIdDeGrupo(int id){
+    /*public static List<Clase> buscarClasesPorIdDeGrupo(int id){
         EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
         return em.createNamedQuery("Clase.findByIdGrupo")
                 .setParameter("idGrupo", id).getResultList();
-    }
+    }*/
     
 
     public Date getFechaRegistro() {

@@ -45,6 +45,7 @@
             </Label>
             <Button fx:id="modificar" layoutX="500.0" layoutY="430.0" mnemonicParsing="false" onAction="#cargarModificar" prefHeight="25.0" prefWidth="79.0" text="Modificar" />
             <Button fx:id="consultar" layoutX="500.0" layoutY="430.0" mnemonicParsing="false" onAction="#cargarConsultar" prefHeight="25.0" prefWidth="79.0" text="Consultar" />
+            <Button fx:id="pagar" layoutX="706.0" layoutY="430.0" mnemonicParsing="false" onAction="#pagarMaestro" text="Pagar" />
          </children></Pane>
    </children>
 </AnchorPane>

@@ -10,6 +10,12 @@ import javafx.fxml.Initializable;
 public class FXMLMarcoController extends MainController implements Initializable {
 
     @FXML
+    public void pagarMaestro() {
+        this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarMaestro,
+                null, TipoDeMenu.PAGO);
+    }
+
+    @FXML
     public void verPromociones() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaPromocion);
     }
@@ -99,11 +105,12 @@ public class FXMLMarcoController extends MainController implements Initializable
     public void registrarEgreso() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaRegistrarEgreso);
     }
-    
+
     @FXML
     void registraReporte() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaReporte);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }

@@ -7,6 +7,7 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p")
     , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")
-    , @NamedQuery(name = "Pago.findByIdClase", query = "SELECT p FROM Pago p WHERE p.idClase = :idClase")
+    , @NamedQuery(name = "Pago.findByIdClase", query = "SELECT p FROM Pago p WHERE p.idClase.idClase = :idClase AND p.fechaPago>:fecha")
     , @NamedQuery(name = "Pago.findByFolio", query = "SELECT p FROM Pago p WHERE p.folio = :folio")
     , @NamedQuery(name = "Pago.findByDescuento", query = "SELECT p FROM Pago p WHERE p.descuento = :descuento")
     , @NamedQuery(name = "Pago.findByAbono", query = "SELECT p FROM Pago p WHERE p.abono = :abono")
@@ -40,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pago.findByStatus", query = "SELECT p FROM Pago p WHERE p.status = :status")
     , @NamedQuery(name = "Pago.findByTipoDePago", query = "SELECT p FROM Pago p WHERE p.tipoDePago = :tipoDePago")})
 public class Pago implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -189,4 +191,10 @@ public class Pago implements Serializable {
         return "Modelo.Pago[ idPago=" + idPago + " ]";
     }
     
+    public static List<Pago> obtenerPagosPorIdDeClase(int idClase, Date fecha) {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager()
+                .createNamedQuery("Pago.findByIdClase")
+                .setParameter("idClase", idClase)
+                .setParameter("fecha", fecha).getResultList();
+    }
 }

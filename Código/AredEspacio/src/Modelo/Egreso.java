@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import ControladorBD.EgresoJpaController;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -135,4 +137,11 @@ public class Egreso implements Serializable {
         return "Modelo.Egreso[ idPago=" + idPago + " ]";
     }
     
+    public boolean crear(){
+        EgresoJpaController controller = 
+                new EgresoJpaController
+        (Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        controller.create(this);
+        return true;
+    }
 }

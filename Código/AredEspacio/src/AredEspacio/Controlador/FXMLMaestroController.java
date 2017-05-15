@@ -118,6 +118,8 @@ public class FXMLMaestroController extends MainController implements Initializab
 
         if (this.maestro == null) {
             maestro.setFechaDeRegistro(new Date(new GregorianCalendar().getTimeInMillis()));
+            //--->
+            maestro.setFechaDeDeshabilitacion(new Date(new GregorianCalendar().getTimeInMillis()));
         }
 
         if (this.maestro == null) {
@@ -462,7 +464,10 @@ public class FXMLMaestroController extends MainController implements Initializab
             if (result.get() == ButtonType.OK) {
                 this.maestro.setDeshabilitado(false);
                 this.maestro.setFechaDeRegistro(new Date(new GregorianCalendar().getTimeInMillis()));
-                this.maestro.setFechaDeDeshabilitacion(null);
+                
+                //--->this.maestro.setFechaDeDeshabilitacion(null);
+                this.maestro.setFechaDeDeshabilitacion(new Date(new GregorianCalendar().getTimeInMillis()));
+                
                 try {
                     this.maestro.actualizar();
                 } catch (Exception ex) {

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMarcoController">
+<AnchorPane id="AnchorPane" prefHeight="50.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLMarcoController">
    <children>
       <MenuBar fx:id="menu" layoutY="2.0" style="-fx-font-size: 14;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -27,6 +24,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#consultarMaestro" text="Consultar" />
                   <MenuItem mnemonicParsing="false" onAction="#modificarMaestro" text="Modificar" />
                   <MenuItem mnemonicParsing="false" onAction="#deshabilitarMaestro" text="Habilitar\Deshabilitar" />
+                  <MenuItem mnemonicParsing="false" onAction="#pagarMaestro" text="Pagar a Maestro" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Grupo">
@@ -44,10 +42,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#incribirAlumno" text="Incribir Alumno" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Promociones">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#verPromociones" text="Promociones" />
-               </items></Menu>
+            <Menu mnemonicParsing="false" text="Promociones" />
             <Menu mnemonicParsing="false" text="Notificaciones" />
             <Menu mnemonicParsing="false" text="Reportes">
               <items>
@@ -59,6 +54,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#registrarEgreso" text="Registrar Egresos" />
                   <MenuItem mnemonicParsing="false" onAction="#paseDeAsistencia" text="Pase de Asistencia" />
+                  <MenuItem mnemonicParsing="false" onAction="#verPromociones" text="Promociones" />
               </items>
             </Menu>
         </menus>
