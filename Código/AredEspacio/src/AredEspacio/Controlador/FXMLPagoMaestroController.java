@@ -43,13 +43,6 @@ public class FXMLPagoMaestroController extends MainController implements Initial
     private TableColumn cTotal;
 
     @FXML
-    private TableColumn cPorcentaje;
-    
-    @FXML
-    private TableColumn cTotalConPorcentaje;
-    
-    
-    @FXML
     private Label lNombre;
 
     @FXML
@@ -128,7 +121,6 @@ public class FXMLPagoMaestroController extends MainController implements Initial
                 }
                 List<DatoPago> datos = new ArrayList<>();
                 int totalFinal = 0;
-                int porcentajeFinal = 0;
                 for (Grupo grupo : maestro.getGrupoList()) {
                     String datosGrupo = "";
                     datosGrupo += "Salon: " + grupo.getSalon();
@@ -136,31 +128,18 @@ public class FXMLPagoMaestroController extends MainController implements Initial
                     datosGrupo += "\nNivel: " + grupo.getNivel();
                     int noPagos = 0;
                     int total = 0;
-                    String porcentaje = grupo.getPorcentaje()+"%";
                     for (Pago pago : pagos) {
-                        //Verificar como se escribe la mensualidad
-                        if (pago.getTipoDePago().equals("Mensualidad") && pago.getIdClase().getIdGrupo().equals(grupo)) {
+                        if (pago.getIdClase().getIdGrupo().getIdGrupo() == grupo.getIdGrupo()) {
                             noPagos++;
-                            total += grupo.getCosto();
-                            //total += pago.getAbono();
+                            total += pago.getAbono();
                         }
                     }
                     totalFinal += total;
-                    int parte = (total*grupo.getPorcentaje())/100;
-                    porcentajeFinal+=parte;
-                    datos.add(new DatoPago(datosGrupo,
-                            String.valueOf(noPagos),
-                            String.valueOf(total),
-                            porcentaje,
-                            String.valueOf(parte)));
+                    datos.add(new DatoPago(datosGrupo, String.valueOf(noPagos), String.valueOf(total)));
                 }
-                datos.add(new DatoPago(" ", 
-                        "Total",
-                        String.valueOf(totalFinal),
-                        "",
-                        String.valueOf(porcentajeFinal)));
+                datos.add(new DatoPago(" ", "Total", String.valueOf(totalFinal)));
                 this.tDatosDePago.setItems(FXCollections.observableArrayList(datos));
-                this.cantidad.setText(String.valueOf(porcentajeFinal));
+                this.cantidad.setText(String.valueOf(totalFinal));
                 this.lFecha.setText("Fecha de Hoy: " + this.dateToString(-1));
                 this.lUltimaFecha.setText("Ultima fecha de Pago: " + this.dateToString(this.maestro.getFechaDeDeshabilitacion().getTime()));
                 String nombre = "Nombre del Maestro: " + this.maestro.getNombre() + " " + this.maestro.getApellidos();
@@ -175,12 +154,6 @@ public class FXMLPagoMaestroController extends MainController implements Initial
         );
         this.cTotal.setCellValueFactory(
                 new PropertyValueFactory<>("Total")
-        );
-        this.cPorcentaje.setCellValueFactory(
-                new PropertyValueFactory<>("Porcentaje")
-        );
-        this.cTotalConPorcentaje.setCellValueFactory(
-                new PropertyValueFactory<>("TotalConPorcentaje")
         );
     }
 }
