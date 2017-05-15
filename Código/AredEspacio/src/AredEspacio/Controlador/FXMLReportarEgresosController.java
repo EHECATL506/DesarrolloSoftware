@@ -15,8 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-/*
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -38,23 +36,22 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
- */
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 /**
  * FXML Controller class
  *
  * @author EHECA
  */
 public class FXMLReportarEgresosController extends MainController implements Initializable {
-
     @FXML
     private Button botonguardar;
     @FXML
@@ -77,22 +74,25 @@ public class FXMLReportarEgresosController extends MainController implements Ini
     private TableColumn<?, ?> columnafecha;
     @FXML
     private TableColumn<?, ?> columanidmaestro;
-    Calendar calendario = GregorianCalendar.getInstance();
-    java.util.Date fecha = new java.util.Date();
-    java.sql.Date fechaSql = new java.sql.Date(fecha.getTime());
+    @FXML
+    private ComboBox<String> combomeses;
+    @FXML
+    private TextField campocosto;
+    
+    Calendar calendario=GregorianCalendar.getInstance();
+    java.util.Date fecha=new java.util.Date();
+    java.sql.Date fechaSql=new java.sql.Date(fecha.getTime());
     private String strNombreDelPDF;
-    //private  Font fuenteNegra10 = new Font(Font.TIMES_ROMAN, 10, Font.BOLD, Color.BLACK);
-    //private  Font fuente8 = new Font(Font.TIMES_ROMAN, 8, Font.NORMAL, Color.BLACK);
-    //private  Font fuenteAzul25 = new Font(Font.TIMES_ROMAN, 25, Font.BOLD, Color.BLUE);
-    Color grisClaro = new Color(230, 230, 230);
-    Color azulClaro = new Color(124, 195, 255);
-    //Document document;
-    //PdfWriter writer;
+    Color grisClaro = new Color( 230,230,230);  
+    Color azulClaro = new Color( 124,195,255 );
+    Document document;
+    PdfWriter writer;
     String strRotuloPDF;
-
+     
     @FXML
     void exportar(ActionEvent event) {
-        /*  strRotuloPDF =" Reporte de Egresos generados por el programa Ared Espacio";
+        
+         strRotuloPDF =" Reporte de Egresos generados por el programa Ared Espacio";
          strNombreDelPDF = "Reporte de egresos.pdf";
         try{   
             document = new Document( PageSize.LETTER.rotate() );  
@@ -105,34 +105,22 @@ public class FXMLReportarEgresosController extends MainController implements Ini
         } catch (Exception e) 
         {
             e.printStackTrace();
-        }*/
-    }
+        }
 
-    //private void agregarContenido(Document document) throws DocumentException {
-        /*Paragraph ParrafoHoja = new Paragraph();
+    }
+     
+    private void agregarContenido(Document document) throws DocumentException{
+        Paragraph ParrafoHoja = new Paragraph();
         agregarLineasEnBlanco(ParrafoHoja, 1);
         ParrafoHoja.add(new Paragraph(strRotuloPDF.toUpperCase ()));
         agregarLineasEnBlanco(ParrafoHoja, 1);
         agregarTabla(ParrafoHoja);
         agregarLineasEnBlanco(ParrafoHoja, 2);
-        /*try
-        {
-            Image im = Image.getInstance("logo_mysql.gif");
-            im.setAlignment(Image.ALIGN_CENTER | Image.TEXTWRAP );
-            im.setWidthPercentage (50);
-          ParrafoHoja.add(im);
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace ();
-        }
-         */
-        //document.add(ParrafoHoja);
+        document.add(ParrafoHoja);
+    }
 
-    //}
-
-    //private void agregarTabla(Paragraph parrafo) throws BadElementException {
-        /*float anchosFilas[] = {0.5f,0.5f,0.5f,0.5f};
+    private void agregarTabla(Paragraph parrafo) throws BadElementException {
+        float anchosFilas[] = {0.5f,0.5f,0.5f,0.5f};
         PdfPTable tabla = new PdfPTable(anchosFilas);
         String rotulosColumnas[] = {"Idpago","Monto","Motivo","FechaInicio"};
         tabla.setWidthPercentage(70);
@@ -160,38 +148,33 @@ public class FXMLReportarEgresosController extends MainController implements Ini
                     tabla.addCell(cell);
                     cell = new PdfPCell(new Paragraph(String.valueOf(egreso.getFecha())));
                     tabla.addCell(cell);
-          /*        cell = new PdfPCell(new Paragraph(rs.getString("id"),fuente8));
-                    tabla.addCell(cell);
-                    cell = new PdfPCell(new Paragraph(String.valueOf(rs.getInt("nombre")),fuente8) );
-                    tabla.addCell(cell);
-                    cell = new PdfPCell(new Paragraph(rs.getString("apellidos"),fuente8));
-                    tabla.addCell(cell); */
-        //}
-        /*}catch(Exception e) 
+             }
+        }catch(Exception e) 
         {
             System.out.println("Excepcion al consultar la base de datos y en tu vida!!!");
             e.printStackTrace();
         }
-        parrafo.add(tabla);*/
-    //}
-
-   /* private static void agregarLineasEnBlanco(Paragraph parrafo, int nLineas) {
-        for (int i = 0; i < nLineas; i++) {
+        parrafo.add(tabla);
+    } 
+ 
+    private static void agregarLineasEnBlanco(Paragraph parrafo, int nLineas) {
+        for (int i = 0; i < nLineas; i++) 
             parrafo.add(new Paragraph(" "));
-        }
-    }*/
-
-    /*public void abrirPDF() {
-        try {
+    }
+ 
+    
+    public void abrirPDF(){
+        try{
             Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + strNombreDelPDF);
-        } catch (IOException e) {
+        }catch (IOException e) 
+        {
             e.printStackTrace();
-        }
-    }*/
+        }   
+    }   
 
     @FXML
     void atras(ActionEvent event) {
-        escena.cargarEscena(EscenaPrincipal.EscenaInicio);
+         escena.cargarEscena(EscenaPrincipal.EscenaInicio);
     }
 
     @Override
@@ -199,32 +182,33 @@ public class FXMLReportarEgresosController extends MainController implements Ini
         Egreso egreso = (Egreso) this.tablaegresos.getSelectionModel().getSelectedItem();
         Maestro megreso = (Maestro) this.tablaegresos.getSelectionModel().getSelectedItem();
         this.columnaidegreso.setCellValueFactory(
-                new PropertyValueFactory<>("Idpago")
+                new PropertyValueFactory<>("idPago")
         );
         this.columnamonto.setCellValueFactory(
-                new PropertyValueFactory<>("Monto")
+                new PropertyValueFactory<>("monto")
         );
         this.columnamotivo.setCellValueFactory(
-                new PropertyValueFactory<>("Motivo")
+                new PropertyValueFactory<>("motivo")
         );
-        this.columnafecha.setCellValueFactory(
-                new PropertyValueFactory<>("FechaInicio")
-        );
+         this.columnafecha.setCellValueFactory(
+                new PropertyValueFactory<>("fecha")
+        );  
         this.columanidmaestro.setCellValueFactory(
-                new PropertyValueFactory<>("id")
+                new PropertyValueFactory<>("id")        
         );
         this.columnanombre.setCellValueFactory(
                 new PropertyValueFactory<>("nombre")
         );
         this.columnaapellido.setCellValueFactory(
                 new PropertyValueFactory<>("apellidos")
+        );     
+         ObservableList lista = FXCollections.observableArrayList(
+                Egreso.listar()        
         );
-        ObservableList lista = FXCollections.observableArrayList( //  Egreso.listar()//, Maestro.listar()              
-                );
-        //  ObservableList listas = FXCollections.observableArrayList(
-        //     Maestro.listar()              
-        //);
         this.tablaegresos.setItems(lista);
-        //this.tablaegresos.setItems(listas);
-    }
+        
+        ObservableList meses = FXCollections.observableArrayList("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
+            "Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        combomeses.setItems(meses);
+    }    
 }

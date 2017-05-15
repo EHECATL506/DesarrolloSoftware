@@ -197,4 +197,16 @@ public class Pago implements Serializable {
                 .setParameter("idClase", idClase)
                 .setParameter("fecha", fecha).getResultList();
     }
+    
+     public static List<Pago> listar() {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null)                
+                .createEntityManager()
+                .createNamedQuery("Pago.findAll").getResultList();
+    }
+     
+     public static List<Pago> listarMeses(int mes) {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null)                
+                .createEntityManager()
+                .createNamedQuery("SELECT * FROM Pago WHERE MONTH(fechaPago) = ?").getResultList();
+     }
 }

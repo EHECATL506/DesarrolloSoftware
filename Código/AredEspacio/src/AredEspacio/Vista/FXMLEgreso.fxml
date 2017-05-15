@@ -14,21 +14,11 @@
             <Font name="System Bold Italic" size="25.0" />
          </font></Label>
       <Label layoutX="355.0" layoutY="99.0" text="Registrar Egresos" />
-      <Label layoutX="343.0" layoutY="241.0" text="Ingresar el monto a pagar:" />
-      <Label layoutX="367.0" layoutY="284.0" text="Ingrese el motivo" />
-      <TextField fx:id="campomonto" layoutX="524.0" layoutY="241.0" />
-      <TextArea fx:id="campomotivo" layoutX="497.0" layoutY="284.0" prefHeight="146.0" prefWidth="263.0" />
-      <Button fx:id="botonoregistra" layoutX="544.0" layoutY="464.0" mnemonicParsing="false" onAction="#registraEgresos" text="Registrar" />
-      <Button fx:id="botoncancelar" layoutX="690.0" layoutY="464.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-      <Label layoutX="133.0" layoutY="140.0" text="Datos del maestro" />
-      <Label layoutX="357.0" layoutY="202.0" text="Id del maestro a pagar" />
-      <TextField fx:id="campomaestro" layoutX="524.0" layoutY="198.0" />
-      <TableView fx:id="tablamaestros" layoutX="17.0" layoutY="166.0" prefHeight="323.0" prefWidth="310.0">
-        <columns>
-          <TableColumn fx:id="columnaid" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="columnanombre" prefWidth="119.0" text="Nombre" />
-            <TableColumn fx:id="columnaapellido" prefWidth="115.0" text="Apellido" />
-        </columns>
-      </TableView>
+      <Label layoutX="184.0" layoutY="188.0" text="Ingresar el monto a pagar:" />
+      <Label layoutX="151.0" layoutY="284.0" text="Ingrese el motivo" />
+      <TextField fx:id="campomonto" layoutX="339.0" layoutY="184.0" />
+      <TextArea fx:id="campomotivo" layoutX="282.0" layoutY="264.0" prefHeight="174.0" prefWidth="324.0" />
+      <Button fx:id="botonoregistra" layoutX="240.0" layoutY="470.0" mnemonicParsing="false" onAction="#registraEgresos" prefHeight="36.0" prefWidth="84.0" text="Registrar" />
+      <Button fx:id="botoncancelar" layoutX="446.0" layoutY="470.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="36.0" prefWidth="84.0" text="Cancelar" />
    </children>
 </AnchorPane>

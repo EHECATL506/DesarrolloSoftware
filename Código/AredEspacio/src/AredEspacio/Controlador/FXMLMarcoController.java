@@ -74,7 +74,7 @@ public class FXMLMarcoController extends MainController implements Initializable
         this.escena.cargarEscenaConParametros(
                 EscenaPrincipal.EscenaBuscarMaestro, null, TipoDeMenu.DESHABILITAR);
     }
-
+    
     //Administrar Alumno
     @FXML
     public void registrarAlumno() {
@@ -109,6 +109,11 @@ public class FXMLMarcoController extends MainController implements Initializable
     @FXML
     void registraReporte() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaReporte);
+    }
+
+      @FXML
+    void reporteIngreso() {
+         this.escena.cargarEscena(EscenaPrincipal.EscenaReporteIngreso);
     }
 
     @Override

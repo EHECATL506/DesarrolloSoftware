@@ -8,6 +8,7 @@ package Modelo;
 import ControladorBD.EgresoJpaController;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -119,6 +120,7 @@ public class Egreso implements Serializable {
         return hash;
     }
 
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -144,4 +146,14 @@ public class Egreso implements Serializable {
         controller.create(this);
         return true;
     }
+    public static List<Egreso> listar() {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null)                
+                .createEntityManager()
+                .createNamedQuery("Egreso.findAll").getResultList();
+    }
+     public static List<Egreso> listarMeses(int mes) {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null)                
+                .createEntityManager()
+                .createNamedQuery("SELECT * FROM Egreso WHERE MONTH(fecha) = ?").getResultList();
+     }
 }
