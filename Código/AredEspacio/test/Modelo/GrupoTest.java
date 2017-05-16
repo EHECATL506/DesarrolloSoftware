@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class GrupoTest {
-    /*
     public GrupoTest() {
     }
     
@@ -16,7 +15,7 @@ public class GrupoTest {
         Grupo grupo = new Grupo();
         grupo.setNivel("Basico");
         grupo.setSalon("CC3");
-        grupo.setTipoDeDanza("Ballet");
+        grupo.setIdDanza(Danza.obtenerTodas().get(0));
         Maestro maestro = Maestro.obtenerMaestroPorApellido("").get(0);
         grupo.setIdMaestro(maestro);
         GregorianCalendar calendar = new GregorianCalendar();
@@ -44,7 +43,7 @@ public class GrupoTest {
         ArrayList<Horario> horarios = new ArrayList<>();
         Grupo grupo = Grupo.listarGrupos().get(0);
         grupo.setSalon("101");
-        grupo.setTipoDeDanza("Cumbia");
+        grupo.setIdDanza(Danza.obtenerTodas().get(0));
         grupo.setNivel("Avanzado");
         boolean resultado = grupo.actualizar(horarios, horarios);
         Assert.assertTrue("Prueba actualizar grupo correctamente",resultado);
@@ -55,5 +54,5 @@ public class GrupoTest {
         Grupo grupo = new Grupo();
         grupo.actualizar(null, null);
     }
-*/
+
 }

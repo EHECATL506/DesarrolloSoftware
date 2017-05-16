@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-05-13 23:49:53
+Date: 2017-05-16 03:05:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,13 +47,13 @@ CREATE TABLE `alumno` (
 DROP TABLE IF EXISTS `asistencia`;
 CREATE TABLE `asistencia` (
   `idAsistencia` int(11) NOT NULL AUTO_INCREMENT,
-  `idClase` int(11) DEFAULT NULL,
-  `asistio` bit(1) DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
+  `idClase` int(11) NOT NULL,
+  `asistio` bit(1) NOT NULL,
+  `fecha` date NOT NULL,
   PRIMARY KEY (`idAsistencia`),
   KEY `idClase` (`idClase`),
   CONSTRAINT `asistencia_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for clase
@@ -70,7 +70,7 @@ CREATE TABLE `clase` (
   KEY `idAlumno` (`idAlumno`) USING BTREE,
   CONSTRAINT `clase_ibfk_1` FOREIGN KEY (`idAlumno`) REFERENCES `alumno` (`idAlumno`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `clase_ibfk_2` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for danza
@@ -87,13 +87,13 @@ CREATE TABLE `danza` (
 -- ----------------------------
 DROP TABLE IF EXISTS `egreso`;
 CREATE TABLE `egreso` (
-  `idPago` int(11) NOT NULL AUTO_INCREMENT,
+  `idEgreso` int(11) NOT NULL AUTO_INCREMENT,
   `monto` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `motivo` text NOT NULL,
   `IdMaestro` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idPago`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`idEgreso`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Table structure for grupo
@@ -175,7 +175,7 @@ CREATE TABLE `pago` (
   KEY `idPromocion` (`idPromocion`),
   CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`idClase`) REFERENCES `clase` (`idClase`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pago_ibfk_2` FOREIGN KEY (`idPromocion`) REFERENCES `promocion` (`idPromocion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for promocion

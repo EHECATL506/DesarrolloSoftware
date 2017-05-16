@@ -14,7 +14,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -150,13 +149,11 @@ public class Clase implements Serializable {
         return true;
     }
     
-    /*public static List<Clase> buscarClasesPorIdDeGrupo(int id){
-        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-        return em.createNamedQuery("Clase.findByIdGrupo")
-                .setParameter("idGrupo", id).getResultList();
-    }*/
+    public static List<Clase> listaDeClases(){
+        ClaseJpaController controller = new ClaseJpaController(Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        return controller.findClaseEntities();
+    }
     
-
     public Date getFechaRegistro() {
         return fechaRegistro;
     }

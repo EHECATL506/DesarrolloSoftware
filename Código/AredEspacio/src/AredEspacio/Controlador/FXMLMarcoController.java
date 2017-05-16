@@ -8,13 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 public class FXMLMarcoController extends MainController implements Initializable {
-
     @FXML
     public void pagarMaestro() {
         this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarMaestro,
                 null, TipoDeMenu.PAGO);
     }
-
+   
+    @FXML
+    public void verNotificaciones() {
+        this.escena.cargarEscena(EscenaPrincipal.EscenaNotificaciones);
+    }
+    
     @FXML
     public void verPromociones() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaPromocion);
@@ -74,7 +78,7 @@ public class FXMLMarcoController extends MainController implements Initializable
         this.escena.cargarEscenaConParametros(
                 EscenaPrincipal.EscenaBuscarMaestro, null, TipoDeMenu.DESHABILITAR);
     }
-    
+
     //Administrar Alumno
     @FXML
     public void registrarAlumno() {
@@ -108,15 +112,11 @@ public class FXMLMarcoController extends MainController implements Initializable
 
     @FXML
     void registraReporte() {
-        this.escena.cargarEscena(EscenaPrincipal.EscenaReporte);
-    }
-
-      @FXML
-    void reporteIngreso() {
-         this.escena.cargarEscena(EscenaPrincipal.EscenaReporteIngreso);
+        this.escena.cargarEscena(EscenaPrincipal.EscenaReporteDeEgresos);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+             
     }
 }

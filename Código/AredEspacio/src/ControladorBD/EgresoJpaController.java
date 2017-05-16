@@ -50,7 +50,7 @@ public class EgresoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = egreso.getIdPago();
+                Integer id = egreso.getIdEgreso();
                 if (findEgreso(id) == null) {
                     throw new NonexistentEntityException("The egreso with id " + id + " no longer exists.");
                 }
@@ -71,7 +71,7 @@ public class EgresoJpaController implements Serializable {
             Egreso egreso;
             try {
                 egreso = em.getReference(Egreso.class, id);
-                egreso.getIdPago();
+                egreso.getIdEgreso();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The egreso with id " + id + " no longer exists.", enfe);
             }
