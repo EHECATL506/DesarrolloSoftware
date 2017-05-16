@@ -111,10 +111,15 @@ public class FXMLMarcoController extends MainController implements Initializable
     }
 
     @FXML
-    void registraReporte() {
+    public void consulatrReporteDeEgresos() {
         this.escena.cargarEscena(EscenaPrincipal.EscenaReporteDeEgresos);
     }
-
+    
+    @FXML
+    public void consultarReporteDeIngresos(){
+        this.escena.cargarEscena(EscenaPrincipal.EscenaReporteDeIngresos);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
              

@@ -75,7 +75,7 @@ public class FXMLNotificacionesController extends MainController implements Init
 
         for (Clase clase : Clase.listaDeClases()) {
             int dia = this.getDayFromDate(clase.getFechaRegistro().getTime());
-            if (dia >= (DIA_DEL_MES - 3) && dia <= DIA_DEL_MES) {
+            if (dia <= (DIA_DEL_MES + 3) && dia >= DIA_DEL_MES) {
                 this.notificacionesPago.add(this.claseToNotificacion(clase, dia));
             }
         }

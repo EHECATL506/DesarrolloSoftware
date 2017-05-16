@@ -49,8 +49,8 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#registrarEgreso" text="Registrar Egreso" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                <MenuItem mnemonicParsing="false" text="Reporte de Ingresos" />
-                  <MenuItem mnemonicParsing="false" onAction="#registraReporte" text="Reporte de Egresos" />
+                <MenuItem mnemonicParsing="false" onAction="#consultarReporteDeIngresos" text="Reporte de Ingresos" />
+                  <MenuItem mnemonicParsing="false" onAction="#consulatrReporteDeEgresos" text="Reporte de Egresos" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Otros">

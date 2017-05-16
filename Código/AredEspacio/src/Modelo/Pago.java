@@ -5,8 +5,11 @@
  */
 package Modelo;
 
+import ControladorBD.PagoJpaController;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -197,4 +200,39 @@ public class Pago implements Serializable {
                 .setParameter("idClase", idClase)
                 .setParameter("fecha", fecha).getResultList();
     }
+    
+    public static List<Pago> obtenerTodosLosPagos(){
+        PagoJpaController controller = new PagoJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        return controller.findPagoEntities();
+    }
+    
+    public String getGrupo(){
+        return "Danza: "+this.idClase.getIdGrupo().getTipoDeDanza()
+                +"\nNivel: " +this.idClase.getIdGrupo().getNivel()
+                +"\nSalon: " +this.idClase.getIdGrupo().getSalon();
+    }
+    
+    public String getAlumno(){
+        return this.idClase.getNombre()+" "+this.idClase.getApellidos();
+    }
+    
+    public String getPromocion(){
+        return "Descuento: "+this.idPromocion.getPorcentajeDeDescuento()
+              +"\nDescripción: "+this.idPromocion.getDescripcion();
+    }
+    
+    public String getAbonoString(){
+        return ""+new Double(this.abono).intValue();
+    }
+    
+    public String getFecha(){
+        GregorianCalendar fecha = new GregorianCalendar();
+        fecha.setTimeInMillis(this.fechaPago.getTime());
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+        int año = fecha.get(Calendar.YEAR);
+        return String.format(" %1$02d/%2$02d/%3$04d", dia, mes, año);
+    }
+    
 }
