@@ -97,6 +97,9 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
     @FXML
     private TableColumn<FilaClase, String> tCDanza;
     @FXML
+    private TableColumn<FilaClase, String> tCStatus;
+    
+    @FXML
     private Button clicAgregar;
     @FXML
     private Button clicBuscar;
@@ -122,8 +125,6 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
         clases = jpaClase.obtenerPorAlumno(alumno);
         for (Clase c : clases) {
             
-            
-            
             String grupo = c.getIdGrupo().toString();
             String fechaIngreso = new SimpleDateFormat("EEE, d MMM yyyy").format(c.getFechaRegistro());
             
@@ -134,10 +135,13 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
             String danza = c.getIdGrupo().getTipoDeDanza();
             String proximoPago =  new SimpleDateFormat("EEE, d MMM yyyy").format(calendar.getTime());
             List<Pago> pagos = c.getPagoList();
-            
-
-            
-            oLlista.add(new FilaClase(grupo, fechaIngreso, proximoPago, danza, "" , c));
+            String status = "";
+            if ( pagos.size() == 0) {
+                status = "PENDIENTE";
+            } else if (pagos.size() > 0){
+                status = pagos.get(0).getStatus();
+            }
+            oLlista.add(new FilaClase(grupo, fechaIngreso, proximoPago, danza, status , c));
         }       
 
         tVClase.setItems(oLlista);
@@ -154,8 +158,8 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
                 
                 Dialog dIncripcion = new Dialog();
                 dIncripcion.setTitle("Pago Incripción");
-                //####aqui estoy ahora
-                dIncripcion.setHeaderText("Capture el precio del la clase: "
+
+                dIncripcion.setHeaderText("Generar el pago de la clase: "
                         + filaClase.getClase().getIdGrupo().getTipoDeDanza()
                         + " " + filaClase.getClase().getIdGrupo().getNivel()
                 );
@@ -191,14 +195,7 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
                         new Label("   Cantidad a Pagar:"), tFCantidad,
                         new Label("    Promoción:"), cBPromocion);
 
-                /*
-                HBox panel2 = new HBox(8);
-
-                panel2.getChildren().addAll(
-                        new Label("Cantidad que Paga:"), tFPaga,
-                        new Label("         Cambio:"), tFResto
-                );
-                */
+                
                 HBox panel3 = new HBox(8);
                 panel3.getChildren().addAll(
                         new Label("        Total a Pagar:"), tFTotal,
@@ -423,7 +420,8 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
         tCGrupo.setCellValueFactory(new PropertyValueFactory<>("Grupo"));
         tCFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("FechaIngreso"));
         tCProximoPago.setCellValueFactory(new PropertyValueFactory<>("ProximoPago"));
-
+        
+        tCStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
         });
     }
 }

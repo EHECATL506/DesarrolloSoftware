@@ -29,12 +29,13 @@
                         <Button fx:id="clicBuscar" layoutX="269.0" layoutY="31.0" mnemonicParsing="false" text="Buscar" />
                         <Pane layoutX="21.0" layoutY="247.0" prefHeight="192.0" prefWidth="721.0" style="-fx-background-color: #f5f5f0; -fx-border-style: solid;">
                            <children>
-                              <TableView fx:id="tVClase" layoutX="14.0" layoutY="12.0" prefHeight="170.0" prefWidth="482.0">
+                              <TableView fx:id="tVClase" layoutX="8.0" layoutY="11.0" prefHeight="170.0" prefWidth="514.0">
                                 <columns>
-                                  <TableColumn fx:id="tCGrupo" text="GRUPO" />
-                                    <TableColumn fx:id="tCDanza" prefWidth="82.0" text="DANZA" />
-                                    <TableColumn fx:id="tCFechaIngreso" prefWidth="143.0" text="FECHA DE INGRESO" />
-                                  <TableColumn fx:id="tCProximoPago" prefWidth="176.0" text="PROXIMA REINSCRIPCÍON" />
+                                  <TableColumn fx:id="tCGrupo" prefWidth="66.0" text="GRUPO" />
+                                    <TableColumn fx:id="tCDanza" prefWidth="78.0" text="DANZA" />
+                                    <TableColumn fx:id="tCFechaIngreso" prefWidth="131.0" text="FECHA DE INGRESO" />
+                                  <TableColumn fx:id="tCProximoPago" prefWidth="163.0" text="PROXIMA REINSCRIPCÍON" />
+                                    <TableColumn fx:id="tCStatus" prefWidth="75.0" text="STATUS" />
                                 </columns>
                               </TableView>
                               <Label layoutX="529.0" layoutY="14.0" prefHeight="27.0" prefWidth="134.0" text="Clases Inscritas">
