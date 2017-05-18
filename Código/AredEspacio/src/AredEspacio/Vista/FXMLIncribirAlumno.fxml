@@ -79,5 +79,6 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
+      <Label layoutX="287.0" layoutY="68.0" text="Registra los pagos de la inscripciones y reincripciones" />
    </children>
 </AnchorPane>

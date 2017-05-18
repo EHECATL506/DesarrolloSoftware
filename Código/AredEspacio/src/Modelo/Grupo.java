@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Grupo.findByIdGrupo", query = "SELECT g FROM Grupo g WHERE g.idGrupo = :idGrupo")
     , @NamedQuery(name = "Grupo.findBySalon", query = "SELECT g FROM Grupo g WHERE g.salon = :salon")
     , @NamedQuery(name = "Grupo.findByNivel", query = "SELECT g FROM Grupo g WHERE g.nivel = :nivel")
-    //buscar por danza
     , @NamedQuery(name = "Grupo.findByIdDanza", query = "SELECT g FROM Grupo g WHERE g.idDanza = :idDanza")
     , @NamedQuery(name = "Grupo.findByInicioDeGrupo", query = "SELECT g FROM Grupo g WHERE g.inicioDeGrupo = :inicioDeGrupo")
     , @NamedQuery(name = "Grupo.findByFinDeGrupo", query = "SELECT g FROM Grupo g WHERE g.finDeGrupo = :finDeGrupo")})
@@ -252,14 +250,4 @@ public class Grupo implements Serializable {
         }
         return true;
     }
-    /*
-    public List<Grupo> obtenerDanzas() {
-        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-        return em.createNamedQuery("Grupo.findByTipoDeDanza").setParameter("tipoDeDanza", "%" + "" + "%").getResultList();
-    }
-    
-    public List<Grupo> obtenerIdGrupo(String tipoDanza) {
-        EntityManager em = Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager();
-        return em.createNamedQuery("Grupo.findByDanza").setParameter("tipoDeDanza", "%" + tipoDanza + "%").getResultList();
-    }*/
 }

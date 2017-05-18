@@ -47,6 +47,8 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
     private Button modificar;
     @FXML
     private Button deshabilitar;
+    @FXML
+    private Button pagar;
 
     @FXML
     public void buscarMaestro() {
@@ -67,11 +69,28 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
                 this.consultar.setDisable(false);
                 this.modificar.setDisable(false);
                 this.deshabilitar.setDisable(false);
+                this.pagar.setDisable(false);
             } else {
                 this.consultar.setDisable(true);
                 this.modificar.setDisable(true);
                 this.deshabilitar.setDisable(true);
+                this.pagar.setDisable(true);
             }
+        }
+    }
+
+    @FXML
+    public void pagarMaestro() {
+        Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
+        if (maestro != null) {
+            this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaPagoMaestro,
+                    maestro, null);
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Información");
+            alerta.setContentText("Seleccione un Maestro");
+            alerta.showAndWait();
         }
     }
 
@@ -94,42 +113,49 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
     }
 
     public void cargarSiguienteEscena() {
-            Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
-            if (maestro != null) {
-                this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaMaestro,
-                        maestro, this.tipoMenu);
-            } else {
-                Alert alerta = new Alert(Alert.AlertType.WARNING);
-                alerta.setHeaderText(null);
-                alerta.setTitle("Información");
-                alerta.setContentText("Seleccione un Maestro");
-                alerta.showAndWait();
-            }
+        Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
+        if (maestro != null) {
+            this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaMaestro,
+                    maestro, this.tipoMenu);
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setHeaderText(null);
+            alerta.setTitle("Información");
+            alerta.setContentText("Seleccione un Maestro");
+            alerta.showAndWait();
+        }
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) { 
-        Platform.runLater(()->{
+    public void initialize(URL url, ResourceBundle rb) {
+        Platform.runLater(() -> { 
             switch (tipoMenu) {
                 case CONSULTAR:
                     this.consultar.setLayoutX(676);
                     this.modificar.setVisible(false);
                     this.deshabilitar.setVisible(false);
+                    this.pagar.setVisible(false);
                     break;
                 case MODIFICAR:
                     this.modificar.setLayoutX(674);
                     this.consultar.setVisible(false);
                     this.deshabilitar.setVisible(false);
+                    this.pagar.setVisible(false);
                     break;
                 case DESHABILITAR:
                     this.deshabilitar.setLayoutX(674);
                     this.consultar.setVisible(false);
                     this.modificar.setVisible(false);
+                    this.pagar.setVisible(false);
                     break;
+                case PAGO:
+                    this.deshabilitar.setVisible(false);
+                    this.consultar.setVisible(false);
+                    this.modificar.setVisible(false);
+                    this.pagar.setLayoutX(706);
             }
-            
         });
-        
+
         this.tabla.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, newSelection) -> {
                     Maestro maestro = (Maestro) this.tabla.getSelectionModel().getSelectedItem();
@@ -160,6 +186,7 @@ public class FXMLMaestroBusquedaController extends MainController implements Ini
         this.consultar.setDisable(true);
         this.modificar.setDisable(true);
         this.deshabilitar.setDisable(true);
+        this.pagar.setDisable(true);
         this.tipoDeBusqueda.setItems(opciones);
         this.tipoDeBusqueda.getSelectionModel().select(1);
     }

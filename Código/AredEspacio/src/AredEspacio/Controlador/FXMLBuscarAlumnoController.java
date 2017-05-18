@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AredEspacio.Controlador;
 
 import AredEspacio.EscenaPrincipal;
@@ -29,11 +24,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-/**
- * FXML Controller class
- *
- * @author Jonathan
- */
 public class FXMLBuscarAlumnoController extends MainController implements Initializable {
 
     @FXML
@@ -41,28 +31,28 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     @FXML
     private TableView<Alumno> tVResultados;
     @FXML
-    private ComboBox<?> cBCriterio;
+    private ComboBox cBCriterio;
     @FXML
-    private TableColumn<?, ?> tCNombre;
+    private TableColumn tCNombre;
     @FXML
-    private TableColumn<?, ?> tCApellidos;
+    private TableColumn tCApellidos;
     @FXML
-    private TableColumn<?, ?> tCMatricula;
+    private TableColumn tCMatricula;
     @FXML
-    private TableColumn<?, ?> tCStatus;
+    private TableColumn tCStatus;
     @FXML
     private Button bClicAccion;
     
     private AlumnoJpaController jpaAlumno;
-/*
+
+    
     //buscarPorApellidos
     public List<Alumno> buscarPorApellidos(String busqueda) {
         List<Alumno> alumnos = jpaAlumno.obtenerPorApellidos(busqueda);
         if (alumnos.size() > 0) {
-            bConsultar.setDisable(false);
-            bModificar.setDisable(false);
-            bEliminar.setDisable(false);
-            bInscribir.setDisable(false);
+            this.bClicAccion.setDisable(false);
+        }else{
+            this.bClicAccion.setDisable(true);
         }
         return alumnos;
     }
@@ -71,14 +61,13 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     public List<Alumno> buscarPorMatricula (String busqueda) {
         List<Alumno> alumnos = jpaAlumno.obtenerPorMatricula(busqueda);
         if (alumnos.size() > 0) {
-            bConsultar.setDisable(false);
-            bModificar.setDisable(false);
-            bEliminar.setDisable(false);
-            bInscribir.setDisable(false);
+            this.bClicAccion.setDisable(false);
+        }else{
+            this.bClicAccion.setDisable(true);
         }
         return alumnos;
     }
-  */  
+    
     //desplegarAlumnos
     public void desplegarAlumnos () {
         List<Alumno> alumnos = jpaAlumno.findAlumnoEntities();
@@ -90,7 +79,6 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
                 @Override
                 public void handle(ActionEvent event) {
                     if (getTipoDeMenu().equals(TipoDeMenu.INCRIBIR)) {
-                       
                         inscribir();
                     }
                     if (getTipoDeMenu().equals(TipoDeMenu.CONSULTAR)) {
@@ -113,7 +101,6 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
     @FXML
     void buscar(ActionEvent event) {
         String busqueda = tFBusqueda.getText();
-        /*
         if (cBCriterio.getValue() == "Apellidos") {
             List<Alumno> alumnos = buscarPorApellidos(busqueda);
             ObservableList lista = FXCollections.observableArrayList(alumnos);
@@ -125,7 +112,6 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
         } else if (cBCriterio.getValue() == null) {
             Mensaje.advertencia("No se ha seleccionado el criterio");
         }
-*/
     }
     
     //clicIncribir
@@ -171,16 +157,32 @@ public class FXMLBuscarAlumnoController extends MainController implements Initia
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Platform.runLater(()->{
+            switch (this.tipoMenu) {
+                case CONSULTAR:
+                    this.bClicAccion.setText("Consultar");
+                    break;
+                case INCRIBIR:
+                    this.bClicAccion.setText("Inscribir");
+                    break;
+                case MODIFICAR:
+                    this.bClicAccion.setText("Modificar");
+                    break;
+                case ELIMINAR:
+                    this.bClicAccion.setText("Baja/Alta");
+                    break;
+            }
+        });
+        
         ObservableList criterio = FXCollections.observableArrayList("Matricula", "Apellidos");
         cBCriterio.setItems(criterio);
+        cBCriterio.getSelectionModel().select(1);
         tCMatricula.setCellValueFactory(new PropertyValueFactory<>("Matricula"));
         tCNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
         tCApellidos.setCellValueFactory(new PropertyValueFactory<>("Apellidos"));
         tCStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
-
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AredEspacioPU");
         jpaAlumno = new AlumnoJpaController(emf);
         desplegarAlumnos();
-
     }
 }

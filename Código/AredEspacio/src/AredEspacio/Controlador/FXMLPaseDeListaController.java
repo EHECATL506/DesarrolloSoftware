@@ -5,7 +5,6 @@ import Modelo.Asistencia;
 import Modelo.Clase;
 import Modelo.Grupo;
 import Modelo.Mensaje;
-import Modelo.TipoDeMenu;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -70,6 +67,9 @@ public class FXMLPaseDeListaController extends MainController implements Initial
     void registrarAsistencia(ActionEvent event) {
         Date fecha = new Date(new GregorianCalendar().getTimeInMillis());
         try {
+            
+            if(!this.checkList.isEmpty()){
+            
             this.checkList.forEach((check, clase)
                     -> {
                 Asistencia asistencia = new Asistencia();
@@ -80,6 +80,9 @@ public class FXMLPaseDeListaController extends MainController implements Initial
             });
             Mensaje.informacion("Exito!! al registrar la asistencia del grupo");
             this.escena.cargarEscena(EscenaPrincipal.EscenaPaseDeLista);
+            }else{
+                Mensaje.advertencia("Seleccione un grupo y asigné la asistencia");
+            }
         } catch (Exception e) {
             Mensaje.advertencia("No hay conexión, Intentelo mas tarde");
         }
@@ -123,7 +126,8 @@ public class FXMLPaseDeListaController extends MainController implements Initial
                     this.vNombre.getChildren().clear();
                     this.vNombre.getChildren().add(tituloNombre);
                     this.checkList.clear();
-                    Clase.buscarClasesPorIdDeGrupo(grupo.getIdGrupo()).forEach(
+                    //---->Clase
+                    Clase.obtenerClasesDelGrupo(grupo.getIdGrupo()).forEach(
                             (clase) -> {
                                 String nombre = "        "
                                 + clase.getNombre() + " " + clase.getApellidos();

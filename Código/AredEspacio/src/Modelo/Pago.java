@@ -5,8 +5,12 @@
  */
 package Modelo;
 
+import ControladorBD.PagoJpaController;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p")
     , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")
-    , @NamedQuery(name = "Pago.findByIdClase", query = "SELECT p FROM Pago p WHERE p.idClase = :idClase")
+    , @NamedQuery(name = "Pago.findByIdClase", query = "SELECT p FROM Pago p WHERE p.idClase.idClase = :idClase AND p.fechaPago>:fecha")
     , @NamedQuery(name = "Pago.findByFolio", query = "SELECT p FROM Pago p WHERE p.folio = :folio")
     , @NamedQuery(name = "Pago.findByDescuento", query = "SELECT p FROM Pago p WHERE p.descuento = :descuento")
     , @NamedQuery(name = "Pago.findByAbono", query = "SELECT p FROM Pago p WHERE p.abono = :abono")
@@ -40,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pago.findByStatus", query = "SELECT p FROM Pago p WHERE p.status = :status")
     , @NamedQuery(name = "Pago.findByTipoDePago", query = "SELECT p FROM Pago p WHERE p.tipoDePago = :tipoDePago")})
 public class Pago implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -187,6 +192,47 @@ public class Pago implements Serializable {
     @Override
     public String toString() {
         return "Modelo.Pago[ idPago=" + idPago + " ]";
+    }
+    
+    public static List<Pago> obtenerPagosPorIdDeClase(int idClase, Date fecha) {
+        return Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager()
+                .createNamedQuery("Pago.findByIdClase")
+                .setParameter("idClase", idClase)
+                .setParameter("fecha", fecha).getResultList();
+    }
+    
+    public static List<Pago> obtenerTodosLosPagos(){
+        PagoJpaController controller = new PagoJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        return controller.findPagoEntities();
+    }
+    
+    public String getGrupo(){
+        return "Danza: "+this.idClase.getIdGrupo().getTipoDeDanza()
+                +"\nNivel: " +this.idClase.getIdGrupo().getNivel()
+                +"\nSalon: " +this.idClase.getIdGrupo().getSalon();
+    }
+    
+    public String getAlumno(){
+        return this.idClase.getNombre()+" "+this.idClase.getApellidos();
+    }
+    
+    public String getPromocion(){
+        return "Descuento: "+this.idPromocion.getPorcentajeDeDescuento()
+              +"\nDescripción: "+this.idPromocion.getDescripcion();
+    }
+    
+    public String getAbonoString(){
+        return ""+new Double(this.abono).intValue();
+    }
+    
+    public String getFecha(){
+        GregorianCalendar fecha = new GregorianCalendar();
+        fecha.setTimeInMillis(this.fechaPago.getTime());
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+        int año = fecha.get(Calendar.YEAR);
+        return String.format(" %1$02d/%2$02d/%3$04d", dia, mes, año);
     }
     
 }

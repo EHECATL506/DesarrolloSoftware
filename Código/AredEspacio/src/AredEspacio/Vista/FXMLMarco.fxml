@@ -24,6 +24,8 @@
                   <MenuItem mnemonicParsing="false" onAction="#consultarMaestro" text="Consultar" />
                   <MenuItem mnemonicParsing="false" onAction="#modificarMaestro" text="Modificar" />
                   <MenuItem mnemonicParsing="false" onAction="#deshabilitarMaestro" text="Habilitar\Deshabilitar" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#pagarMaestro" text="Pagar a Maestro" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Grupo">
@@ -32,7 +34,9 @@
                   <MenuItem mnemonicParsing="false" onAction="#modificarGrupo" text="Modificar" />
                   <MenuItem mnemonicParsing="false" onAction="#deshabilitarGrupo" text="Deshabilitar" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#paseDeAsistencia" text="Pase de Asistencia" />
                   <MenuItem mnemonicParsing="false" onAction="#cambiarAlumnoDeGrupo" text="Cambiar Alumno" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#listaDeDanzas" text="Danza" />
               </items>
             </Menu>
@@ -41,21 +45,18 @@
                   <MenuItem mnemonicParsing="false" onAction="#incribirAlumno" text="Incribir Alumno" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Promociones">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#verPromociones" text="Promociones" />
-               </items></Menu>
-            <Menu mnemonicParsing="false" text="Notificaciones" />
-            <Menu mnemonicParsing="false" text="Reportes">
+            <Menu mnemonicParsing="false" text="Egresos e Ingresos">
               <items>
-                <MenuItem mnemonicParsing="false" text="Ingresos" />
-                  <MenuItem mnemonicParsing="false" text="Egresos" />
+                <MenuItem mnemonicParsing="false" onAction="#registrarEgreso" text="Registrar Egreso" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" onAction="#consultarReporteDeIngresos" text="Historial de Ingresos" />
+                  <MenuItem mnemonicParsing="false" onAction="#consulatrReporteDeEgresos" text="Historial de Egresos" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Otros">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#registrarEgreso" text="Registrar Egresos" />
-                  <MenuItem mnemonicParsing="false" onAction="#paseDeAsistencia" text="Pase de Asistencia" />
+                <MenuItem mnemonicParsing="false" onAction="#verNotificaciones" text="Notificaciones" />
+                  <MenuItem mnemonicParsing="false" onAction="#verPromociones" text="Promociones" />
               </items>
             </Menu>
         </menus>

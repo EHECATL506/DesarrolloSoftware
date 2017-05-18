@@ -71,7 +71,6 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="bActualizar" layoutX="477.0" layoutY="161.0" mnemonicParsing="false" onAction="#actualizarHorario" text="Actualizar" />
             <Button fx:id="bEliminarHorario" layoutX="556.0" layoutY="161.0" mnemonicParsing="false" onAction="#eliminarDelHorario" text="Eliminar" />
             <Button layoutX="629.0" layoutY="161.0" mnemonicParsing="false" onAction="#agregarAlHorario" text="Agregar" />
          </children>

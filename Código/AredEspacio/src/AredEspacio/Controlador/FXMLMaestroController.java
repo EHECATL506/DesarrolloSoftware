@@ -5,6 +5,7 @@ import Modelo.Foto;
 import Modelo.GrupoAsignado;
 import Modelo.Maestro;
 import Modelo.TipoDeMenu;
+import Modelo.Validar;
 import java.net.URL;
 import java.sql.Date;
 import java.time.Instant;
@@ -117,6 +118,8 @@ public class FXMLMaestroController extends MainController implements Initializab
 
         if (this.maestro == null) {
             maestro.setFechaDeRegistro(new Date(new GregorianCalendar().getTimeInMillis()));
+            //--->
+            maestro.setFechaDeDeshabilitacion(new Date(new GregorianCalendar().getTimeInMillis()));
         }
 
         if (this.maestro == null) {
@@ -255,7 +258,7 @@ public class FXMLMaestroController extends MainController implements Initializab
             campo.setStyle(null);
             return true;
         } else {
-            campo.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            campo.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
             return false;
         }
     }
@@ -265,7 +268,7 @@ public class FXMLMaestroController extends MainController implements Initializab
             campo.setStyle(null);
             return true;
         } else {
-            campo.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            campo.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
             return false;
         }
     }
@@ -275,7 +278,7 @@ public class FXMLMaestroController extends MainController implements Initializab
             combo.setStyle(null);
             return true;
         } else {
-            combo.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            combo.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
             return false;
         }
     }
@@ -285,7 +288,7 @@ public class FXMLMaestroController extends MainController implements Initializab
             campo.setStyle(null);
             return true;
         } else {
-            campo.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            campo.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
             return false;
         }
     }
@@ -318,7 +321,7 @@ public class FXMLMaestroController extends MainController implements Initializab
     private boolean validarInformacion() {
         boolean bApellido = this.validarCampo(this.campoApellido);
         boolean bCiudad = this.validarCampo(this.campoCiudad);
-        boolean bCorreo = this.validarAlfanumerico(this.campoCorreo);
+        boolean bCorreo = Validar.correo(this.campoCorreo);
         boolean bDomicilio = this.validarAlfanumerico(this.campoDomicilio);
         boolean bNombre = this.validarCampo(this.campoNombre);
         boolean bTelefono = this.validarCampoNumerico(this.campoTelefono);
@@ -329,22 +332,12 @@ public class FXMLMaestroController extends MainController implements Initializab
         boolean bFechaNacimiento = this.fechaNacimiento.getValue() != null;
         boolean bFoto;
 
-        /*if (this.maestro == null) {
-            bFoto = this.rutaFoto != null; //&& !this.rutaFoto.equals("Recursos/Imagenes/ErrorDeImagen.png");
-        } else {
-            bFoto = true;
-        }*/
         if (bFechaNacimiento) {
             this.fechaNacimiento.setStyle(null);
         } else {
-            this.fechaNacimiento.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+            this.fechaNacimiento.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
         }
-
-        /*if (bFoto) {
-            this.agregarFoto.setStyle(null);
-        } else {
-            this.agregarFoto.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
-        }*/
+        
         if (bApellido && bCiudad && bCorreo && bDomicilio && bNombre && bTelefono && bMovil && bCP
                 && bGenero && bEstado && bFechaNacimiento) {
             return true;
@@ -470,6 +463,11 @@ public class FXMLMaestroController extends MainController implements Initializab
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 this.maestro.setDeshabilitado(false);
+                this.maestro.setFechaDeRegistro(new Date(new GregorianCalendar().getTimeInMillis()));
+                
+                //--->this.maestro.setFechaDeDeshabilitacion(null);
+                this.maestro.setFechaDeDeshabilitacion(new Date(new GregorianCalendar().getTimeInMillis()));
+                
                 try {
                     this.maestro.actualizar();
                 } catch (Exception ex) {

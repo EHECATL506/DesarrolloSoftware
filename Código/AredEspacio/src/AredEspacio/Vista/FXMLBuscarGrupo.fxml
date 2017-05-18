@@ -12,9 +12,10 @@
       <TableView fx:id="tGrupo" layoutX="39.0" layoutY="147.0" prefHeight="300.0" prefWidth="708.0" tableMenuButtonVisible="true">
         <columns>
           <TableColumn fx:id="cId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="cSalon" prefWidth="151.0" text="Salon" />
-            <TableColumn fx:id="cTipoDeDanza" prefWidth="201.0" text="Tipo de Danza" />
-            <TableColumn fx:id="cMaestro" prefWidth="279.0" text="Maestro Asignado" />
+          <TableColumn fx:id="cSalon" prefWidth="104.0" text="Salon" />
+            <TableColumn fx:id="cTipoDeDanza" prefWidth="202.0" text="Tipo de Danza" />
+            <TableColumn fx:id="cNivel" prefWidth="119.0" text="Nivel" />
+            <TableColumn fx:id="cMaestro" prefWidth="206.0" text="Maestro Asignado" />
         </columns>
       </TableView>
       <Button fx:id="modificar" layoutX="644.0" layoutY="465.0" mnemonicParsing="false" onAction="#cargarModificar" text="Modificar Grupo" />

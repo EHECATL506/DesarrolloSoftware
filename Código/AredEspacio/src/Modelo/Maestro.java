@@ -5,7 +5,6 @@
  */
 package Modelo;
 
-import ControladorBD.ContadorJpaController;
 import ControladorBD.MaestroJpaController;
 import java.io.Serializable;
 import java.util.Date;
@@ -325,18 +324,13 @@ public class Maestro implements Serializable {
     }
 
     private void crearNoDeColaborador() throws Exception {
-        ContadorJpaController controller = new ContadorJpaController(
+         MaestroJpaController controller = new MaestroJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null)
         );
-        EntityManager entityManager = controller.getEntityManager();
-        Contador contadorMaestro = (Contador) entityManager
-                .createNamedQuery("Contador.findByNombre").setParameter("nombre", "Maestros").getSingleResult();
-        int numeroDeMaestros = contadorMaestro.getContador();
-        numeroDeMaestros++;
+         
+        int numeroDeMaestros = controller.getMaestroCount();
         int año = new Date().getYear() - 100;
         String numeroDeColaborador = String.format("M%1$02d%2$06d", año, numeroDeMaestros);
-        contadorMaestro.setContador(numeroDeMaestros);
-        controller.edit(contadorMaestro);
         this.noDeColaborador = numeroDeColaborador;
     }
 

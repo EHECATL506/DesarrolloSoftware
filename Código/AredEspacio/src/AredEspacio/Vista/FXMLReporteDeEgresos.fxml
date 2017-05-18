@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLReporteDeEgresosController">
+     <children>
+      <Label layoutX="297.0" layoutY="66.0" text="Historial de Egresos">
+         <font>
+            <Font name="System Bold Italic" size="25.0" />
+         </font></Label>
+      <TableView fx:id="tEgresos" layoutX="80.0" layoutY="195.0" prefHeight="329.0" prefWidth="651.0" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn fx:id="cMonto" prefWidth="116.0" text="Monto" />
+          <TableColumn fx:id="cMotivo" prefWidth="357.0" text="Motivo" />
+            <TableColumn fx:id="cFecha" minWidth="0.0" prefWidth="162.0" text="Fecha" />
+        </columns>
+      </TableView>
+      <Label layoutX="80.0" layoutY="151.0" text="Seleccione mes:" />
+      <Label layoutX="349.0" layoutY="151.0" text="Seleccione año:" />
+      <ComboBox fx:id="comboMes" layoutX="171.0" layoutY="147.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboAño" layoutX="438.0" layoutY="147.0" prefWidth="150.0" />
+      <Label fx:id="lTotal" layoutX="614.0" layoutY="147.0" text="Total: 999_999">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

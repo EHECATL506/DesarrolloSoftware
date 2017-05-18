@@ -11,14 +11,13 @@ import Modelo.Clase;
 import Modelo.FilaHorario;
 import Modelo.Horario;
 import Modelo.Mensaje;
+import Modelo.TipoDeMenu;
 import Modelo.Validar;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -36,8 +35,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Label;
@@ -176,28 +173,31 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     }
     //consultarHorario
     public void consultarHorario(Alumno alumno) {
-      /*  ObservableList<FilaHorario> lista = FXCollections.observableArrayList();
+       ObservableList<FilaHorario> lista = FXCollections.observableArrayList();
         for (Clase grupo : alumno.getClaseList()) {
-            
             String clase = grupo.getIdGrupo().getTipoDeDanza();
             String maestro =  (grupo.getIdGrupo().getIdMaestro().getNombre() + " ") +
                     grupo.getIdGrupo().getIdMaestro().getApellidos();
             String nivel = grupo.getIdGrupo().getNivel();
+            String dia="";
+            String hora="";
             for (Horario horario : grupo.getIdGrupo().getHorarioList()) {
-                String dia = horario.getDia();
-                String hora = horario.getHora();
-                lista.add(new FilaHorario(clase, maestro, dia, hora, nivel));
-            }        
-            tVHorario.setItems(lista);
+                dia += horario.getDia()+"\n";
+                hora += horario.getHora()+"\n";
+            } 
+            lista.add(new FilaHorario(clase, maestro, dia, hora, nivel));
+           
         }
-        */
+         tVHorario.setItems(lista);
     }
     //modificarAlumno
     public void modificarAlumno(Alumno alumno) throws Exception  {
         if (rutaFoto != null) AgregarFoto(alumno);
         jpaAlumno.edit(alumno);
         Mensaje.informacion("El alumno ha sido actualizado");
-        escena.cargarEscena(EscenaPrincipal.EscenaBuscarAlumno);
+        //---->
+        escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarAlumno,
+                null, TipoDeMenu.MODIFICAR);
     }
     //guardarAlumno
     public void guardarAlumno(Alumno alumno) throws Exception {        

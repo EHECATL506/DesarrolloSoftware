@@ -1,12 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
+import ControladorBD.EgresoJpaController;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Egreso.findAll", query = "SELECT e FROM Egreso e")
-    , @NamedQuery(name = "Egreso.findByIdPago", query = "SELECT e FROM Egreso e WHERE e.idPago = :idPago")
+    , @NamedQuery(name = "Egreso.findByIdEgreso", query = "SELECT e FROM Egreso e WHERE e.idEgreso = :idEgreso")
     , @NamedQuery(name = "Egreso.findByMonto", query = "SELECT e FROM Egreso e WHERE e.monto = :monto")
     , @NamedQuery(name = "Egreso.findByFecha", query = "SELECT e FROM Egreso e WHERE e.fecha = :fecha")
     , @NamedQuery(name = "Egreso.findByIdMaestro", query = "SELECT e FROM Egreso e WHERE e.idMaestro = :idMaestro")})
@@ -40,8 +40,8 @@ public class Egreso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idPago")
-    private Integer idPago;
+    @Column(name = "idEgreso")
+    private Integer idEgreso;
     @Basic(optional = false)
     @Column(name = "monto")
     private int monto;
@@ -59,23 +59,23 @@ public class Egreso implements Serializable {
     public Egreso() {
     }
 
-    public Egreso(Integer idPago) {
-        this.idPago = idPago;
+    public Egreso(Integer idEgreso) {
+        this.idEgreso = idEgreso;
     }
 
-    public Egreso(Integer idPago, int monto, Date fecha, String motivo) {
-        this.idPago = idPago;
+    public Egreso(Integer idEgreso, int monto, Date fecha, String motivo) {
+        this.idEgreso = idEgreso;
         this.monto = monto;
         this.fecha = fecha;
         this.motivo = motivo;
     }
 
-    public Integer getIdPago() {
-        return idPago;
+    public Integer getIdEgreso() {
+        return idEgreso;
     }
 
     public void setIdPago(Integer idPago) {
-        this.idPago = idPago;
+        this.idEgreso = idPago;
     }
 
     public int getMonto() {
@@ -113,7 +113,7 @@ public class Egreso implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idPago != null ? idPago.hashCode() : 0);
+        hash += (idEgreso != null ? idEgreso.hashCode() : 0);
         return hash;
     }
 
@@ -124,7 +124,7 @@ public class Egreso implements Serializable {
             return false;
         }
         Egreso other = (Egreso) object;
-        if ((this.idPago == null && other.idPago != null) || (this.idPago != null && !this.idPago.equals(other.idPago))) {
+        if ((this.idEgreso == null && other.idEgreso != null) || (this.idEgreso != null && !this.idEgreso.equals(other.idEgreso))) {
             return false;
         }
         return true;
@@ -132,7 +132,40 @@ public class Egreso implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Egreso[ idPago=" + idPago + " ]";
+        return "Modelo.Egreso[ idEgreso=" + idEgreso + " ]";
+    }
+
+    public static List<Egreso> obtenerTodosLosEgresos() {
+        EgresoJpaController controller
+                = new EgresoJpaController(Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        return controller.findEgresoEntities();
+    }
+
+    public boolean crear() {
+        EgresoJpaController controller
+                = new EgresoJpaController(Persistence.createEntityManagerFactory("AredEspacioPU", null));
+        controller.create(this);
+        return true;
+    }
+
+    public String getMontoCompleto() {
+        return String.valueOf(this.monto);
+    }
+
+    public String getFechaCompleta() {
+        GregorianCalendar fecha = new GregorianCalendar();
+        fecha.setTimeInMillis(this.fecha.getTime());
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+        int año = fecha.get(Calendar.YEAR);
+        return String.format(" %1$02d/%2$02d/%3$04d", dia, mes, año);
     }
     
+    public String getMotivoCompleto(){
+        if(this.idMaestro==null){
+            return this.motivo;
+        }else{
+            return this.motivo+": "+this.idMaestro;
+        }
+    }
 }

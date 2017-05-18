@@ -55,4 +55,12 @@ public class HorarioTest {
         Horario horario = new Horario();
         horario.eliminar();
     }
+    
+    //Nuevo
+    @Test
+    public void pruebaObtenerTodosLosHorarios(){
+        boolean resultado = !Horario.listaDeHorarios().isEmpty();
+        assertTrue("Prueba obtener todos los horarios", resultado);
+    } 
+    
 }

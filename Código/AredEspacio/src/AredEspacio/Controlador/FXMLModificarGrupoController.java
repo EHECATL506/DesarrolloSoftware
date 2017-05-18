@@ -87,9 +87,6 @@ public class FXMLModificarGrupoController extends MainController implements Init
     private Spinner<Integer> spPorcentaje;
     
     @FXML
-    private Button bActualizar;
-
-    @FXML
     private Button bEliminarHorario;
 
     @FXML
@@ -189,41 +186,6 @@ public class FXMLModificarGrupoController extends MainController implements Init
     }
 
     @FXML
-    void actualizarHorario(ActionEvent event) {
-        /*Horario horario = (Horario) this.tHorario.getSelectionModel().getSelectedItem();
-        if (horario != null) {
-            if (!(this.cbDia.getValue() == null)) {
-                boolean valido = false;
-
-                String dia = this.cbDia.getValue().toString();
-                int horasInicio = Integer.parseInt(this.sHorasInicio.getValue().toString());
-                int minutosInicio = Integer.parseInt(this.spMinutosInicio.getValue().toString());
-                int horasFin = Integer.parseInt(this.spHorasFin.getValue().toString());
-                int minutosFin = Integer.parseInt(this.spMinutosFin.getValue().toString());
-                String horas = horasInicio + ":" + minutosInicio + "-" + horasFin + ":" + minutosFin;
-
-                if (horario.getIdHorario() != null) {
-                    valido = this.validarDiaID(dia, horario.getIdHorario())
-                            && this.validarHora(horasInicio, minutosInicio, horasFin, minutosFin);
-                    if (valido) {
-                        this.horarios.remove(horario);
-                        horario.setDia(dia);
-                        horario.setHora(horas);
-                        this.horarios.add(horario);
-                        ObservableList listaHorario = FXCollections.observableArrayList(this.horarios);
-                        this.tHorario.setItems(listaHorario);
-                    }
-                }
-
-            } else {
-                Mensaje.advertencia("Seleccione un Dia");
-            }
-        } else {
-            Mensaje.advertencia("Seleccione un horario");
-        }*/
-    }
-
-    @FXML
     void actualizarGrupo(ActionEvent event) {
         if (this.horarios.isEmpty()) {
             Mensaje.advertencia("Agregue almenos un dia con su hora de inicio y fin al horario");
@@ -276,7 +238,6 @@ public class FXMLModificarGrupoController extends MainController implements Init
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.bActualizar.setVisible(false);
         this.cNoDeColaborador.setCellValueFactory(
                 new PropertyValueFactory<>("NoDeColaborador")
         );

@@ -9,6 +9,7 @@ import ControladorBD.HorarioJpaController;
 import Exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Horario.findByDia", query = "SELECT h FROM Horario h WHERE h.dia = :dia")
     , @NamedQuery(name = "Horario.findByHora", query = "SELECT h FROM Horario h WHERE h.hora = :hora")})
 public class Horario implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -178,5 +178,12 @@ public class Horario implements Serializable {
             horario.setIdGrupo(grupo);
             horario.crear();
         }
+    }
+    
+    public static List<Horario> listaDeHorarios() {
+         HorarioJpaController controller = new HorarioJpaController(
+                Persistence.createEntityManagerFactory("AredEspacioPU", null)
+        );
+        return controller.findHorarioEntities();
     }
 }

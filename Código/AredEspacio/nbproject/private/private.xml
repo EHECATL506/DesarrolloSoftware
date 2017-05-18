@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/Modelo/FilaClase.java</file>
             <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/Modelo/Pago.java</file>
@@ -10,5 +11,8 @@
             <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/ControladorBD/PagoJpaController.java</file>
             <file>file:/C:/Users/Jonathan/.ssh/DesarrolloSoftware/Código/AredEspacio/src/AredEspacio/Controlador/FXMLIncribirAlumnoController.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> e2dd2ce3f08e41e4e79bbdb1827f7be6c6368d25
     </open-files>
 </project-private>
