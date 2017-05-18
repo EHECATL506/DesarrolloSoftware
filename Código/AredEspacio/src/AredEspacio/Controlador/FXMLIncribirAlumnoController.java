@@ -104,6 +104,7 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
     @FXML
     private Button clicBuscar;
 
+    private Dialog dIncripcion;
     //ObservableList<FilaHorario> lista;
     private ClaseJpaController jpaClase;
     private DanzaJpaController jpaDanza;
@@ -120,6 +121,7 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
     private ComboBox<String> cBPromocion;
 
     private List<Clase> clases;
+    //desplegarClases
     public void desplegarClases(Alumno alumno) {
         ObservableList<FilaClase> oLlista = FXCollections.observableArrayList();
         clases = jpaClase.obtenerPorAlumno(alumno);
@@ -153,7 +155,7 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
                 }
                 
                 
-                Dialog dIncripcion = new Dialog();
+                dIncripcion = new Dialog();
                 dIncripcion.setTitle("Pago Incripción");
 
                 dIncripcion.setHeaderText("Generar el pago de la clase: "
@@ -208,12 +210,6 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
                 dIncripcion.getDialogPane().setContent(panel);
                 dIncripcion.show();
                 
-                clicImprimir.setOnAction(new EventHandler<ActionEvent>() {
-                     @Override
-                    public void handle(ActionEvent event) {
-                        
-                    }
-                });
 
                 //clicPagarIncripcion
                 clicPago.setOnAction(new EventHandler<ActionEvent>() {
@@ -243,6 +239,7 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
         
     }
  
+    //desplegarGrupos
     public void desplegarGrupos(Danza danza, Alumno alumno) {        
         List<Grupo> grupos = jpaGrupo.obtenerPorDanza(danza);
         ObservableList oLGrupos = FXCollections.observableArrayList(grupos);
@@ -320,8 +317,6 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
     //guardarPago
     private void guardarPago(Pago pago, Clase clase, Promocion promocion) {
         
-
-        
         float cantidad = Float.valueOf(tFCantidad.getText().replaceAll("\\$", ""));
         float paga = 0;
         float descuento = 0;
@@ -357,16 +352,11 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
             }
             jpaPago.create(pago);
             Mensaje.informacion("El alumno ha pagado su inscripción");
+            dIncripcion.close();
             escena.cargarEscena(EscenaPrincipal.EscenaInicio );
         }
     }
 
-    /*
-    @FXML
-    void clicBuscar(ActionEvent event) {
-        
-    }
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
