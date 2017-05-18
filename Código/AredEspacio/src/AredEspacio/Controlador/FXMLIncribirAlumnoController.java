@@ -136,11 +136,8 @@ public class FXMLIncribirAlumnoController extends MainController implements Init
             String proximoPago =  new SimpleDateFormat("EEE, d MMM yyyy").format(calendar.getTime());
             List<Pago> pagos = c.getPagoList();
             String status = "";
-            if ( pagos.size() == 0) {
-                status = "PENDIENTE";
-            } else if (pagos.size() > 0){
-                status = pagos.get(0).getStatus();
-            }
+            if ( pagos.size() == 0) status = "PENDIENTE";
+            else if (pagos.size() > 0) status = pagos.get(0).getStatus();
             oLlista.add(new FilaClase(grupo, fechaIngreso, proximoPago, danza, status , c));
         }       
 
