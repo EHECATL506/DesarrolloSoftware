@@ -1,6 +1,7 @@
 package Modelo;
 
 import ControladorBD.EgresoJpaController;
+import ControladorBD.MaestroJpaController;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -165,7 +166,10 @@ public class Egreso implements Serializable {
         if(this.idMaestro==null){
             return this.motivo;
         }else{
-            return this.motivo+": "+this.idMaestro;
+            MaestroJpaController controller = new MaestroJpaController
+                (Persistence.createEntityManagerFactory("AredEspacioPU", null));
+            Maestro maestro = controller.findMaestro(this.idMaestro);
+            return this.motivo+": "+maestro.getNombre()+" "+maestro.getApellidos();
         }
     }
 }
