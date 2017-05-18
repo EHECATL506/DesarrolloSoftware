@@ -194,4 +194,12 @@ public class ClaseJpaController implements Serializable {
         }
     }
     
+    //obtener las clases donde esta incrito el alumno
+    public List<Clase> obtenerPorAlumno(Alumno alumno) {
+        EntityManager em = getEntityManager();
+        List<Clase> c = em.createNamedQuery("Clase.findByIdAlumno").
+                setParameter("idAlumno", alumno).getResultList();
+        return c;
+    } 
+    
 }

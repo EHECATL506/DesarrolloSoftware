@@ -216,11 +216,11 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     public void clicGuardar(ActionEvent event) throws Exception {
         Alumno alumno = new Alumno();
         if (accion.equals("MODIFICAR")) {
-            if (validarCampos((Alumno)this.parametros) == 1) modificarAlumno((Alumno)this.parametros);
+            if (validarAlumno((Alumno)this.parametros) == 1) modificarAlumno((Alumno)this.parametros);
             else Mensaje.advertencia("Los campos han sido invalidos");
         }
         else if (accion.equals("REGISTRAR")) {
-            if (validarCampos(alumno) == 1) guardarAlumno(alumno);
+            if (validarAlumno(alumno) == 1) guardarAlumno(alumno);
             else Mensaje.advertencia("Los campos han sido invalidos"); 
         }  
     }
@@ -262,7 +262,7 @@ public class FXMLRegistrarAlumnoController extends MainController implements  In
     }
     
     //validarAlumno
-    public int validarCampos(Alumno alumno) throws ParseException {
+    public int validarAlumno(Alumno alumno) throws ParseException {
         int valido = 2048;
         if (Validar.texto(tFNombre)) {valido >>=1; alumno.setNombre(tFNombre.getText());}
         if (Validar.texto(tFApellidos)) {valido >>=1;alumno.setApellidos(tFApellidos.getText());}

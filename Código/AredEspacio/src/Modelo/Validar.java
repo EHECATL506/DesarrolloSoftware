@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 public class Validar {
     public static boolean cantidad(TextField texto) {
         texto.setStyle(null);
-        Pattern auto = Pattern.compile("^[0-9]{1,4}.[0-9]{2}$");
+        Pattern auto = Pattern.compile("^\\$[0-9]{1,4}.[0-9]{2}$");
         boolean valido = auto.matcher(texto.getText()).find();
         if (valido) return true;
         else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;

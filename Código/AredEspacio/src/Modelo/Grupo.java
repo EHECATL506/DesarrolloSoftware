@@ -204,7 +204,7 @@ public class Grupo implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Grupo[ idGrupo=" + idGrupo + " ]";
+        return String.format("GR-%1$05d", idGrupo);
     }
    
     public String getMaestro(){

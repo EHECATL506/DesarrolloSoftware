@@ -230,6 +230,7 @@ public class GrupoJpaController implements Serializable {
         }
     }
     
+    //obtener los grupos que coincidan con danza 
     public List<Grupo> obtenerPorDanza (Danza danza) {
          EntityManager em = getEntityManager();
          List<Grupo> g = em.createNamedQuery("Grupo.findByIdDanza")

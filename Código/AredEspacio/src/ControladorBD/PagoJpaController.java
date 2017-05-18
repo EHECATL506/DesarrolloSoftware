@@ -165,4 +165,11 @@ public class PagoJpaController implements Serializable {
         }
     }
     
+    //Obtener los pagos donde coincida con las classes
+    public Pago obtenerPorClase(Clase clase) {
+        EntityManager em = getEntityManager();
+        Pago p = (Pago) em.createNamedQuery("Pago.findByIdClase").
+                setParameter("idClase", clase).getSingleResult();
+        return p;
+    }
 }

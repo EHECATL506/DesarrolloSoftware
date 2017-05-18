@@ -18,51 +18,56 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AredEspacio.Controlador.FXMLIncribirAlumnoController">
    <children>
-      <StackPane layoutX="14.0" layoutY="87.0" prefHeight="403.0" prefWidth="763.0">
+      <StackPane layoutX="14.0" layoutY="87.0" prefHeight="447.0" prefWidth="763.0">
          <children>
             <HBox prefHeight="332.0" prefWidth="763.0">
                <children>
-                  <Pane prefHeight="425.0" prefWidth="763.0">
+                  <Pane prefHeight="437.0" prefWidth="763.0">
                      <children>
                         <Label layoutX="17.0" layoutY="33.0" text="Tipo de Danza:" />
                         <ComboBox fx:id="cBDanza" layoutX="102.0" layoutY="28.0" minHeight="30.0" prefHeight="30.0" prefWidth="159.0" promptText="Selecciona la danza" />
-                        <Button layoutX="269.0" layoutY="31.0" mnemonicParsing="false" onAction="#clicBuscar" text="Buscar" />
-                        <Pane layoutX="21.0" layoutY="275.0" prefHeight="125.0" prefWidth="721.0" style="-fx-background-color: #f5f5f0; -fx-border-style: solid;">
+                        <Button fx:id="clicBuscar" layoutX="269.0" layoutY="31.0" mnemonicParsing="false" text="Buscar" />
+                        <Pane layoutX="21.0" layoutY="247.0" prefHeight="192.0" prefWidth="721.0" style="-fx-background-color: #f5f5f0; -fx-border-style: solid;">
                            <children>
-                              <TableView fx:id="tVClase" layoutX="14.0" layoutY="20.0" prefHeight="95.0" prefWidth="376.0">
+                              <TableView fx:id="tVClase" layoutX="14.0" layoutY="12.0" prefHeight="170.0" prefWidth="482.0">
                                 <columns>
-                                  <TableColumn fx:id="tCAlumno" prefWidth="75.0" text="ALUMNO" />
-                                  <TableColumn fx:id="tCGrupo" prefWidth="107.0" text="GRUPO" />
-                                    <TableColumn fx:id="tCFechaIngreso" prefWidth="135.0" text="FECHA DE INGRESO" />
+                                  <TableColumn fx:id="tCGrupo" text="GRUPO" />
+                                    <TableColumn fx:id="tCDanza" prefWidth="82.0" text="DANZA" />
+                                    <TableColumn fx:id="tCFechaIngreso" prefWidth="143.0" text="FECHA DE INGRESO" />
+                                  <TableColumn fx:id="tCProximoPago" prefWidth="176.0" text="PROXIMA REINSCRIPCÍON" />
                                 </columns>
                               </TableView>
-                              <Label layoutX="498.0" layoutY="20.0" prefHeight="17.0" prefWidth="101.0" text="Inscripción">
+                              <Label layoutX="529.0" layoutY="14.0" prefHeight="27.0" prefWidth="134.0" text="Clases Inscritas">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="clicInscribir" layoutX="581.0" layoutY="85.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Inscribir a la clase" />
-                              <Button layoutX="412.0" layoutY="85.0" mnemonicParsing="false" text="Eliminar de la clase" />
+                              <Button fx:id="clicInscribir" layoutX="540.0" layoutY="147.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Generar Pago" />
                            </children>
                         </Pane>
-                        <Button fx:id="clicAgregar" layoutX="326.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Agregar" />
-                        <TitledPane collapsible="false" layoutX="427.0" layoutY="66.0" prefHeight="200.0" prefWidth="316.0" text="Horario">
+                        <Button fx:id="clicAgregar" layoutX="326.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="72.0" text="Inscribir" />
+                        <TitledPane collapsible="false" layoutX="427.0" layoutY="66.0" prefHeight="170.0" prefWidth="316.0" text="Horario de la clase: ">
                            <content>
-                              <TableView fx:id="tVHorario" prefHeight="144.0" prefWidth="232.0">
+                              <TableView fx:id="tVHorario" prefHeight="143.0" prefWidth="314.0">
                                 <columns>
-                                    <TableColumn fx:id="tCDia" prefWidth="171.0" text="DIA" />
-                                    <TableColumn fx:id="tCHora" prefWidth="141.0" text="HORA" />
+                                    <TableColumn fx:id="tCDia" prefWidth="150.0" text="DIA" />
+                                    <TableColumn fx:id="tCHora" prefWidth="162.0" text="HORA" />
                                 </columns>
                               </TableView>
                            </content>
                         </TitledPane>
-                        <TableView fx:id="tVGrupo" layoutX="21.0" layoutY="66.0" prefHeight="200.0" prefWidth="388.0">
-                          <columns>
-                            <TableColumn fx:id="tCSalon" prefWidth="67.0" text="SALÓN" />
-                            <TableColumn fx:id="tCNivel" prefWidth="147.0" text="NIVEL" />
-                            <TableColumn fx:id="tCMaestro" minWidth="0.0" prefWidth="159.0" text="MAESTRO" />
-                          </columns>
-                        </TableView>
+                        <TitledPane collapsible="false" layoutX="19.0" layoutY="66.0" prefHeight="170.0" prefWidth="400.0" text="Grupos Disponibles">
+                           <content>
+                              <TableView fx:id="tVGrupo" prefHeight="170.0" prefWidth="250.0">
+                                <columns>
+                                  <TableColumn fx:id="tCSalon" prefWidth="58.0" text="SALÓN" />
+                                  <TableColumn fx:id="tCMaestro" minWidth="0.0" prefWidth="124.0" text="MAESTRO" />
+                                  <TableColumn fx:id="tCNivel" prefWidth="93.0" text="NIVEL" />
+                                    <TableColumn fx:id="tCCosto" prefWidth="121.0" text="COSTO" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </TitledPane>
                      </children>
                   </Pane>
                </children>
