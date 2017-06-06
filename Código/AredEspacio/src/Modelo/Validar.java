@@ -25,15 +25,17 @@ public class Validar {
     }
     
     public static boolean cantidadSinPunto(TextField texto) {
-        texto.setStyle(null);
-        Pattern auto = Pattern.compile("[\\d]");
-        boolean valido = auto.matcher(texto.getText()).find();
-        if (valido) return true;
-        else texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");return false;
+        try{
+            Integer.parseInt(texto.getText());
+            texto.setStyle(null);
+            return true;
+        }catch(Exception e){
+            texto.setStyle("-fx-border-color: red ; -fx-border-width: 1px ;");
+            return false;
+        }
     }
    
-   
-//validarTexto
+    //validarTexto
     public static boolean texto(TextField texto) {
         texto.setStyle(null);
         Pattern auto = Pattern.compile("^([0-9A-Za-zñÑáéíóúÁÉÍÓÚ]+\\s?[0-9A-Za-zñÑáéíóúÁÉÍÓÚ,&.-:+%=/?@#]*\\s?)+$");
