@@ -45,16 +45,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pago.findByStatus", query = "SELECT p FROM Pago p WHERE p.status = :status")
     , @NamedQuery(name = "Pago.findByTipoDePago", query = "SELECT p FROM Pago p WHERE p.tipoDePago = :tipoDePago")})
 public class Pago implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idPago")
     private Integer idPago;
-    @Basic(optional = false)
+
+    //@Basic(optional = false)
     @Column(name = "folio")
     private String folio;
+
     @Basic(optional = false)
     @Column(name = "descuento")
     private float descuento;
@@ -71,11 +73,11 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @Column(name = "tipoDePago")
     private String tipoDePago;
-    
+
     @JoinColumn(name = "idClase", referencedColumnName = "idClase")
     @ManyToOne(optional = false)
     private Clase idClase;
-    
+
     @JoinColumn(name = "idPromocion", referencedColumnName = "idPromocion")
     @ManyToOne(optional = false)
     private Promocion idPromocion;
@@ -104,7 +106,7 @@ public class Pago implements Serializable {
     public void setIdPromocion(Promocion idPromocion) {
         this.idPromocion = idPromocion;
     }
-    
+
     public Integer getIdPago() {
         return idPago;
     }
@@ -193,40 +195,44 @@ public class Pago implements Serializable {
     public String toString() {
         return "Modelo.Pago[ idPago=" + idPago + " ]";
     }
-    
+
     public static List<Pago> obtenerPagosPorIdDeClase(int idClase, Date fecha) {
         return Persistence.createEntityManagerFactory("AredEspacioPU", null).createEntityManager()
                 .createNamedQuery("Pago.findByIdClase")
                 .setParameter("idClase", idClase)
                 .setParameter("fecha", fecha).getResultList();
     }
-    
-    public static List<Pago> obtenerTodosLosPagos(){
+
+    public static List<Pago> obtenerTodosLosPagos() {
         PagoJpaController controller = new PagoJpaController(
                 Persistence.createEntityManagerFactory("AredEspacioPU", null));
         return controller.findPagoEntities();
     }
-    
-    public String getGrupo(){
-        return "Danza: "+this.idClase.getIdGrupo().getTipoDeDanza()
-                +"\nNivel: " +this.idClase.getIdGrupo().getNivel()
-                +"\nSalon: " +this.idClase.getIdGrupo().getSalon();
+
+    public String getGrupo() {
+        return "Danza: " + this.idClase.getIdGrupo().getTipoDeDanza()
+                + "\nNivel: " + this.idClase.getIdGrupo().getNivel()
+                + "\nSalon: " + this.idClase.getIdGrupo().getSalon();
     }
-    
-    public String getAlumno(){
-        return this.idClase.getNombre()+" "+this.idClase.getApellidos();
+
+    public String getAlumno() {
+        return this.idClase.getNombre() + " " + this.idClase.getApellidos();
     }
-    
-    public String getPromocion(){
-        return "Descuento: "+this.idPromocion.getPorcentajeDeDescuento()
-              +"\nDescripción: "+this.idPromocion.getDescripcion();
+
+    public String getPromocion() {
+        if (this.idPromocion != null) {
+            return "Descuento: " + this.idPromocion.getPorcentajeDeDescuento()
+                    + "\nDescripción: " + this.idPromocion.getDescripcion();
+        } else {
+            return "";
+        }
     }
-    
-    public String getAbonoString(){
-        return ""+new Double(this.abono).intValue();
+
+    public String getAbonoString() {
+        return "" + new Double(this.abono).intValue();
     }
-    
-    public String getFecha(){
+
+    public String getFecha() {
         GregorianCalendar fecha = new GregorianCalendar();
         fecha.setTimeInMillis(this.fechaPago.getTime());
         int dia = fecha.get(Calendar.DAY_OF_MONTH);
@@ -234,5 +240,9 @@ public class Pago implements Serializable {
         int año = fecha.get(Calendar.YEAR);
         return String.format(" %1$02d/%2$02d/%3$04d", dia, mes, año);
     }
-    
+
+    public void crear() {
+        new PagoJpaController(Persistence.createEntityManagerFactory("AredEspacioPU", null))
+                .create(this);
+    }
 }

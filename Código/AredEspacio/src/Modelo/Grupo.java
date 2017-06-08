@@ -250,4 +250,12 @@ public class Grupo implements Serializable {
         }
         return true;
     }
+    
+    public String getDatosGrupo(){
+        return "Tipo de Danza: " +this.getTipoDeDanza()
+                +"\nSalon: "+this.salon
+                +"\nNivel: "+this.nivel
+                +"\nMaestro: "+this.getMaestro()
+                +"\nPrecio: "+this.costo;
+    }
 }

@@ -8,6 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 public class FXMLMarcoController extends MainController implements Initializable {
+    
+    @FXML
+    public void pagarMensualidad(){
+        this.escena.cargarEscena(EscenaPrincipal.EscenaPagarMensualidad);
+    }
+    
     @FXML
     public void pagarMaestro() {
         this.escena.cargarEscenaConParametros(EscenaPrincipal.EscenaBuscarMaestro,

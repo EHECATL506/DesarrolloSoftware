@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import ControladorBD.AlumnoJpaController;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -319,5 +321,15 @@ public class Alumno implements Serializable {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+    
+    public String getDatosAlumno(){
+        return this.nombre +" "+ this.apellidos;
+    }
+    
+    public static List<Alumno> listaDeAlumnos(){
+        return new AlumnoJpaController
+        (Persistence.createEntityManagerFactory("AredEspacioPU", null))
+                .findAlumnoEntities();
     }
 }

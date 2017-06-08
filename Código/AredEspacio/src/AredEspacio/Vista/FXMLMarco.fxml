@@ -40,9 +40,10 @@
                   <MenuItem mnemonicParsing="false" onAction="#listaDeDanzas" text="Danza" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Incripción">
+            <Menu mnemonicParsing="false" text="Pagos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#incribirAlumno" text="Incribir Alumno" />
+                  <MenuItem mnemonicParsing="false" onAction="#pagarMensualidad" text="Pagar Mensualidad" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Egresos e Ingresos">

@@ -120,7 +120,9 @@ public class Promocion implements Serializable {
     
     @Override
     public String toString() {
-        return "Modelo.Promocion[ idPromocion=" + idPromocion + " ]";
+        return this.getPorcentajeDeDescuento()+
+                "\n"+this.descripcion;
+        //return "Modelo.Promocion[ idPromocion=" + idPromocion + " ]";
     }
     
     public String getPorcentajeDeDescuento(){
